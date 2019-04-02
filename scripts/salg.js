@@ -20,33 +20,35 @@ export class SalgStartside extends Component {
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
-          <h2>Velkommen {this.ansatt.fornavn}</h2>
+          <h2>
+            Velkommen til selgersiden {this.ansatt.fornavn} {this.ansatt.etternavn}
+          </h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
             Ny Bestilling
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.endreBestillingPush}>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.aktiveBestillingerPush}>
             Aktive bestillinger
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.historikkPush}>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.bestillingHistorikkPush}>
             Bestillingshistorikk
           </button>
         </div>
       </div>
     );
   }
-  mounted(){
-    ansatteService.getAnsatt(this.props.match.params.id, ansatt => {
+  mounted() {
+    ansatteService.getAnsatt(this.props.match.params.ansattId, ansatt => {
       this.ansatt = ansatt;
     });
   }
   nyBestillingPush() {
-    history.push('/bestilling/' + this.props.match.params.id);
+    history.push('/bestilling/' + this.props.match.params.ansattId);
   }
-  endreBestillingPush() {
-    history.push('/aktiveBestillinger/');
+  aktiveBestillingerPush() {
+    history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
   }
-  historikkPush() {
-    history.push('/bestillingHistorikk/');
+  bestillingHistorikkPush() {
+    history.push('/bestillingHistorikk/' + this.props.match.params.ansattId);
   }
   loggUtPush() {
     history.push('/');
@@ -58,6 +60,9 @@ export class AktiveBestillinger extends Component {
   bestillinger = [];
   tabell = [];
   ansatt = [];
+
+  innleveringssteder = [];
+  utleveringssteder = [];
 
   bestilling_type = '';
   kunde_epost = '';
@@ -75,13 +80,13 @@ export class AktiveBestillinger extends Component {
             Logg ut
           </button>
         </div>
-        <button type="button" onClick={this.tilbake}>
-          Tilbake til startsiden
-        </button>
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer bestillingene?
         </button>
         <h2>Aktive bestillinger</h2>
+        <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
+          Tilbake
+        </button>
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
@@ -132,10 +137,11 @@ export class AktiveBestillinger extends Component {
               onChange={e => (this.utleveringssted = event.target.value)}
             >
               <option value="" selected>
-                Søk etter Utleveringssted:
+                Velg utleveringssted
               </option>
-              <option value="Haugastøl">Haugastøl</option>
-              <option value="Finse">Finse</option>
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <label for="innleveringssted">Innleveringssted:</label>
             <select
@@ -144,13 +150,11 @@ export class AktiveBestillinger extends Component {
               onChange={e => (this.innleveringssted = event.target.value)}
             >
               <option value="" selected>
-                Søk etter innleveringssted:
+                Velg utleveringssted
               </option>
-              <option value="Haugastøl">Haugastøl</option>
-              <option value="Finse">Finse</option>
-              <option value="Flåm">Flåm</option>
-              <option value="Voss">Voss</option>
-              <option value="Myrdal">Myrdal</option>
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <button type="submit" class="btn btn-sucess btn-lg btn-block">
               Søk
@@ -174,13 +178,17 @@ export class AktiveBestillinger extends Component {
       this.createTable();
     });
 
-    bestillingService.hentAnsatt(this.props.match.params.id, ansatt => {
-      this.ansatt = ansatt;
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
+    });
+
+    bestillingService.hentInnleveringsted(innleveringssteder => {
+      this.innleveringssteder = innleveringssteder;
     });
   }
 
   tilbake() {
-    history.push('/salgStartside/');
+    history.push('/salgStartside/' + this.props.match.params.ansattId);
   }
 
   loggUtPush() {
@@ -228,10 +236,16 @@ export class AktiveBestillinger extends Component {
             {this.bestillinger[i].innlevering_dato} {this.bestillinger[i].innlevering_tid}
           </td>
           <td>
-            <NavLink to={'/endreBestilling/' + this.bestillinger[i].id}> Vis / Endre </NavLink>
+            <NavLink to={'/endreBestilling/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
+              {' '}
+              Vis / Endre{' '}
+            </NavLink>
           </td>
           <td>
-            <NavLink to={'/innlevering/' + this.bestillinger[i].id}> Lever inn </NavLink>
+            <NavLink to={'/innlevering/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
+              {' '}
+              Lever inn{' '}
+            </NavLink>
           </td>
         </tr>
       );
@@ -287,6 +301,9 @@ export class BestillingHistorikk extends Component {
   tabell = [];
   ansatt = [];
 
+  innleveringssteder = [];
+  utleveringssteder = [];
+
   bestilling_type = '';
   kunde_epost = '';
   utleveringssted = '';
@@ -296,40 +313,48 @@ export class BestillingHistorikk extends Component {
 
   render() {
     return (
-      <div>
+      <div id="yttersteDiv">
         <div class="header w3-container w3-green">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
-        <button type="button" onClick={this.tilbake}>
-          Tilbake til startsiden
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer bestillingene?
         </button>
         <h2>Bestillingshistorikk</h2>
-        <h3>Filtrer bestillingene:</h3>
-        <div>
+        <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
+          Tilbake
+        </button>
+        <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
-            <div>
+            <div class="form-inline">
+              <h3>Filtrer bestillingene:</h3>
               <h4>Velg start- og sluttidspunkt</h4>
-              <label for="utlevering_dato">Utleveringstid</label>
               <input
                 id="utlevering_dato"
                 type="date"
+                class="form-control form-control-lg"
                 onChange={e => (this.utlevering_dato = event.target.value)}
                 required
               />
-              <label for="innlevering_dato">Utleveringstid</label>
               <input
                 id="innlevering_dato"
                 type="date"
+                class="form-control form-control-lg"
                 min={this.utlevering_dato}
                 onChange={e => (this.innlevering_dato = event.target.value)}
                 required
               />
             </div>
             <br />
-            <select id="bestilling_type" onChange={e => (this.bestilling_type = event.target.value)}>
+            <label for="bestilling_type">Bestillingtype:</label>
+            <select
+              id="bestilling_type"
+              class="form-control form-control-lg"
+              onChange={e => (this.bestilling_type = event.target.value)}
+            >
               <option value="" selected>
                 Søk etter bestillingstype:
               </option>
@@ -337,37 +362,50 @@ export class BestillingHistorikk extends Component {
               <option value="Dagsutleie">Dagsutleie</option>
               <option value="Helgeutleie">Helgeutleie</option>
             </select>
+            <label for="kunde_epost">Kundens Epost:</label>
             <input
               type="text"
               id="kunde_epost"
+              class="form-control form-control-lg"
               placeholder="Søk etter kundens epost:"
               onChange={e => (this.kunde_epost = event.target.value)}
             />
-            <select id="utleveringssted" onChange={e => (this.utleveringssted = event.target.value)}>
+            <label for="utleveringssted">Utleveringssted:</label>
+            <select
+              id="utleveringssted"
+              class="form-control form-control-lg"
+              onChange={e => (this.utleveringssted = event.target.value)}
+            >
               <option value="" selected>
-                Søk etter Utleveringssted:
+                Velg utleveringssted
               </option>
-              <option value="Haugastøl">Haugastøl</option>
-              <option value="Finse">Finse</option>
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
-            <select id="innleveringssted" onChange={e => (this.innleveringssted = event.target.value)}>
+            <label for="innleveringssted">Innleveringssted:</label>
+            <select
+              id="innleveringssted"
+              class="form-control form-control-lg"
+              onChange={e => (this.innleveringssted = event.target.value)}
+            >
               <option value="" selected>
-                Søk etter innleveringssted:
+                Velg utleveringssted
               </option>
-              <option value="Haugastøl">Haugastøl</option>
-              <option value="Finse">Finse</option>
-              <option value="Flåm">Flåm</option>
-              <option value="Voss">Voss</option>
-              <option value="Myrdal">Myrdal</option>
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
-            <button type="submit">Søk</button>
-            <button type="button" onClick={this.nullstill}>
+            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              Søk
+            </button>
+            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
               Nullstill
             </button>
           </form>
         </div>
         <br />
-        <table id="customers">
+        <table id="customers" align="center">
           <tbody>{this.tabell}</tbody>
         </table>
       </div>
@@ -380,14 +418,28 @@ export class BestillingHistorikk extends Component {
       this.createTable();
     });
 
-    bestillingService.hentAnsatt(this.props.match.params.id, ansatt => {
-      this.ansatt = ansatt;
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
+    });
+
+    bestillingService.hentInnleveringsted(innleveringssteder => {
+      this.innleveringssteder = innleveringssteder;
     });
   }
 
-  tilbake() {
-    history.push('/salgStartside/');
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
   }
+
+  tilbake() {
+    history.push('/salgStartside/' + this.props.match.params.ansattId);
+  }
+
   loggUtPush() {
     history.push('/');
   }
@@ -474,99 +526,22 @@ export class BestillingHistorikk extends Component {
 }
 
 export class Innlevering extends Component {
-  steder = [];
-  stedStandard = '';
-
-  dateNow = '';
-  timeNow = '';
-
   render() {
     return (
-      <div id="innleveringYtterste">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
-          </button>
-        </div>
-        <div id="innleveringDiv">
-          Hvor er det levert inn?
-          <form onSubmit={this.save}>
-            <select
-              class="form-control"
-              id="utleveringsstedInput"
-              onChange={e => (this.stedStandard = event.target.value)}
-              required
-            >
-              <option value="" selected hidden>
-                Velg utleveringssted
-              </option>
-              {this.steder.map(steder => (
-                <option value={steder.id} key={steder.id}>
-                  {steder.område}
-                </option>
-              ))}
-            </select>
-            <button type="submit" class="btn">
-              Lever inn
-            </button>
-          </form>
-        </div>
+      <div>
+        <h1>Jobber med saken</h1>
       </div>
     );
   }
 
   mounted() {
-    bestillingService.hentInnleveringsted(steder => {
-      this.steder = steder;
-    });
-
-    this.dagensDato();
-  }
-
-  save(e) {
-    e.preventDefault();
-    bestillingService.leverInn(this.dateNow, this.timeNow, this.props.match.params.id, leverInn => {
-      bestillingService.updateSykkel(this.stedStandard, this.props.match.params.id, leverInnSykkel => {
-        bestillingService.updateSykkel(this.stedStandard, this.props.match.params.id, leverInnSykkel => {
-          history.push('/aktiveBestillinger/' + this.props.match.params.id);
+    bestillingService.leverInn(this.props.match.params.bestillingId, leverInn => {
+      bestillingService.updateSykkel(this.props.match.params.bestillingId, leverInnSykkel => {
+        bestillingService.updateUtstyr(this.props.match.params.bestillingId, leverInnUtstyr => {
+          history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
         });
       });
     });
-  }
-
-  dagensDato() {
-    this.dateNow = new Date();
-
-    var dd = this.dateNow.getDate();
-    var mm = this.dateNow.getMonth() + 1;
-    var yyyy = this.dateNow.getFullYear();
-
-    var hh = this.dateNow.getHours();
-    var min = this.dateNow.getMinutes();
-
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-
-    if (min < 10) {
-      min = '0' + min;
-    }
-
-    this.dateNow = yyyy + '-' + mm + '-' + dd;
-
-    this.timeNow = hh + ':' + min;
-
-    console.log(this.dateNow);
-    console.log(this.timeNow);
-  }
-
-  loggUtPush() {
-    history.push('/');
   }
 }
 
@@ -596,7 +571,7 @@ export class EndreBestilling extends Component {
             Logg ut
           </button>
         </div>
-        <button type="save" class="btn" onClick={this.tilbake}>
+        <button type="save" id="tilbake" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
         <div id="endreInfoBestilling">
@@ -734,17 +709,17 @@ export class EndreBestilling extends Component {
     );
   }
   mounted() {
-    bestillingService.hentBestilling(this.props.match.params.id, bestillinger => {
+    bestillingService.hentBestilling(this.props.match.params.bestillingId, bestillinger => {
       this.bestillinger = bestillinger;
     });
 
-    sykkelService.hentSyklerOversikt(this.props.match.params.id, sykkelOversikt => {
+    sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
       this.syklerPerBestilling = sykkelOversikt;
       this.lagSykkelOversikt();
       console.log(this.syklerPerBestilling);
     });
 
-    sykkelService.hentUtstyrOversikt(this.props.match.params.id, utstyrOversikt => {
+    sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
       this.utstyrPerBestilling = utstyrOversikt;
       this.lagUtstyrOversikt();
       console.log(this.utstyrPerBestilling);
@@ -765,25 +740,29 @@ export class EndreBestilling extends Component {
 
   save() {
     bestillingService.updateBestillinger(this.bestillinger, () => {
-      history.push('/bestillinger/' + this.props.match.params.id);
+      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
     });
   }
   delete() {
-    bestillingService.deleteBestillinger(this.props.match.params.id, () => {
-      history.push('/bestillinger');
+    bestillingService.deleteBestillinger(this.props.match.params.bestillingId, () => {
+      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
     });
   }
 
   tilbake() {
-    history.push('/aktiveBestillinger/');
+    history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
   }
 
   syklerPush() {
-    history.push('/endreBestillingSykler/' + this.props.match.params.id + '/endreSykler');
+    history.push(
+      '/endreBestillingSykler/' + this.props.match.params.ansattId + '/' + this.props.match.params.bestillingId
+    );
   }
 
   utstyrPush() {
-    history.push('/endreBestillingUtstyr/' + this.props.match.params.id + '/endreUtstyr');
+    history.push(
+      '/endreBestillingUtstyr/' + this.props.match.params.ansattId + '/' + this.props.match.params.bestillingId
+    );
   }
   loggUtPush() {
     history.push('/');
@@ -885,7 +864,7 @@ export class EndreSykler extends Component {
 
   render() {
     return (
-      <div id="endreSyklerBestilling">
+      <div id="yttersteDiv">
         <div class="header w3-container w3-green">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
@@ -895,8 +874,8 @@ export class EndreSykler extends Component {
         <button type="save" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
-        <h1>Velg hvor mange sykler kunden vil ha:</h1>
         <div id="syklerDiv">
+          <h1>Velg hvor mange sykler kunden vil ha:</h1>
           <div id="ghostHybridHerreDiv" class="sykkelDiver">
             <h4>Ghost Hybrid Herre</h4>
             <hr />
@@ -1023,13 +1002,13 @@ export class EndreSykler extends Component {
             />
             <div class="antallValgteDiver">Antall valgte: {this.antallValgteRacerArray[0]}</div>
           </div>
+          <button type="button" class="btn" onClick={this.leggTilSykler}>
+            Legg til sykler
+          </button>
+          <button type="button" class="btn" onClick={this.fjernSykler}>
+            Fjern sykler fra bestilling
+          </button>
         </div>
-        <button type="button" class="btn" onClick={this.leggTilSykler}>
-          Legg til sykler
-        </button>
-        <button type="button" class="btn" onClick={this.fjernSykler}>
-          Fjern sykler fra bestilling
-        </button>
       </div>
     );
   }
@@ -1039,7 +1018,7 @@ export class EndreSykler extends Component {
       console.log(this.syklerLedig);
     });
 
-    sykkelService.hentSyklerOversikt(this.props.match.params.id, sykkelOversikt => {
+    sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
       this.syklerPerBestilling = sykkelOversikt;
       console.log(this.syklerPerBestilling);
     });
@@ -1048,18 +1027,18 @@ export class EndreSykler extends Component {
   }
 
   tilbake() {
-    history.push('/endreBestilling/' + this.props.match.params.id);
+    history.push('/endreBestilling/' + this.props.match.params.ansattId + '/' + +this.props.match.params.bestillingId);
   }
 
   hentAntall() {
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Hybrid Herre', herreValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Hybrid Herre', herreValgt => {
       let tall = herreValgt;
       this.antallValgteHerre = tall[0].hvorMangeValgt;
       this.antallValgteHerreArray.pop();
       this.antallValgteHerreArray.push(this.antallValgteHerre);
     });
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Hybrid Dame', dameValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Hybrid Dame', dameValgt => {
       let tall = dameValgt;
       this.antallValgteDame = tall[0].hvorMangeValgt;
       this.antallValgteDameArray.pop();
@@ -1067,7 +1046,7 @@ export class EndreSykler extends Component {
     });
 
     sykkelService.hvorMangeSyklerValgt(
-      this.props.match.params.id,
+      this.props.match.params.bestillingId,
       'Ghost Hybrid Herre m/ bagasjebrett',
       herreBagasjeValgt => {
         let tall = herreBagasjeValgt;
@@ -1078,7 +1057,7 @@ export class EndreSykler extends Component {
     );
 
     sykkelService.hvorMangeSyklerValgt(
-      this.props.match.params.id,
+      this.props.match.params.bestillingId,
       'Ghost Hybrid Dame m/ bagasjebrett',
       dameBagasjeValgt => {
         let tall = dameBagasjeValgt;
@@ -1088,35 +1067,35 @@ export class EndreSykler extends Component {
       }
     );
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Barnesykkel', barnValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Barnesykkel', barnValgt => {
       let tall = barnValgt;
       this.antallValgteBarn = tall[0].hvorMangeValgt;
       this.antallValgteBarnArray.pop();
       this.antallValgteBarnArray.push(this.antallValgteBarn);
     });
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Juniorsykkel', juniorValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Juniorsykkel', juniorValgt => {
       let tall = juniorValgt;
       this.antallValgteJunior = tall[0].hvorMangeValgt;
       this.antallValgteJuniorArray.pop();
       this.antallValgteJuniorArray.push(this.antallValgteJunior);
     });
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Terreng', terrengValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Terreng', terrengValgt => {
       let tall = terrengValgt;
       this.antallValgteTerreng = tall[0].hvorMangeValgt;
       this.antallValgteTerrengArray.pop();
       this.antallValgteTerrengArray.push(this.antallValgteTerreng);
     });
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'El-sykkel', elSykkelValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'El-sykkel', elSykkelValgt => {
       let tall = elSykkelValgt;
       this.antallValgteElsykkel = tall[0].hvorMangeValgt;
       this.antallValgteElsykkelArray.pop();
       this.antallValgteElsykkelArray.push(this.antallValgteElsykkel);
     });
 
-    sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Racersykkel', racerValgt => {
+    sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Racersykkel', racerValgt => {
       let tall = racerValgt;
       this.antallValgteRacer = tall[0].hvorMangeValgt;
       this.antallValgteRacerArray.pop();
@@ -1127,8 +1106,8 @@ export class EndreSykler extends Component {
   leggTilSykler() {
     if (this.herre > 0) {
       if (this.syklerLedig[4].ant_ledige > this.herre) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Ghost Hybrid Herre', this.herre, herre => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Hybrid Herre', herreValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Ghost Hybrid Herre', this.herre, herre => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Hybrid Herre', herreValgt => {
             let tall = herreValgt;
             this.antallValgteHerre = tall[0].hvorMangeValgt;
             this.antallValgteHerreArray.pop();
@@ -1145,8 +1124,8 @@ export class EndreSykler extends Component {
 
     if (this.dame > 0) {
       if (this.syklerLedig[2].ant_ledige > this.dame) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Ghost Hybrid Dame', this.dame, dame => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Hybrid Dame', dameValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Ghost Hybrid Dame', this.dame, dame => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Hybrid Dame', dameValgt => {
             let tall = dameValgt;
             this.antallValgteDame = tall[0].hvorMangeValgt;
             this.antallValgteDameArray.pop();
@@ -1163,12 +1142,12 @@ export class EndreSykler extends Component {
     if (this.herreBagasje > 0) {
       if (this.syklerLedig[5].ant_ledige > this.herreBagasje) {
         sykkelService.leggInnSykler(
-          this.props.match.params.id,
+          this.props.match.params.bestillingId,
           'Ghost Hybrid Herre m/ bagasjebrett',
           this.herreBagasje,
           herreBagasje => {
             sykkelService.hvorMangeSyklerValgt(
-              this.props.match.params.id,
+              this.props.match.params.bestillingId,
               'Ghost Hybrid Herre m/ bagasjebrett',
               herreBagasjeValgt => {
                 let tall = herreBagasjeValgt;
@@ -1190,12 +1169,12 @@ export class EndreSykler extends Component {
     if (this.dameBagasje > 0) {
       if (this.syklerLedig[3].ant_ledige > this.dameBagasje) {
         sykkelService.leggInnSykler(
-          this.props.match.params.id,
+          this.props.match.params.bestillingId,
           'Ghost Hybrid Dame m/ bagasjebrett',
           this.dameBagasje,
           dameBagasje => {
             sykkelService.hvorMangeSyklerValgt(
-              this.props.match.params.id,
+              this.props.match.params.bestillingId,
               'Ghost Hybrid Dame m/ bagasjebrett',
               dameBagasjeValgt => {
                 let tall = dameBagasjeValgt;
@@ -1216,8 +1195,8 @@ export class EndreSykler extends Component {
 
     if (this.barn > 0) {
       if (this.syklerLedig[0].ant_ledige > this.barn) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Barnesykkel', this.barn, barn => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Barnesykkel', barnValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Barnesykkel', this.barn, barn => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Barnesykkel', barnValgt => {
             let tall = barnValgt;
             this.antallValgteBarn = tall[0].hvorMangeValgt;
             this.antallValgteBarnArray.pop();
@@ -1234,8 +1213,8 @@ export class EndreSykler extends Component {
 
     if (this.junior > 0) {
       if (this.syklerLedig[7].ant_ledige > this.junior) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Juniorsykkel', this.junior, junior => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Juniorsykkel', juniorValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Juniorsykkel', this.junior, junior => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Juniorsykkel', juniorValgt => {
             let tall = juniorValgt;
             this.antallValgteJunior = tall[0].hvorMangeValgt;
             this.antallValgteJuniorArray.pop();
@@ -1252,8 +1231,8 @@ export class EndreSykler extends Component {
 
     if (this.terreng > 0) {
       if (this.syklerLedig[6].ant_ledige > this.terreng) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Ghost Terreng', this.terreng, terreng => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Ghost Terreng', terrengValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Ghost Terreng', this.terreng, terreng => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Ghost Terreng', terrengValgt => {
             let tall = terrengValgt;
             this.antallValgteTerreng = tall[0].hvorMangeValgt;
             this.antallValgteTerrengArray.pop();
@@ -1270,8 +1249,8 @@ export class EndreSykler extends Component {
 
     if (this.elSykkel > 0) {
       if (this.syklerLedig[1].ant_ledige > this.elSykkel) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'El-sykkel', this.elSykkel, elSykkel => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'El-sykkel', elSykkelValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'El-sykkel', this.elSykkel, elSykkel => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'El-sykkel', elSykkelValgt => {
             let tall = elSykkelValgt;
             this.antallValgteElsykkel = tall[0].hvorMangeValgt;
             this.antallValgteElsykkelArray.pop();
@@ -1288,8 +1267,8 @@ export class EndreSykler extends Component {
 
     if (this.racer > 0) {
       if (this.syklerLedig[8].ant_ledige > this.racer) {
-        sykkelService.leggInnSykler(this.props.match.params.id, 'Racersykkel', this.racer, racer => {
-          sykkelService.hvorMangeSyklerValgt(this.props.match.params.id, 'Racersykkel', racerValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Racersykkel', this.racer, racer => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Racersykkel', racerValgt => {
             let tall = racerValgt;
             this.antallValgteRacer = tall[0].hvorMangeValgt;
             this.antallValgteRacerArray.pop();
@@ -1348,7 +1327,7 @@ export class EndreSykler extends Component {
   }
 
   fjernSykler() {
-    sykkelService.fjernSyklerFraBestilling(this.props.match.params.id, fjernSykler => {
+    sykkelService.fjernSyklerFraBestilling(this.props.match.params.bestillingId, fjernSykler => {
       sykkelService.hvorMangeSyklerLedig(syklerLedig => {
         this.syklerLedig = syklerLedig;
         this.antallValgteHerreArray[0] = '';
@@ -1394,7 +1373,7 @@ export class EndreUtstyr extends Component {
 
   render() {
     return (
-      <div id="endreUtstyrBestilling">
+      <div id="yttersteDiv">
         <div class="header w3-container w3-green">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
@@ -1404,8 +1383,8 @@ export class EndreUtstyr extends Component {
         <button type="save" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
-        <h1>Velg Utstyr</h1>
         <div id="utstyrDiv">
+          <h1>Velg Utstyr</h1>
           <div id="barneseteDiv" class="utstyrDiver">
             <h4>Barnesete</h4>
             <img src="../bilder/barnesete.jpeg" />
@@ -1491,12 +1470,14 @@ export class EndreUtstyr extends Component {
             <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelvognArray[0]}</div>
           </div>
         </div>
-        <button type="button" class="btn" onClick={this.leggTilUtstyr}>
-          Legg inn utstyr
-        </button>
-        <button type="button" class="btn" onClick={this.fjernUtstyr}>
-          Fjern utstyr som er lagt inn i bestillingen
-        </button>
+        <div align="center">
+          <button type="button" class="btn" onClick={this.leggTilUtstyr}>
+            Legg inn utstyr
+          </button>
+          <button type="button" class="btn" onClick={this.fjernUtstyr}>
+            Fjern utstyr som er lagt inn i bestillingen
+          </button>
+        </div>
       </div>
     );
   }
@@ -1506,7 +1487,7 @@ export class EndreUtstyr extends Component {
       console.log(this.utstyrLedig);
     });
 
-    sykkelService.hentUtstyrOversikt(this.props.match.params.id, utstyrOversikt => {
+    sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
       this.utstyrOversikt = utstyrOversikt;
 
       console.log(this.utstyrOversikt);
@@ -1516,53 +1497,53 @@ export class EndreUtstyr extends Component {
   }
 
   tilbake() {
-    history.push('/endreBestilling/' + this.props.match.params.id);
+    history.push('/endreBestilling/' + this.props.match.params.ansattId + '/' + +this.props.match.params.bestillingId);
   }
 
   hentAntall() {
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Barnesete', barneseteValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Barnesete', barneseteValgt => {
       let tall = barneseteValgt;
       this.antallValgteBarnesete = tall[0].hvorMangeValgt;
       this.antallValgteBarneseteArray.pop();
       this.antallValgteBarneseteArray.push(this.antallValgteBarnesete);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm barn', hjelmBarnValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Hjelm barn', hjelmBarnValgt => {
       let tall = hjelmBarnValgt;
       this.antallValgteHjelmBarn = tall[0].hvorMangeValgt;
       this.antallValgteHjelmBarnArray.pop();
       this.antallValgteHjelmBarnArray.push(this.antallValgteHjelmBarn);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm voksne', hjelmVoksneValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Hjelm voksne', hjelmVoksneValgt => {
       let tall = hjelmVoksneValgt;
       this.antallValgteHjelmVoksne = tall[0].hvorMangeValgt;
       this.antallValgteHjelmVoksneArray.pop();
       this.antallValgteHjelmVoksneArray.push(this.antallValgteHjelmVoksne);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelkurv', sykkelkurvValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkelkurv', sykkelkurvValgt => {
       let tall = sykkelkurvValgt;
       this.antallValgteSykkelkurv = tall[0].hvorMangeValgt;
       this.antallValgteSykkelkurvArray.pop();
       this.antallValgteSykkelkurvArray.push(this.antallValgteSykkelkurv);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkellås', sykkellåsValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkellås', sykkellåsValgt => {
       let tall = sykkellåsValgt;
       this.antallValgteSykkellås = tall[0].hvorMangeValgt;
       this.antallValgteSykkellåsArray.pop();
       this.antallValgteSykkellåsArray.push(this.antallValgteSykkellås);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelstativ', sykkelstativValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkelstativ', sykkelstativValgt => {
       let tall = sykkelstativValgt;
       this.antallValgteSykkelstativ = tall[0].hvorMangeValgt;
       this.antallValgteSykkelstativArray.pop();
       this.antallValgteSykkelstativArray.push(this.antallValgteSykkelstativ);
     });
 
-    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelvogn', sykkelvognValgt => {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkelvogn', sykkelvognValgt => {
       let tall = sykkelvognValgt;
       this.antallValgteSykkelvogn = tall[0].hvorMangeValgt;
       this.antallValgteSykkelvognArray.pop();
@@ -1573,8 +1554,8 @@ export class EndreUtstyr extends Component {
   leggTilUtstyr() {
     if (this.barnesete > 0) {
       if (this.utstyrLedig[0].ant_ledige > this.barnesete) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Barnesete', this.barnesete, barnesete => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Barnesete', barneseteValgt => {
+        sykkelService.leggInnUtstyr(this.props.match.params.bestillingId, 'Barnesete', this.barnesete, barnesete => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Barnesete', barneseteValgt => {
             let tall = barneseteValgt;
             this.antallValgteBarnesete = tall[0].hvorMangeValgt;
             this.antallValgteBarneseteArray.pop();
@@ -1591,8 +1572,8 @@ export class EndreUtstyr extends Component {
 
     if (this.hjelmBarn > 0) {
       if (this.utstyrLedig[1].ant_ledige > this.hjelmBarn) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Hjelm barn', this.hjelmBarn, hjelmBarn => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm barn', hjelmBarnValgt => {
+        sykkelService.leggInnUtstyr(this.props.match.params.bestillingId, 'Hjelm barn', this.hjelmBarn, hjelmBarn => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Hjelm barn', hjelmBarnValgt => {
             let tall = hjelmBarnValgt;
             this.antallValgteHjelmBarn = tall[0].hvorMangeValgt;
             this.antallValgteHjelmBarnArray.pop();
@@ -1609,14 +1590,23 @@ export class EndreUtstyr extends Component {
 
     if (this.hjelmVoksne > 0) {
       if (this.utstyrLedig[2].ant_ledige > this.hjelmVoksne) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Hjelm voksne', this.hjelmVoksne, hjelmVoksne => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm voksne', hjelmVoksneValgt => {
-            let tall = hjelmVoksneValgt;
-            this.antallValgteHjelmVoksne = tall[0].hvorMangeValgt;
-            this.antallValgteHjelmVoksneArray.pop();
-            this.antallValgteHjelmVoksneArray.push(this.antallValgteHjelmVoksne);
-          });
-        });
+        sykkelService.leggInnUtstyr(
+          this.props.match.params.bestillingId,
+          'Hjelm voksne',
+          this.hjelmVoksne,
+          hjelmVoksne => {
+            sykkelService.hvorMangeUtstyrValgt(
+              this.props.match.params.bestillingId,
+              'Hjelm voksne',
+              hjelmVoksneValgt => {
+                let tall = hjelmVoksneValgt;
+                this.antallValgteHjelmVoksne = tall[0].hvorMangeValgt;
+                this.antallValgteHjelmVoksneArray.pop();
+                this.antallValgteHjelmVoksneArray.push(this.antallValgteHjelmVoksne);
+              }
+            );
+          }
+        );
       } else {
         alert(
           'Vi har ikke nok hjelmer for voksne på lager for øyeblikket. Lagerstatus er ' +
@@ -1627,8 +1617,8 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelkurv > 0) {
       if (this.utstyrLedig[3].ant_ledige > this.sykkelkurv) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelkurv', this.sykkelkurv, sykkelkurv => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelkurv', sykkelkurvValgt => {
+        sykkelService.leggInnUtstyr(this.props.match.params.bestillingId, 'Sykkelkurv', this.sykkelkurv, sykkelkurv => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkelkurv', sykkelkurvValgt => {
             let tall = sykkelkurvValgt;
             this.antallValgteSykkelkurv = tall[0].hvorMangeValgt;
             this.antallValgteSykkelkurvArray.pop();
@@ -1645,8 +1635,8 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkellås > 0) {
       if (this.utstyrLedig[4].ant_ledige > this.sykkellås) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkellås', this.sykkellås, sykkellås => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkellås', sykkellåsValgt => {
+        sykkelService.leggInnUtstyr(this.props.match.params.bestillingId, 'Sykkellås', this.sykkellås, sykkellås => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkellås', sykkellåsValgt => {
             let tall = sykkellåsValgt;
             this.antallValgteSykkellås = tall[0].hvorMangeValgt;
             this.antallValgteSykkellåsArray.pop();
@@ -1663,14 +1653,23 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelstativ > 0) {
       if (this.utstyrLedig[5].ant_ledige > this.sykkelstativ) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelstativ', this.sykkelstativ, sykkelstativ => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelstativ', sykkelstativValgt => {
-            let tall = sykkelstativValgt;
-            this.antallValgteSykkelstativ = tall[0].hvorMangeValgt;
-            this.antallValgteSykkelstativArray.pop();
-            this.antallValgteSykkelstativArray.push(this.antallValgteSykkelstativ);
-          });
-        });
+        sykkelService.leggInnUtstyr(
+          this.props.match.params.bestillingId,
+          'Sykkelstativ',
+          this.sykkelstativ,
+          sykkelstativ => {
+            sykkelService.hvorMangeUtstyrValgt(
+              this.props.match.params.bestillingId,
+              'Sykkelstativ',
+              sykkelstativValgt => {
+                let tall = sykkelstativValgt;
+                this.antallValgteSykkelstativ = tall[0].hvorMangeValgt;
+                this.antallValgteSykkelstativArray.pop();
+                this.antallValgteSykkelstativArray.push(this.antallValgteSykkelstativ);
+              }
+            );
+          }
+        );
       } else {
         alert(
           'Vi har ikke nok sykkelstativ på lager for øyeblikket. Lagerstatus er ' +
@@ -1681,8 +1680,8 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelvogn > 0) {
       if (this.utstyrLedig[6].ant_ledige > this.sykkelvogn) {
-        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelvogn', this.sykkelvogn, sykkelvogn => {
-          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelvogn', sykkelvognValgt => {
+        sykkelService.leggInnUtstyr(this.props.match.params.bestillingId, 'Sykkelvogn', this.sykkelvogn, sykkelvogn => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.bestillingId, 'Sykkelvogn', sykkelvognValgt => {
             let tall = sykkelvognValgt;
             this.antallValgteSykkelvogn = tall[0].hvorMangeValgt;
             this.antallValgteSykkelvognArray.pop();
@@ -1720,7 +1719,7 @@ export class EndreUtstyr extends Component {
   }
 
   fjernUtstyr() {
-    sykkelService.fjernUtstyrFraBestilling(this.props.match.params.id, fjernSykler => {
+    sykkelService.fjernUtstyrFraBestilling(this.props.match.params.bestillingId, fjernSykler => {
       sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
         this.utstyrLedig = utstyrLedig;
         this.antallValgteBarneseteArray[0] = '';
@@ -1751,7 +1750,7 @@ export class NyKunde extends Component {
             Logg ut
           </button>
         </div>
-        <button onClick={this.tilbake} class="btn">
+        <button onClick={this.tilbake} id="tilbake" class="btn">
           Tilbake
         </button>
         <div id="nyKundeDiv">
@@ -1801,12 +1800,12 @@ export class NyKunde extends Component {
   }
 
   tilbake() {
-    history.push('/bestilling/');
+    history.push('/bestilling/' + this.props.match.params.ansattId);
   }
 
   leggTilKunde() {
     kundeService.leggTilKunde(this.epost, this.fornavn, this.etternavn, this.telefon, id => {
-      history.push('/bestilling/');
+      history.push('/bestilling/' + this.props.match.params.ansattId);
     });
   }
   loggUtPush() {

@@ -194,10 +194,10 @@ class BestillingService extends Component {
       }
     );
   }
-  updateSykkel(lokasjon, id, success) {
+  updateSykkel(id, success) {
     connection.query(
-      'update Sykkel set status="Ledig", lokasjon_id = ? , bestilling_id = NULL where bestilling_id=?',
-      [lokasjon, id],
+      'update Sykkel set status="Ledig", bestilling_id = NULL where bestilling_id=?',
+      [id],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -206,10 +206,10 @@ class BestillingService extends Component {
     );
   }
 
-  updateUtstyr(lokasjon, id, success) {
+  updateUtstyr(id, success) {
     connection.query(
-      'update Utstyr set status="Ledig", lokasjon_id = ? , bestilling_id = NULL where bestilling_id=?',
-      [lokasjon, id],
+      'update Utstyr set status="Ledig", bestilling_id = NULL where bestilling_id=?',
+      [id],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -218,10 +218,10 @@ class BestillingService extends Component {
     );
   }
 
-  leverInn(dato, tid, id, success) {
+  leverInn(id, success) {
     connection.query(
-      'UPDATE Bestilling set faktiskInnlevering_dato = ?, faktiskInnlevering_tid = ? WHERE id = ?',
-      [dato, tid, id],
+      'UPDATE Bestilling set faktiskInnlevering_dato = CURRENT_DATE(), faktiskInnlevering_tid = CURRENT_TIME() WHERE id = ?',
+      [id],
       (error, results) => {
         if (error) return console.error(error);
 

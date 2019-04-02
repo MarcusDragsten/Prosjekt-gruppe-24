@@ -173,13 +173,13 @@ ReactDOM.render(
     <div>
       <Route exact path="/" component={Login} />
 
-      <Route path="/salgStartside/:id" component={SalgStartside} />
-      <Route path="/aktiveBestillinger/" component={AktiveBestillinger} />
-      <Route path="/innlevering/:id/" component={Innlevering} />
-      <Route path="/endreBestilling/:id" component={EndreBestilling} />
-      <Route path="/bestillingHistorikk/" component={BestillingHistorikk} />
-      <Route exact path="/endreBestillingSykler/:id/endreSykler" component={EndreSykler} />
-      <Route exact path="/endreBestillingUtstyr/:id/endreUtstyr" component={EndreUtstyr} />
+      <Route path="/salgStartside/:ansattId" component={SalgStartside} />
+      <Route path="/aktiveBestillinger/:ansattId" component={AktiveBestillinger} />
+      <Route path="/innlevering/:ansattId/:bestillingId" component={Innlevering} />
+      <Route path="/endreBestilling/:ansattId/:bestillingId" component={EndreBestilling} />
+      <Route path="/bestillingHistorikk/:ansattId" component={BestillingHistorikk} />
+      <Route exact path="/endreBestillingSykler/:ansattId/:bestillingId" component={EndreSykler} />
+      <Route exact path="/endreBestillingUtstyr/:ansattId/:bestillingId" component={EndreUtstyr} />
       <Route path="/bestilling/:id" component={Bestilling} />
 
       <Route path="/nyKunde/" component={NyKunde} />

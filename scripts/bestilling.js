@@ -121,7 +121,6 @@ export class Bestilling extends Component {
             </button>
           </div>
           <form onSubmit={this.wrapper1}>
-
             <h4>Bestillingstype:</h4>
             <select
               class="form-control"
@@ -224,7 +223,7 @@ export class Bestilling extends Component {
               Velg sykler og utstyr
             </button>
           </form>
-          <button type="button" id="oversiktTilbake" onClick={this.return}>
+          <button type="button" id="tilbake" onClick={this.return}>
             Tilbake til startsiden
           </button>
         </div>
@@ -499,7 +498,7 @@ export class Bestilling extends Component {
               <u>{this.sumTotalt}</u>
             </b>
           </p>
-          <button type="button" id="oversiktTilbake" onClick={this.return}>
+          <button type="button" id="tilbake" onClick={this.return}>
             Tilbake til startsiden
           </button>
         </div>
