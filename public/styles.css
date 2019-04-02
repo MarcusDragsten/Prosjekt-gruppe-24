@@ -1,0 +1,369 @@
+body {
+  background-image: url('../bilder/stripes-light.png');
+  background-color: white;
+}
+/*removes all rounded corners in bootstrap buttons*/
+* {
+  border-radius: 0 !important;
+}
+
+#velgSykkel,
+#velgUtstyr,
+#bestillingOversikt,
+#filtrerAktiveBestillingerDiv {
+  display: none;
+}
+
+#yttersteDiv {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+.container {
+  padding: 20px;
+  margin: auto;
+  top: 25%;
+  position: relative;
+  max-width: 50%;
+}
+#filtrerAktiveBestillingerDiv,
+#filtrerRapporterDiv {
+  background-color: #f2f2f2;
+  padding-bottom: 20px;
+  margin: auto;
+  position: relative;
+  max-width: 65%;
+  text-align: center;
+}
+
+#toggleFiltrerKnapp {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+}
+
+/*positions all headings*/
+h2 {
+  text-align: center;
+}
+
+#loginDiv {
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin: auto;
+  top: 25%;
+  position: relative;
+  max-width: 50%;
+}
+
+#brukernavnDiv,
+#passordDiv {
+  max-width: 75%;
+}
+
+#inputBrukernavn,
+#inputPassord {
+  width: 100%;
+}
+#salgStartsideKnapperDiv,
+#adminStartsideKnapperDiv {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 25%;
+  text-align: center;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  font-family: Fjalla One, sans-serif;
+  font-size: 15px;
+}
+
+.btn {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 7px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: darkgrey;
+  color: white;
+}
+
+.title {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+#nyBestilling {
+  position: relative;
+  text-align: center;
+}
+
+#oversiktTilbake {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+#nyKundeDiv {
+  position: relative;
+  text-align: center;
+  max-width: 60%;
+  left: 20%;
+  right: 20%;
+}
+
+#bestilling_typeInput,
+#utleveringsstedInput,
+#innleveringsstedInput,
+#kunde_epostInput,
+#utlevering_datoInput,
+#utlevering_tidInput,
+#innlevering_datoInput,
+#innlevering_tidInput {
+  max-width: 25%;
+  margin: auto;
+}
+
+#kundeFornavnInput,
+#kundeEtternavnInput,
+#kundeEpostInput,
+#kundeTlfInput {
+  max-width: 34%;
+  margin: auto;
+}
+
+#syklerDiv {
+  position: relative;
+  text-align: center;
+}
+
+.sykkelDiver {
+  position: relative;
+  display: inline-block;
+  max-width: 30%;
+  border: 2px solid grey;
+  text-align: center;
+  margin: 5px;
+  padding-bottom: 5px;
+  background-color: white;
+}
+
+#sykkelKnapperDiv {
+  text-align: center;
+  align-items: center;
+}
+
+.utstyrDiver {
+  position: relative;
+  display: inline-block;
+  max-width: 30%;
+  border: 2px solid grey;
+  text-align: center;
+  margin: 5px;
+  padding-bottom: 5px;
+  background-color: white;
+}
+
+img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#loggUtKnapp {
+  position: absolute;
+  top: 23px;
+  right: 15px;
+  color: black;
+}
+/*EndreBestilling tabell*/
+#customers {
+  font-family: 'Fjalla One', sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin-bottom: 10px;
+  align: center;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4caf50;
+  color: white;
+}
+#velgSykkel,
+#velgUtstyr,
+#bestillingOversikt {
+  position: relative;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#sykkel,
+#utstyr {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+::after {
+  content: '';
+  clear: both;
+}
+
+* {
+  box-sizing: border-box;
+}
+::placeholder {
+  font-size: 1em;
+}
+
+#ansatteDiv,
+#ansatteDetailsDiv,
+#lokasjonerDiv {
+  position: relative;
+  max-width: 45%;
+  text-align: center;
+  left: 30%;
+  right: 30%;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+}
+
+#ansatteDetailsDiv {
+  border-top: 2px solid black;
+  padding-bottom: 10px;
+}
+
+#ansatteDiv {
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+#ansatteEditDiv,
+#nyAnsattDiv {
+  position: relative;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+#nyAnsattEpostInput,
+#nyAnsattRolleInput,
+#nyAnsattFornavnInput,
+#nyAnsattPassordInput,
+#nyAnsattLokasjonInput,
+#nyAnsattEtternavnInput,
+#nyAnsattBrukernavnInput,
+#nyAnsattTlfInput {
+  max-width: 34%;
+  margin: auto;
+}
+
+#rapportTabellDiv {
+  text-align: center;
+}
+
+#totalGevinstDiv {
+  padding: 15px;
+  border: 2px solid black;
+  max-width: 30%;
+  margin: auto;
+  background-color: white;
+}
+
+#inputHybridHerre,
+#inputHybridDame,
+#inputHybridHerreBagasje,
+#inputHybridDameBagasje,
+#inputBarn,
+#inputJunior,
+#inputTerreng,
+#inputElsykkel,
+#inputRacer {
+  float: left;
+  max-width: 50%;
+  margin-left: 5%;
+}
+
+.antallValgteDiver {
+  float: right;
+  margin-right: 5%;
+  margin-top: 2.5%;
+}
+
+#innleveringYtterste {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+}
+
+#innleveringDiv {
+  position: relative;
+  width: 100%;
+  border: 2px solid black;
+}
+
+#innholdIBestilling {
+  position: relative;
+  width: auto;
+  height: auto;
+  text-align: center;
+  width: 100vw;
+}
+
+#syklerIbestilling {
+  position: relative;
+  width: 30%;
+  display: inline-block;
+}
+
+#utstyrIbestilling {
+  position: relative;
+  display: inline-block;
+  width: 30%;
+}
+
+#endreInfoBestilling {
+  position: relative;
+  text-align: center;
+}
+
+#endreSyklerBestilling {
+  position: relative;
+  text-align: center;
+  top: 50%;
+}
