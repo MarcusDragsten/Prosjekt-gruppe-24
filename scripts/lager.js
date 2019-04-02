@@ -11,14 +11,9 @@ export class LagerStartside extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
-          </button>
-        </div>
         <h1>Startside - Lager</h1>
         <br />
+
         <button type="button" class="button" onClick={this.ledigSykkel}>
           Sykler på lager
         </button>
@@ -49,6 +44,9 @@ export class LagerStartside extends Component {
         <button type="button" class="button" onClick={this.leggTilUtstyr}>
           Legg til utstyr
         </button>
+        <button type="button" class="button" onClick={this.savnetSykkel}>
+          Sykler som ikke er innlevert
+        </button>
       </div>
     );
   }
@@ -77,8 +75,8 @@ export class LagerStartside extends Component {
   henteSykkel() {
     history.push('/henteSykkel');
   }
-  loggUtPush() {
-    history.push('/');
+  savnetSykkel() {
+    history.push('/savnetSykkel');
   }
 }
 export class LedigSykkel extends Component {
@@ -86,7 +84,6 @@ export class LedigSykkel extends Component {
   tabell1 = [];
 
   type = '';
-  tilhørighet = '';
   lokasjon_id = '';
   modellnavn = '';
   timepris = '';
@@ -167,17 +164,6 @@ export class LedigSykkel extends Component {
       );
 
       for (let i = 0; i < this.sykkelPåLager.length; i++) {
-        if (this.sykkelPåLager[i].lokasjon_id == 1) {
-          this.tilhørighet = 'Haugastøl';
-        } else if (this.sykkelPåLager[i].lokasjon_id == 2) {
-          this.tilhørighet = 'Finse';
-        } else if (this.sykkelPåLager[i].lokasjon_id == 3) {
-          this.tilhørighet = 'Flåm';
-        } else if (this.sykkelPåLager[i].lokasjon_id == 4) {
-          this.tilhørighet = 'Voss';
-        } else if (this.sykkelPåLager[i].lokasjon_id == 5) {
-          this.tilhørighet = 'Myrdal';
-        }
         this.tabell1.push(
           <tr>
             <td>{this.sykkelPåLager[i].id}</td>
@@ -187,7 +173,7 @@ export class LedigSykkel extends Component {
             <td>{this.sykkelPåLager[i].girsystem}</td>
             <td>{this.sykkelPåLager[i].ramme}</td>
             <td>{this.sykkelPåLager[i].bremse}</td>
-            <td>{this.tilhørighet}</td>
+            <td>{this.sykkelPåLager[i].område}</td>
             <td>{this.sykkelPåLager[i].timepris}</td>
             <td>
               <NavLink to={'/redigerSykkel/' + this.sykkelPåLager[i].id + '/edit'}> Endre </NavLink>
@@ -243,8 +229,8 @@ export class UtleidSykkel extends Component {
   tabell1 = [];
 
   type = '';
-  tilhørighet = '';
   modellnavn = '';
+  lokasjon_id = '';
   timepris = '';
 
   render() {
@@ -302,7 +288,7 @@ export class UtleidSykkel extends Component {
   }
 
   createTable1() {
-    if (this.sykkelPåLager == 0) {
+    if (this.sykkelUtleid == 0) {
       alert('Ingen sykler matchet søket!');
     } else {
       this.tabell1 = '';
@@ -323,28 +309,16 @@ export class UtleidSykkel extends Component {
       );
 
       for (let i = 0; i < this.sykkelUtleid.length; i++) {
-        if (this.sykkelUtleid[i].lokasjon_id == 1) {
-          this.tilhørighet = 'Haugastøl';
-        } else if (this.sykkelUtleid[i].lokasjon_id == 2) {
-          this.tilhørighet = 'Finse';
-        } else if (this.sykkelUtleid[i].lokasjon_id == 3) {
-          this.tilhørighet = 'Flåm';
-        } else if (this.sykkelUtleid[i].lokasjon_id == 4) {
-          this.tilhørighet = 'Voss';
-        } else if (this.sykkelUtleid[i].lokasjon_id == 5) {
-          this.tilhørighet = 'Myrdal';
-        }
         this.tabell1.push(
           <tr>
             <td>{this.sykkelUtleid[i].id}</td>
-
             <td>{this.sykkelUtleid[i].modellnavn}</td>
             <td>{this.sykkelUtleid[i].type}</td>
             <td>{this.sykkelUtleid[i].hjul_størrelse}</td>
             <td>{this.sykkelUtleid[i].girsystem}</td>
             <td>{this.sykkelUtleid[i].ramme}</td>
             <td>{this.sykkelUtleid[i].bremse}</td>
-            <td>{this.tilhørighet}</td>
+            <td>{this.sykkelUtleid[i].område}</td>
             <td>{this.sykkelUtleid[i].timepris}</td>
             <td>
               <NavLink to={'/redigerSykkel/' + this.sykkelUtleid[i].id + '/edit'}> Endre </NavLink>
@@ -366,6 +340,7 @@ export class UtleidSykkel extends Component {
 
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
+      console.log(this.sykkelUtleid);
       this.createTable1();
     });
   }
@@ -398,8 +373,8 @@ export class LedigUtstyr extends Component {
   tabell1 = [];
 
   type = '';
+  lokasjon_id = '';
   pris = '';
-  tilhørighet = '';
 
   render() {
     return (
@@ -408,7 +383,7 @@ export class LedigUtstyr extends Component {
           Tilbake til startsiden
         </button>
         <h2>Oversikt over utstyr på lager</h2>
-        <h3>Filtrer syklene:</h3>
+        <h3>Filtrer utstyr:</h3>
         <div>
           <form onSubmit={this.sok}>
             <select id="type" onChange={e => (this.type = event.target.value)}>
@@ -455,7 +430,7 @@ export class LedigUtstyr extends Component {
   }
 
   createTable1() {
-    if (this.sykkelPåLager == 0) {
+    if (this.utstyrPåLager == 0) {
       alert('Ingen utstyr matchet søket!');
     } else {
       this.tabell1 = '';
@@ -472,23 +447,12 @@ export class LedigUtstyr extends Component {
       );
 
       for (let i = 0; i < this.utstyrPåLager.length; i++) {
-        if (this.utstyrPåLager[i].lokasjon_id == 1) {
-          this.tilhørighet = 'Haugastøl';
-        } else if (this.utstyrPåLager[i].lokasjon_id == 2) {
-          this.tilhørighet = 'Finse';
-        } else if (this.utstyrPåLager[i].lokasjon_id == 3) {
-          this.tilhørighet = 'Flåm';
-        } else if (this.utstyrPåLager[i].lokasjon_id == 4) {
-          this.tilhørighet = 'Voss';
-        } else if (this.utstyrPåLager[i].lokasjon_id == 5) {
-          this.tilhørighet = 'Myrdal';
-        }
         this.tabell1.push(
           <tr>
             <td>{this.utstyrPåLager[i].id}</td>
             <td>{this.utstyrPåLager[i].type}</td>
             <td>{this.utstyrPåLager[i].beskrivelse}</td>
-            <td>{this.tilhørighet}</td>
+            <td>{this.utstyrPåLager[i].område}</td>
             <td>{this.utstyrPåLager[i].pris}</td>
             <td>
               <NavLink to={'/redigerUtstyr/' + this.utstyrPåLager[i].id + '/edit'}> Endre </NavLink>
@@ -539,7 +503,7 @@ export class UtleidUtstyr extends Component {
   tabell1 = [];
 
   type = '';
-  tilhørighet = '';
+  lokasjon_id = '';
   pris = '';
 
   render() {
@@ -549,7 +513,7 @@ export class UtleidUtstyr extends Component {
           Tilbake til startsiden
         </button>
         <h2>Oversikt over utleide utstyr</h2>
-        <h3>Filtrer syklene:</h3>
+        <h3>Filtrer utstyr:</h3>
         <div>
           <form onSubmit={this.sok}>
             <select id="type" onChange={e => (this.type = event.target.value)}>
@@ -596,7 +560,7 @@ export class UtleidUtstyr extends Component {
   }
 
   createTable1() {
-    if (this.sykkelPåLager == 0) {
+    if (this.utstyrUtleid == 0) {
       alert('Ingen utstyr matchet søket!');
     } else {
       this.tabell1 = '';
@@ -614,23 +578,12 @@ export class UtleidUtstyr extends Component {
       );
 
       for (let i = 0; i < this.utstyrUtleid.length; i++) {
-        if (this.utstyrUtleid[i].lokasjon_id == 1) {
-          this.tilhørighet = 'Haugastøl';
-        } else if (this.utstyrUtleid[i].lokasjon_id == 2) {
-          this.tilhørighet = 'Finse';
-        } else if (this.utstyrUtleid[i].lokasjon_id == 3) {
-          this.tilhørighet = 'Flåm';
-        } else if (this.utstyrUtleid[i].lokasjon_id == 4) {
-          this.tilhørighet = 'Voss';
-        } else if (this.utstyrUtleid[i].lokasjon_id == 5) {
-          this.tilhørighet = 'Myrdal';
-        }
         this.tabell1.push(
           <tr>
             <td>{this.utstyrUtleid[i].id}</td>
             <td>{this.utstyrUtleid[i].type}</td>
             <td>{this.utstyrUtleid[i].beskrivelse}</td>
-            <td>{this.tilhørighet}</td>
+            <td>{this.utstyrUtleid[i].område}</td>
             <td>{this.utstyrUtleid[i].pris}</td>
             <td>
               <NavLink to={'/redigerUtstyr/' + this.utstyrUtleid[i].id + '/edit'}> Endre </NavLink>
@@ -777,8 +730,10 @@ export class HenteSykkel extends Component {
   }
 
   mounted() {
-    lagerService.henteSykkel(sykkel => {
+    this.dagensDato();
+    lagerService.henteSykkel(this.dateNow, sykkel => {
       this.sykkel = sykkel;
+      console.log(this.sykkel);
       this.createTable6();
     });
   }
@@ -816,8 +771,37 @@ export class HenteSykkel extends Component {
   tilbake() {
     history.push('/lagerStartside/');
   }
+  dagensDato() {
+    this.dateNow = new Date();
+
+    var dd = this.dateNow.getDate();
+    var mm = this.dateNow.getMonth() + 1;
+    var yyyy = this.dateNow.getFullYear();
+
+    var hh = this.dateNow.getHours();
+    var min = this.dateNow.getMinutes();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+
+    if (min < 10) {
+      min = '0' + min;
+    }
+
+    this.dateNow = yyyy + '-' + mm + '-' + dd;
+
+    this.timeNow = hh + ':' + min;
+
+    console.log(this.dateNow);
+    console.log(this.timeNow);
+  }
 }
-class EndreHenteSykkel extends Component {
+export class EndreHenteSykkel extends Component {
   sykkel = null;
 
   render() {
@@ -938,7 +922,7 @@ export class LeggTilSykkel extends Component {
   }
 
   add() {
-    lagerService.addSykkel(
+    sykkelService.addSykkel(
       this.type,
       this.status,
       this.hjul_størrelse,
@@ -961,6 +945,7 @@ export class LeggTilSykkel extends Component {
 
 export class LeggTilUtstyr extends Component {
   type = '';
+  lokasjon_id = '';
   beskrivelse = '';
   status = 'Ledig';
   pris = '';
@@ -983,6 +968,17 @@ export class LeggTilUtstyr extends Component {
             </select>
           </li>
           <li>
+            Lokasjon:
+            <select value={this.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
+              <option>Velg lokasjon</option>
+              <option value="1">Haugastøl</option>
+              <option value="2">Finse</option>
+              <option value="3">Flåm</option>
+              <option value="4">Voss</option>
+              <option value="5">Myrdal</option>
+            </select>
+          </li>
+          <li>
             Beskrivelse:
             <input type="text" value={this.beskrivelse} onChange={e => (this.beskrivelse = e.target.value)} required />
           </li>
@@ -1002,7 +998,7 @@ export class LeggTilUtstyr extends Component {
   }
 
   add() {
-    lagerService.addUtstyr(this.type, this.beskrivelse, this.status, this.pris, id => {
+    lagerService.addUtstyr(this.type, this.lokasjon_id, this.beskrivelse, this.status, this.pris, id => {
       history.push('/lagerStartside/' + id);
     });
   }
@@ -1080,7 +1076,7 @@ export class EndreSykkel extends Component {
     lagerService.deleteSykkel(this.props.match.params.id, () => history.push('lagerStartside'));
   }
 }
-export class EndreUtstyrLager extends Component {
+export class EndreUtstyr extends Component {
   utstyr = null;
 
   render() {
@@ -1095,6 +1091,17 @@ export class EndreUtstyrLager extends Component {
               <option value="Ledig">Ledig</option>
               <option value="Utleid">Utleid</option>
               <option value="Reparasjon">Til reparasjon</option>
+            </select>
+          </li>
+          <li>
+            Lokasjon:
+            <select value={this.utstyr.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
+              <option>Velg lokasjon</option>
+              <option value="1">Haugastøl</option>
+              <option value="2">Finse</option>
+              <option value="3">Flåm</option>
+              <option value="4">Voss</option>
+              <option value="5">Myrdal</option>
             </select>
           </li>
           <li>
@@ -1133,5 +1140,117 @@ export class EndreUtstyrLager extends Component {
   }
   delete() {
     lagerService.deleteUtstyr(this.props.match.params.id, () => history.push('lagerStartside'));
+  }
+}
+export class SavnetSykkel extends Component {
+  savnetSykkel = [];
+  tabell = [];
+
+  render() {
+    return (
+      <div>
+        <h3>Oversikt over sykler som ikke er levert tilbake i tide</h3>
+        <button type="Add" onClick={this.tilbake}>
+          Tilbake
+        </button>
+        <table>
+          <tbody>{this.tabell}</tbody>
+        </table>
+      </div>
+    );
+  }
+  mounted() {
+    this.dagensDato();
+    lagerService.hentSavnetSykkel(this.dateNow, savnetSykkel => {
+      this.savnetSykkel = savnetSykkel;
+      console.log(this.savnetSykkel);
+      this.createTable();
+    });
+  }
+
+  createTable() {
+    this.tabell.push(
+      <tr>
+        <th>Bestillings ID</th>
+        <th>Sykkel ID</th>
+        <th>Modellnavn</th>
+        <th>Epost</th>
+        <th>Innleveringssted</th>
+        <th>Innleveringsdato</th>
+        <th>Innleveringstid</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.savnetSykkel.length; i++) {
+      this.tabell.push(
+        <tr>
+          <td>{this.savnetSykkel[i].bestilling_id}</td>
+          <td>{this.savnetSykkel[i].id}</td>
+          <td>{this.savnetSykkel[i].modellnavn}</td>
+          <td>{this.savnetSykkel[i].kunde_epost}</td>
+          <td>{this.savnetSykkel[i].innleveringssted}</td>
+          <td>{this.savnetSykkel[i].innlevering_dato}</td>
+          <td>{this.savnetSykkel[i].innlevering_tid}</td>
+          <td>
+            <NavLink to={'/savnetSykkel/' + this.savnetSykkel[i].id + '/edit'}> Returnert </NavLink>
+          </td>
+        </tr>
+      );
+    }
+  }
+  tilbake() {
+    history.push('/lagerStartside/');
+  }
+  dagensDato() {
+    this.dateNow = new Date();
+
+    var dd = this.dateNow.getDate();
+    var mm = this.dateNow.getMonth() + 1;
+    var yyyy = this.dateNow.getFullYear();
+
+    var hh = this.dateNow.getHours();
+    var min = this.dateNow.getMinutes();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+
+    if (min < 10) {
+      min = '0' + min;
+    }
+
+    this.dateNow = yyyy + '-' + mm + '-' + dd;
+
+    this.timeNow = hh + ':' + min;
+
+    console.log(this.dateNow);
+    console.log(this.timeNow);
+  }
+}
+export class EndreSavnetSykkel extends Component {
+  sykkel = null;
+
+  render() {
+    var x = confirm('Er sykkel tilbake på lager?');
+    if (x == true) {
+      console.log('Sykkelen er tilbake på lager');
+    } else {
+      console.log('Avbryt');
+    }
+  }
+  mounted() {
+    lagerService.hentSavnetSykkelId(this.props.match.params.id, sykkel => {
+      this.sykkel = sykkel;
+    });
+  }
+
+  save() {
+    lagerService.ferdigSavnetSykkel(this.sykkel, () => {
+      history.push('/lagerStartside/');
+    });
   }
 }
