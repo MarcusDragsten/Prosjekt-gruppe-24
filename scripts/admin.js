@@ -29,7 +29,6 @@ export class AdminStartside extends Component {
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.rapportPush}>
             Se rapport
           </button>
-          asdasd
         </div>
       </div>
     );

@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { bestillingService } from '../services/bestillingService.js';
 import { sykkelService } from '../services/sykkelService.js';
-
+import { ansatteService } from '../services/adminService.js';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class SalgStartside extends Component {
+  ansatt = [];
   render() {
     return (
       <div id="yttersteDiv">
@@ -19,7 +20,7 @@ export class SalgStartside extends Component {
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
-          <h2>Velkommen til selgersiden</h2>
+          <h2>Velkommen {this.ansatt.fornavn}</h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
             Ny Bestilling
           </button>
@@ -33,8 +34,13 @@ export class SalgStartside extends Component {
       </div>
     );
   }
+  mounted(){
+    ansatteService.getAnsatt(this.props.match.params.id, ansatt => {
+      this.ansatt = ansatt;
+    });
+  }
   nyBestillingPush() {
-    history.push('/bestilling/');
+    history.push('/bestilling/' + this.props.match.params.id);
   }
   endreBestillingPush() {
     history.push('/aktiveBestillinger/');
@@ -176,6 +182,7 @@ export class AktiveBestillinger extends Component {
   tilbake() {
     history.push('/salgStartside/');
   }
+
   loggUtPush() {
     history.push('/');
   }
@@ -1038,8 +1045,6 @@ export class EndreSykler extends Component {
     });
 
     this.hentAntall();
-
-    console.log(window.location.href);
   }
 
   tilbake() {
@@ -1370,76 +1375,128 @@ export class EndreUtstyr extends Component {
   sykkelstativ = 0;
   sykkelvogn = 0;
 
+  antallValgteBarneseteArray = [];
+  antallValgteBarnesete = [];
+  antallValgteHjelmBarnArray = [];
+  antallValgteHjelmBarn = [];
+  antallValgteHjelmVoksneArray = [];
+  antallValgteHjelmVoksne = [];
+  antallValgteSykkelkurvArray = [];
+  antallValgteSykkelkurv = [];
+  antallValgteSykkellåsArray = [];
+  antallValgteSykkellås = [];
+  antallValgteSykkelstativArray = [];
+  antallValgteSykkelstativ = [];
+  antallValgteSykkelvognArray = [];
+  antallValgteSykkelvogn = [];
+
   utstyrLedig = [];
 
   render() {
     return (
-      <div>
-        <h1>Legg til eller fjern utstyr fra bestillingen</h1>
-        <div>
-          <h5>Barnesete</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.barnesete = e.target.value)}
-          />
-          <h5>Hjelm for barn</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.hjelmBarn = e.target.value)}
-          />
-          <h5>Hjelm for voksne</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.hjelmVoksne = e.target.value)}
-          />
-          <h5>Sykkelkurv</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.sykkelkurv = e.target.value)}
-          />
-          <h5>Sykkellås</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.sykkellås = e.target.value)}
-          />
-          <h5>Sykkelstativ</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.sykkelstativ = e.target.value)}
-          />
-          <h5>Sykkelvogn</h5>
-          <img src="asdas" />
-          <input
-            type="number"
-            placeholder="Hvor mange vil du leie?"
-            min="0"
-            onChange={e => (this.sykkelvogn = e.target.value)}
-          />
-          <button type="button" onClick={this.leggTilUtstyr}>
-            Legg til utstyr
-          </button>
-          <button type="button" onClick={this.fjernUtstyr}>
-            Fjern utstyr fra bestilling
+      <div id="endreUtstyrBestilling">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
+            Logg ut
           </button>
         </div>
+        <button type="save" class="btn" onClick={this.tilbake}>
+          Tilbake
+        </button>
+        <h1>Velg Utstyr</h1>
+        <div id="utstyrDiv">
+          <div id="barneseteDiv" class="utstyrDiver">
+            <h4>Barnesete</h4>
+            <img src="../bilder/barnesete.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputBarnesete"
+              min="0"
+              onChange={e => (this.barnesete = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteBarneseteArray[0]}</div>
+          </div>
+          <div id="hjelmBarnDiv" class="utstyrDiver">
+            <h4>Hjelm for barn</h4>
+            <img src="../bilder/hjelm-barn.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputHjelmBarn"
+              min="0"
+              onChange={e => (this.hjelmBarn = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmBarnArray[0]}</div>
+          </div>
+          <div id="hjelmVoksneDiv" class="utstyrDiver">
+            <h4>Hjelm for voksne</h4>
+            <img src="../bilder/hjelm-voksne.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputHjelmVoksne"
+              min="0"
+              onChange={e => (this.hjelmVoksne = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmVoksneArray[0]}</div>
+          </div>
+          <div id="sykkelkurvDiv" class="utstyrDiver">
+            <h4>Sykkelkurv</h4>
+            <img src="../bilder/sykkelkurv.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputSykkelkurv"
+              min="0"
+              onChange={e => (this.sykkelkurv = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelkurvArray[0]}</div>
+          </div>
+          <div id="sykkellåsDiv" class="utstyrDiver">
+            <h4>Sykkellås</h4>
+            <img src="../bilder/sykkellås.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputSykkellås"
+              min="0"
+              onChange={e => (this.sykkellås = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkellåsArray[0]}</div>
+          </div>
+          <div id="sykkelstativDiv" class="utstyrDiver">
+            <h4>Sykkelstativ</h4>
+            <img src="../bilder/sykkelstativ-hund.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputSykkelstativ"
+              min="0"
+              onChange={e => (this.sykkelstativ = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelstativArray[0]}</div>
+          </div>
+          <div id="sykkelvogn" class="utstyrDiver">
+            <h4>Sykkelvogn</h4>
+            <img src="../bilder/sykkelvogn.jpeg" />
+            <input
+              type="number"
+              placeholder="Hvor mange vil du leie?"
+              id="inputSykkelvogn"
+              min="0"
+              onChange={e => (this.sykkelvogn = e.target.value)}
+            />
+            <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelvognArray[0]}</div>
+          </div>
+        </div>
+        <button type="button" class="btn" onClick={this.leggTilUtstyr}>
+          Legg inn utstyr
+        </button>
+        <button type="button" class="btn" onClick={this.fjernUtstyr}>
+          Fjern utstyr som er lagt inn i bestillingen
+        </button>
       </div>
     );
   }
@@ -1448,12 +1505,82 @@ export class EndreUtstyr extends Component {
       this.utstyrLedig = utstyrLedig;
       console.log(this.utstyrLedig);
     });
+
+    sykkelService.hentUtstyrOversikt(this.props.match.params.id, utstyrOversikt => {
+      this.utstyrOversikt = utstyrOversikt;
+
+      console.log(this.utstyrOversikt);
+    });
+
+    this.hentAntall();
+  }
+
+  tilbake() {
+    history.push('/endreBestilling/' + this.props.match.params.id);
+  }
+
+  hentAntall() {
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Barnesete', barneseteValgt => {
+      let tall = barneseteValgt;
+      this.antallValgteBarnesete = tall[0].hvorMangeValgt;
+      this.antallValgteBarneseteArray.pop();
+      this.antallValgteBarneseteArray.push(this.antallValgteBarnesete);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm barn', hjelmBarnValgt => {
+      let tall = hjelmBarnValgt;
+      this.antallValgteHjelmBarn = tall[0].hvorMangeValgt;
+      this.antallValgteHjelmBarnArray.pop();
+      this.antallValgteHjelmBarnArray.push(this.antallValgteHjelmBarn);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm voksne', hjelmVoksneValgt => {
+      let tall = hjelmVoksneValgt;
+      this.antallValgteHjelmVoksne = tall[0].hvorMangeValgt;
+      this.antallValgteHjelmVoksneArray.pop();
+      this.antallValgteHjelmVoksneArray.push(this.antallValgteHjelmVoksne);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelkurv', sykkelkurvValgt => {
+      let tall = sykkelkurvValgt;
+      this.antallValgteSykkelkurv = tall[0].hvorMangeValgt;
+      this.antallValgteSykkelkurvArray.pop();
+      this.antallValgteSykkelkurvArray.push(this.antallValgteSykkelkurv);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkellås', sykkellåsValgt => {
+      let tall = sykkellåsValgt;
+      this.antallValgteSykkellås = tall[0].hvorMangeValgt;
+      this.antallValgteSykkellåsArray.pop();
+      this.antallValgteSykkellåsArray.push(this.antallValgteSykkellås);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelstativ', sykkelstativValgt => {
+      let tall = sykkelstativValgt;
+      this.antallValgteSykkelstativ = tall[0].hvorMangeValgt;
+      this.antallValgteSykkelstativArray.pop();
+      this.antallValgteSykkelstativArray.push(this.antallValgteSykkelstativ);
+    });
+
+    sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelvogn', sykkelvognValgt => {
+      let tall = sykkelvognValgt;
+      this.antallValgteSykkelvogn = tall[0].hvorMangeValgt;
+      this.antallValgteSykkelvognArray.pop();
+      this.antallValgteSykkelvognArray.push(this.antallValgteSykkelvogn);
+    });
   }
 
   leggTilUtstyr() {
     if (this.barnesete > 0) {
       if (this.utstyrLedig[0].ant_ledige > this.barnesete) {
-        sykkelService.updateBarnesete(this.props.match.params.id, this.barnesete, barnesete => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Barnesete', this.barnesete, barnesete => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Barnesete', barneseteValgt => {
+            let tall = barneseteValgt;
+            this.antallValgteBarnesete = tall[0].hvorMangeValgt;
+            this.antallValgteBarneseteArray.pop();
+            this.antallValgteBarneseteArray.push(this.antallValgteBarnesete);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok barneseter på lager for øyeblikket. Lagerstatus er ' +
@@ -1464,7 +1591,14 @@ export class EndreUtstyr extends Component {
 
     if (this.hjelmBarn > 0) {
       if (this.utstyrLedig[1].ant_ledige > this.hjelmBarn) {
-        sykkelService.updateHjelmBarn(this.props.match.params.id, this.hjelmBarn, hjelmBarn => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Hjelm barn', this.hjelmBarn, hjelmBarn => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm barn', hjelmBarnValgt => {
+            let tall = hjelmBarnValgt;
+            this.antallValgteHjelmBarn = tall[0].hvorMangeValgt;
+            this.antallValgteHjelmBarnArray.pop();
+            this.antallValgteHjelmBarnArray.push(this.antallValgteHjelmBarn);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok hjelmer for barn på lager for øyeblikket. Lagerstatus er ' +
@@ -1475,7 +1609,14 @@ export class EndreUtstyr extends Component {
 
     if (this.hjelmVoksne > 0) {
       if (this.utstyrLedig[2].ant_ledige > this.hjelmVoksne) {
-        sykkelService.updateHjelmVoksne(this.props.match.params.id, this.hjelmVoksne, hjelmVoksne => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Hjelm voksne', this.hjelmVoksne, hjelmVoksne => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Hjelm voksne', hjelmVoksneValgt => {
+            let tall = hjelmVoksneValgt;
+            this.antallValgteHjelmVoksne = tall[0].hvorMangeValgt;
+            this.antallValgteHjelmVoksneArray.pop();
+            this.antallValgteHjelmVoksneArray.push(this.antallValgteHjelmVoksne);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok hjelmer for voksne på lager for øyeblikket. Lagerstatus er ' +
@@ -1486,7 +1627,14 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelkurv > 0) {
       if (this.utstyrLedig[3].ant_ledige > this.sykkelkurv) {
-        sykkelService.updateSykkelkurv(this.props.match.params.id, this.sykkelkurv, sykkelkurv => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelkurv', this.sykkelkurv, sykkelkurv => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelkurv', sykkelkurvValgt => {
+            let tall = sykkelkurvValgt;
+            this.antallValgteSykkelkurv = tall[0].hvorMangeValgt;
+            this.antallValgteSykkelkurvArray.pop();
+            this.antallValgteSykkelkurvArray.push(this.antallValgteSykkelkurv);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok sykkelkurver på lager for øyeblikket. Lagerstatus er ' +
@@ -1497,7 +1645,14 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkellås > 0) {
       if (this.utstyrLedig[4].ant_ledige > this.sykkellås) {
-        sykkelService.updateSykkellås(this.props.match.params.id, this.sykkellås, sykkellås => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkellås', this.sykkellås, sykkellås => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkellås', sykkellåsValgt => {
+            let tall = sykkellåsValgt;
+            this.antallValgteSykkellås = tall[0].hvorMangeValgt;
+            this.antallValgteSykkellåsArray.pop();
+            this.antallValgteSykkellåsArray.push(this.antallValgteSykkellås);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok sykkellåser på lager for øyeblikket. Lagerstatus er ' +
@@ -1508,7 +1663,14 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelstativ > 0) {
       if (this.utstyrLedig[5].ant_ledige > this.sykkelstativ) {
-        sykkelService.updateSykkelstativ(this.props.match.params.id, this.sykkelstativ, sykkelstativ => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelstativ', this.sykkelstativ, sykkelstativ => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelstativ', sykkelstativValgt => {
+            let tall = sykkelstativValgt;
+            this.antallValgteSykkelstativ = tall[0].hvorMangeValgt;
+            this.antallValgteSykkelstativArray.pop();
+            this.antallValgteSykkelstativArray.push(this.antallValgteSykkelstativ);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok sykkelstativ på lager for øyeblikket. Lagerstatus er ' +
@@ -1519,7 +1681,14 @@ export class EndreUtstyr extends Component {
 
     if (this.sykkelvogn > 0) {
       if (this.utstyrLedig[6].ant_ledige > this.sykkelvogn) {
-        sykkelService.updateSykkelvogn(this.props.match.params.id, this.sykkelvogn, sykkelvogn => {});
+        sykkelService.leggInnUtstyr(this.props.match.params.id, 'Sykkelvogn', this.sykkelvogn, sykkelvogn => {
+          sykkelService.hvorMangeUtstyrValgt(this.props.match.params.id, 'Sykkelvogn', sykkelvognValgt => {
+            let tall = sykkelvognValgt;
+            this.antallValgteSykkelvogn = tall[0].hvorMangeValgt;
+            this.antallValgteSykkelvognArray.pop();
+            this.antallValgteSykkelvognArray.push(this.antallValgteSykkelvogn);
+          });
+        });
       } else {
         alert(
           'Vi har ikke nok sykkelvogner på lager for øyeblikket. Lagerstatus er ' +
@@ -1527,12 +1696,42 @@ export class EndreUtstyr extends Component {
         );
       }
     }
-    history.push('/endreBestilling/' + this.props.match.params.id);
+
+    sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
+      this.utstyrLedig = utstyrLedig;
+      console.log(this.utstyrLedig);
+    });
+
+    document.getElementById('inputBarnesete').value = '';
+    document.getElementById('inputHjelmBarn').value = '';
+    document.getElementById('inputHjelmVoksne').value = '';
+    document.getElementById('inputSykkelkurv').value = '';
+    document.getElementById('inputSykkellås').value = '';
+    document.getElementById('inputSykkelstativ').value = '';
+    document.getElementById('inputSykkelvogn').value = '';
+
+    this.barnesete = 0;
+    this.hjelmBarn = 0;
+    this.hjelmVoksne = 0;
+    this.sykkelkurv = 0;
+    this.sykkellås = 0;
+    this.sykkelstativ = 0;
+    this.sykkelvogn = 0;
   }
+
   fjernUtstyr() {
     sykkelService.fjernUtstyrFraBestilling(this.props.match.params.id, fjernSykler => {
-      history.push('/endreBestilling/' + this.props.match.params.id);
-      console.log(this.sykkelOversikt);
+      sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
+        this.utstyrLedig = utstyrLedig;
+        this.antallValgteBarneseteArray[0] = '';
+        this.antallValgteHjelmBarnArray[0] = '';
+        this.antallValgteHjelmVoksneArray[0] = '';
+        this.antallValgteSykkelkurvArray[0] = '';
+        this.antallValgteSykkellåsArray[0] = '';
+        this.antallValgteSykkelstativArray[0] = '';
+        this.antallValgteSykkelvognArray[0] = '';
+        console.log(this.utstyrLedig);
+      });
     });
   }
 }

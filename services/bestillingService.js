@@ -44,10 +44,11 @@ class BestillingService extends Component {
     utlevering_tid,
     innlevering_dato,
     innlevering_tid,
+    selger,
     success
   ) {
     connection.query(
-      'insert into Bestilling (bestilling_type, kunde_epost, utleveringssted, innleveringssted, utlevering_dato, utlevering_tid, innlevering_dato, innlevering_tid) values (?, ?, ?, ?, ?, ?, ?, ?)',
+      'insert into Bestilling (bestilling_type, kunde_epost, utleveringssted, innleveringssted, utlevering_dato, utlevering_tid, innlevering_dato, innlevering_tid, selger) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         bestilling_type,
         kunde_epost,
@@ -56,7 +57,8 @@ class BestillingService extends Component {
         utlevering_dato,
         utlevering_tid,
         innlevering_dato,
-        innlevering_tid
+        innlevering_tid,
+        selger
       ],
       (error, results) => {
         if (error) return console.error(error);

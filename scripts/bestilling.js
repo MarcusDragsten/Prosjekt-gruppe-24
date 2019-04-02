@@ -121,6 +121,7 @@ export class Bestilling extends Component {
             </button>
           </div>
           <form onSubmit={this.wrapper1}>
+
             <h4>Bestillingstype:</h4>
             <select
               class="form-control"
@@ -380,10 +381,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.barnesete = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteBarneseteArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteBarneseteArray[0]}</div>
             </div>
             <div id="hjelmBarnDiv" class="utstyrDiver">
               <h4>Hjelm for barn</h4>
@@ -395,10 +393,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.hjelmBarn = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteHjelmBarnArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmBarnArray[0]}</div>
             </div>
             <div id="hjelmVoksneDiv" class="utstyrDiver">
               <h4>Hjelm for voksne</h4>
@@ -410,10 +405,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.hjelmVoksne = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteHjelmVoksneArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmVoksneArray[0]}</div>
             </div>
             <div id="sykkelkurvDiv" class="utstyrDiver">
               <h4>Sykkelkurv</h4>
@@ -425,10 +417,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.sykkelkurv = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteSykkelkurvArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelkurvArray[0]}</div>
             </div>
             <div id="sykkellåsDiv" class="utstyrDiver">
               <h4>Sykkellås</h4>
@@ -440,10 +429,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.sykkellås = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteSykkellåsArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkellåsArray[0]}</div>
             </div>
             <div id="sykkelstativDiv" class="utstyrDiver">
               <h4>Sykkelstativ</h4>
@@ -455,10 +441,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.sykkelstativ = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteSykkelstativArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelstativArray[0]}</div>
             </div>
             <div id="sykkelvogn" class="utstyrDiver">
               <h4>Sykkelvogn</h4>
@@ -470,10 +453,7 @@ export class Bestilling extends Component {
                 min="0"
                 onChange={e => (this.sykkelvogn = e.target.value)}
               />
-              <div class="antallValgteDiver">
-                Antall valgte:
-                {this.antallValgteSykkelvognArray[0]}
-              </div>
+              <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelvognArray[0]}</div>
             </div>
           </div>
           <button type="button" class="btn" onClick={this.wrapper3}>
@@ -576,7 +556,7 @@ export class Bestilling extends Component {
   }
 
   return() {
-    history.push('/salgStartside/');
+    history.push('/salgStartside/' + this.props.match.params.id);
   }
 
   dagensDato() {
@@ -630,6 +610,7 @@ export class Bestilling extends Component {
       this.utlevering_tid,
       this.innlevering_dato,
       this.innlevering_tid,
+      this.props.match.params.id,
       id => {
         console.log(this.utlevering_dato);
       }
