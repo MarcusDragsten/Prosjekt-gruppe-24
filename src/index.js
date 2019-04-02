@@ -148,7 +148,7 @@ class Login extends Component {
             //Sekretær
           }
           if (this.ansatte[i].rolle == 'Selger') {
-            history.push('/salgStartside/');
+            history.push('/salgStartside/' + this.ansatte[i].id);
             //Selger
           }
           if (this.ansatte[i].rolle == 'Lager') {
@@ -173,14 +173,14 @@ ReactDOM.render(
     <div>
       <Route exact path="/" component={Login} />
 
-      <Route path="/salgStartside/" component={SalgStartside} />
+      <Route path="/salgStartside/:id" component={SalgStartside} />
       <Route path="/aktiveBestillinger/" component={AktiveBestillinger} />
       <Route path="/innlevering/:id/" component={Innlevering} />
       <Route path="/endreBestilling/:id" component={EndreBestilling} />
       <Route path="/bestillingHistorikk/" component={BestillingHistorikk} />
       <Route exact path="/endreBestillingSykler/:id/endreSykler" component={EndreSykler} />
       <Route exact path="/endreBestillingUtstyr/:id/endreUtstyr" component={EndreUtstyr} />
-      <Route path="/bestilling/" component={Bestilling} />
+      <Route path="/bestilling/:id" component={Bestilling} />
 
       <Route path="/nyKunde/" component={NyKunde} />
 

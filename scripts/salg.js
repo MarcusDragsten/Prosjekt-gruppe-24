@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { bestillingService } from '../services/bestillingService.js';
 import { sykkelService } from '../services/sykkelService.js';
-
+import { ansatteService } from '../services/adminService.js';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class SalgStartside extends Component {
+  ansatt = [];
   render() {
     return (
       <div id="yttersteDiv">
@@ -19,7 +20,7 @@ export class SalgStartside extends Component {
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
-          <h2>Velkommen til selgersiden</h2>
+          <h2>Velkommen {this.ansatt.fornavn}</h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
             Ny Bestilling
           </button>
@@ -33,8 +34,13 @@ export class SalgStartside extends Component {
       </div>
     );
   }
+  mounted(){
+    ansatteService.getAnsatt(this.props.match.params.id, ansatt => {
+      this.ansatt = ansatt;
+    });
+  }
   nyBestillingPush() {
-    history.push('/bestilling/');
+    history.push('/bestilling/' + this.props.match.params.id);
   }
   endreBestillingPush() {
     history.push('/aktiveBestillinger/');

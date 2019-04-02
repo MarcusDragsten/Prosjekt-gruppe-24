@@ -17,7 +17,7 @@ export class Bestilling extends Component {
   utlevering_tid = '';
   innlevering_dato = '';
   innlevering_tid = '';
-  selger= 'Velg selger';
+
   utleveringssteder = [];
   innleveringssteder = [];
 
@@ -121,21 +121,7 @@ export class Bestilling extends Component {
             </button>
           </div>
           <form onSubmit={this.wrapper1}>
-          <h4> Selger:</h4>
-          <select
-          class="form-control"
-          id="selgerInput"
-          value={this.selger}
-          onChange={e => (this.selger = event.target.value)}
-          required
-          >
-          <option value="" selected hidden>
-           Velg selger
-          </option>
-          <option value="3">Solan</option>
-          <option value="4">Ben Redik</option>
-          <option value="5">Randolph</option>
-          </select>
+
             <h4>Bestillingstype:</h4>
             <select
               class="form-control"
@@ -570,7 +556,7 @@ export class Bestilling extends Component {
   }
 
   return() {
-    history.push('/salgStartside/');
+    history.push('/salgStartside/' + this.props.match.params.id);
   }
 
   dagensDato() {
@@ -624,7 +610,7 @@ export class Bestilling extends Component {
       this.utlevering_tid,
       this.innlevering_dato,
       this.innlevering_tid,
-      this.selger,
+      this.props.match.params.id,
       id => {
         console.log(this.utlevering_dato);
       }
