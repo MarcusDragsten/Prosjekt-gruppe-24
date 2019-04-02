@@ -47,6 +47,9 @@ export class LagerStartside extends Component {
         <button type="button" class="button" onClick={this.savnetSykkel}>
           Sykler som ikke er innlevert
         </button>
+        <button type="button" class="button" onClick={this.tilbake}>
+          Tilbake
+        </button>
       </div>
     );
   }
@@ -77,6 +80,9 @@ export class LagerStartside extends Component {
   }
   savnetSykkel() {
     history.push('/savnetSykkel');
+  }
+  tilbake() {
+    history.push('/');
   }
 }
 export class LedigSykkel extends Component {
@@ -719,19 +725,18 @@ export class HenteSykkel extends Component {
     return (
       <div>
         <h3>Oversikt over sykler som trenger transport</h3>
-        <table>
-          <tbody>{this.tabell6}</tbody>
-        </table>
         <button type="button" onClick={this.tilbake}>
           Tilbake
         </button>
+        <table>
+          <tbody>{this.tabell6}</tbody>
+        </table>
       </div>
     );
   }
 
   mounted() {
-    this.dagensDato();
-    lagerService.henteSykkel(this.dateNow, sykkel => {
+    lagerService.henteSykkel(sykkel => {
       this.sykkel = sykkel;
       console.log(this.sykkel);
       this.createTable6();
@@ -743,9 +748,9 @@ export class HenteSykkel extends Component {
       <tr>
         <th>Bestillings ID</th>
         <th>Sykkel ID</th>
-        <th>Type</th>
         <th>Modellnavn</th>
-        <th>Lokasjon</th>
+        <th>Innleveringssted</th>
+        <th>Tilhørighet</th>
         <th>Dato</th>
         <th>Tid</th>
       </tr>
@@ -756,9 +761,9 @@ export class HenteSykkel extends Component {
         <tr>
           <td>{this.sykkel[i].bestilling_id}</td>
           <td>{this.sykkel[i].id}</td>
-          <td>{this.sykkel[i].type}</td>
           <td>{this.sykkel[i].modellnavn}</td>
           <td>{this.sykkel[i].innleveringssted}</td>
+          <td>{this.sykkel[i].område}</td>
           <td>{this.sykkel[i].innlevering_dato}</td>
           <td>{this.sykkel[i].innlevering_tid}</td>
           <td>
@@ -770,35 +775,6 @@ export class HenteSykkel extends Component {
   }
   tilbake() {
     history.push('/lagerStartside/');
-  }
-  dagensDato() {
-    this.dateNow = new Date();
-
-    var dd = this.dateNow.getDate();
-    var mm = this.dateNow.getMonth() + 1;
-    var yyyy = this.dateNow.getFullYear();
-
-    var hh = this.dateNow.getHours();
-    var min = this.dateNow.getMinutes();
-
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-
-    if (min < 10) {
-      min = '0' + min;
-    }
-
-    this.dateNow = yyyy + '-' + mm + '-' + dd;
-
-    this.timeNow = hh + ':' + min;
-
-    console.log(this.dateNow);
-    console.log(this.timeNow);
   }
 }
 export class EndreHenteSykkel extends Component {
@@ -1028,7 +1004,7 @@ export class EndreSykkel extends Component {
             Lokasjon:
             <select
               value={this.sykler.lokasjon_id}
-              onChange={e => (this.sykler.lokasjon_id = event.target.value)}
+              onChange={e => (this.sykler.lokasjon = event.target.value)}
               required
             >
               <option value="1">Haugastøl</option>
@@ -1160,8 +1136,7 @@ export class SavnetSykkel extends Component {
     );
   }
   mounted() {
-    this.dagensDato();
-    lagerService.hentSavnetSykkel(this.dateNow, savnetSykkel => {
+    lagerService.hentSavnetSykkel(savnetSykkel => {
       this.savnetSykkel = savnetSykkel;
       console.log(this.savnetSykkel);
       this.createTable();
@@ -1175,6 +1150,7 @@ export class SavnetSykkel extends Component {
         <th>Sykkel ID</th>
         <th>Modellnavn</th>
         <th>Epost</th>
+        <th>Tilhørighet</th>
         <th>Innleveringssted</th>
         <th>Innleveringsdato</th>
         <th>Innleveringstid</th>
@@ -1188,6 +1164,7 @@ export class SavnetSykkel extends Component {
           <td>{this.savnetSykkel[i].id}</td>
           <td>{this.savnetSykkel[i].modellnavn}</td>
           <td>{this.savnetSykkel[i].kunde_epost}</td>
+          <td>{this.savnetSykkel[i].område}</td>
           <td>{this.savnetSykkel[i].innleveringssted}</td>
           <td>{this.savnetSykkel[i].innlevering_dato}</td>
           <td>{this.savnetSykkel[i].innlevering_tid}</td>
@@ -1200,35 +1177,6 @@ export class SavnetSykkel extends Component {
   }
   tilbake() {
     history.push('/lagerStartside/');
-  }
-  dagensDato() {
-    this.dateNow = new Date();
-
-    var dd = this.dateNow.getDate();
-    var mm = this.dateNow.getMonth() + 1;
-    var yyyy = this.dateNow.getFullYear();
-
-    var hh = this.dateNow.getHours();
-    var min = this.dateNow.getMinutes();
-
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-
-    if (min < 10) {
-      min = '0' + min;
-    }
-
-    this.dateNow = yyyy + '-' + mm + '-' + dd;
-
-    this.timeNow = hh + ':' + min;
-
-    console.log(this.dateNow);
-    console.log(this.timeNow);
   }
 }
 export class EndreSavnetSykkel extends Component {

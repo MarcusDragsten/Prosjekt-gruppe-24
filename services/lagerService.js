@@ -179,10 +179,10 @@ class LagerService extends Component {
     });
   }
 
-  henteSykkel(dato, success) {
+  henteSykkel(success) {
     connection.query(
-      'SELECT Sykkel.bestilling_id, Sykkel.id, Sykkel.type, Sykkel.modellnavn, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid FROM Bestilling INNER JOIN Sykkel ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Lokasjoner.id = Sykkel.lokasjon_id WHERE Bestilling.innleveringssted <> Lokasjoner.område AND Sykkel.status = "Utleid" AND Bestilling.innlevering_dato > ? AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato ASC',
-      [dato],
+      'SELECT Sykkel.bestilling_id, Sykkel.id, Sykkel.modellnavn, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid, Lokasjoner.område FROM Bestilling INNER JOIN Sykkel ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Lokasjoner.id = Sykkel.lokasjon_id WHERE Sykkel.status = "Utleid" AND Bestilling.innlevering_dato >= CURRENT_DATE() AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato ASC',
+
       (error, results) => {
         if (error) return console.error(error);
         success(results);
@@ -207,10 +207,10 @@ class LagerService extends Component {
       }
     );
   }
-  hentSavnetSykkel(dato, success) {
+  hentSavnetSykkel(success) {
     connection.query(
-      'SELECT Sykkel.bestilling_id, Sykkel.id, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid, Sykkel.modellnavn, Bestilling.kunde_epost FROM Sykkel INNER JOIN Bestilling ON Sykkel.bestilling_id = Bestilling.id WHERE Bestilling.innlevering_dato < ? AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato',
-      [dato],
+      'SELECT Sykkel.bestilling_id, Sykkel.id, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid, Sykkel.modellnavn, Bestilling.kunde_epost, Lokasjoner.område FROM Sykkel INNER JOIN Bestilling ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Lokasjoner.id = Sykkel.lokasjon_id WHERE Bestilling.innlevering_dato < CURRENT_DATE() AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato',
+
       (error, results) => {
         if (error) return console.error(error);
 
