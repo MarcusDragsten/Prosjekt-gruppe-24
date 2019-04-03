@@ -226,9 +226,15 @@ export class Bestilling extends Component {
           <button type="button" id="tilbake" onClick={this.return}>
             Tilbake til startsiden
           </button>
+          <button type="button" id="avbrytBestilling" onClick={this.return}>
+            Avbryt Bestilling
+          </button>
         </div>
         <div id="velgSykkel">
           <h1>Velg hvor mange sykler kunden vil ha:</h1>
+          <button type="button" id="avbrytBestilling" onClick={this.avbrytBestilling}>
+            Avbryt Bestilling
+          </button>
           <div id="syklerDiv">
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
               <h4>Ghost Hybrid Herre</h4>
@@ -366,6 +372,9 @@ export class Bestilling extends Component {
           <button type="button" id="hentOversiktKnapp" class="btn" onClick={this.hentSyklerOversikt}>
             Gå videre
           </button>
+          <button type="button" id="avbrytBestillingSykkel" class="btn" onClick={this.avbrytBestillingSykkel}>
+            Avbryt bestilling
+          </button>
         </div>
         <div id="velgUtstyr">
           <h1>Velg Utstyr</h1>
@@ -501,6 +510,9 @@ export class Bestilling extends Component {
           <button type="button" id="tilbake" onClick={this.return}>
             Tilbake til startsiden
           </button>
+          <button type="button" id="avbrytBestillingUtstyr" onClick={this.avbrytBestillingUtstyr}>
+            Avbryt Bestilling
+          </button>
         </div>
       </div>
     );
@@ -555,8 +567,26 @@ export class Bestilling extends Component {
   }
 
   return() {
-    history.push('/salgStartside/' + this.props.match.params.id);
+    history.push('/salgStartside/' + this.props.match.params.ansattId);
   }
+  avbrytBestilling(){
+          bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
+        history.push('/salgStartside/' + this.props.match.params.ansattId)
+        });
+  }
+  avbrytBestillingSykkel(){
+          bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+        history.push('/salgStartside/' + this.props.match.params.ansattId)
+        });
+  }
+  avbrytBestillingUtstyr(){
+    bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+        bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
+  history.push('/salgStartside/' + this.props.match.params.ansattId)
+  });
+  });
+
+}
 
   dagensDato() {
     this.dateNow = new Date();
@@ -609,7 +639,7 @@ export class Bestilling extends Component {
       this.utlevering_tid,
       this.innlevering_dato,
       this.innlevering_tid,
-      this.props.match.params.id,
+      this.props.match.params.ansattId,
       id => {
         console.log(this.utlevering_dato);
       }
