@@ -178,7 +178,7 @@ ReactDOM.render(
       <Route path="/bestillingHistorikk/:ansattId" component={BestillingHistorikk} />
       <Route exact path="/endreBestillingSykler/:ansattId/:bestillingId" component={EndreSykler} />
       <Route exact path="/endreBestillingUtstyr/:ansattId/:bestillingId" component={EndreUtstyr} />
-      <Route path="/bestilling/:id" component={Bestilling} />
+      <Route path="/bestilling/:ansattId" component={Bestilling} />
 
       <Route path="/nyKunde/" component={NyKunde} />
 

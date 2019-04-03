@@ -11,6 +11,26 @@ class AnsatteService {
     });
   }
 
+  getSelgere(success) {
+    connection.query('select * from Ansatte where rolle="Selger"', (error, results) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  getSelger(id, success) {
+    connection.query(
+      'select fornavn, etternavn from Ansatte where rolle="Selger" and id = ?',
+      [id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
+
   getAnsatt(id, success) {
     connection.query('select * from Ansatte where id = ?', [id], (error, results) => {
       if (error) return console.error(error);

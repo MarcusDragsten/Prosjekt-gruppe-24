@@ -601,13 +601,31 @@ export class LokasjonEdit extends Component {
 }
 
 export class Rapport extends Component {
-  tabell = [];
-  rapporter = [];
+  tabell1 = [];
+  tabell2 = [];
+
+  totalRapport = [];
+  ansatteRapport = [];
+
   totalGevinstArray = [];
   totalGevinst = [];
+  ansatteGevinstArray = [];
+  ansatteGevinst = [];
+  ansattFornavnArray = [];
+  ansattFornavn = [];
+  ansattEtternavnArray = [];
+  ansattEtternavn = [];
 
   utlevering_dato = '';
   faktiskInnlevering_dato = '';
+  selger = '';
+
+  utlevering_dato2 = '';
+  faktiskInnlevering_dato2 = '';
+
+  selgere = [];
+
+  selgerNavn = [];
 
   render() {
     return (
@@ -617,13 +635,15 @@ export class Rapport extends Component {
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
-          <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-            Filtrer bestillingene?
+          <button type="button" id="tilbake" class="btn" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <div id="rapportTabellDiv">
-          <h1>Rapportsiden</h1>
-          <div id="filtrerRapporterDiv">
+        <h1>Rapportsiden</h1>
+        <hr />
+        <div id="rapportTotalTabellDiv">
+          <h2>Rapport over alle inntekter</h2>
+          <div id="filtrerRapportTotalDiv">
             <form onSubmit={this.sok}>
               <div class="form-inline">
                 <h3>Filtrer rapporten:</h3>
@@ -644,6 +664,7 @@ export class Rapport extends Component {
                   required
                 />
               </div>
+              <br />
               <button type="submit" class="btn btn-sucess">
                 Søk
               </button>
@@ -653,24 +674,114 @@ export class Rapport extends Component {
             </form>
           </div>
           <br />
-          <table id="customers" align="center">
-            <tbody>{this.tabell}</tbody>
-          </table>
-          <div id="totalGevinstDiv">
-            Totalgevinst for perioden:{' '}
-            <b>
-              <u>{this.totalGevinstArray[0]}</u>
-            </b>
+          <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+            Filtrer bestillingene?
+          </button>
+          <br />
+          <br />
+          <div>
+            <table id="customers" align="center">
+              <tbody>{this.tabell1}</tbody>
+            </table>
+            <div class="gevinstDiver">
+              Totalgevinst i perioden:{' '}
+              <b>
+                <u>{this.totalGevinstArray[0]}</u>
+              </b>
+            </div>
+            <br />
+            <hr />
+          </div>
+        </div>
+        <div id="rapportAnsatteTabellDiv">
+          <h2>Rapport over alle inntekter per ansatt</h2>
+          <div id="filtrerRapportAnsatteDiv">
+            <form onSubmit={this.sok2}>
+              <div class="form-inline">
+                <h3>Filtrer rapporten:</h3>
+                <h4>Velg ut- og innleveringtidspunkt</h4>
+                <input
+                  id="utlevering_dato2"
+                  type="date"
+                  class="form-control form-control-lg"
+                  onChange={e => (this.utlevering_dato2 = event.target.value)}
+                  required
+                />
+                <input
+                  id="faktiskInnlevering_dato2"
+                  type="date"
+                  class="form-control form-control-lg"
+                  min={this.utlevering_dato2}
+                  onChange={e => (this.faktiskInnlevering_dato2 = event.target.value)}
+                  required
+                />
+              </div>
+              <br />
+              <div>
+                <select
+                  id="ansattInput"
+                  class="form-control form-control-lg"
+                  onChange={e => (this.selger = event.target.value)}
+                >
+                  <option value="" selected>
+                    Filtrer med ansatt
+                  </option>
+                  {this.selgere.map(selgere => (
+                    <option value={selgere.id} key={selgere.id}>
+                      {selgere.fornavn} {selgere.etternavn}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button type="submit" class="btn btn-sucess">
+                Søk
+              </button>
+              <button type="button" class="btn btn-sucess" onClick={this.nullstill2}>
+                Nullstill
+              </button>
+            </form>
+          </div>
+          <br />
+          <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer2}>
+            Filtrer bestillingene?
+          </button>
+          <br />
+          <br />
+          <div>
+            <table id="customers" align="center">
+              <tbody>{this.tabell2}</tbody>
+            </table>
+            <div class="gevinstDiver">
+              Totalgevinst i perioden for {this.ansattFornavnArray[0]} {this.ansattEtternavnArray[0]}:{' '}
+              <b>
+                <u>{this.ansatteGevinstArray[0]}</u>
+              </b>
+            </div>
+            <br />
           </div>
         </div>
       </div>
     );
   }
   mounted() {
-    bestillingService.hentRapport(rapport => {
-      this.rapporter = rapport;
-      this.createTable();
+    bestillingService.hentTotalRapport(rapport => {
+      this.totalRapport = rapport;
+      this.createTable1();
     });
+
+    bestillingService.hentAnsatteRapport(rapport => {
+      this.ansatteRapport = rapport;
+      this.createTable2();
+    });
+
+    ansatteService.getSelgere(selgere => {
+      this.selgere = selgere;
+      console.log(this.selgere);
+    });
+  }
+
+  return() {
+    history.push('/adminStartside/');
   }
 
   loggUtPush() {
@@ -678,7 +789,16 @@ export class Rapport extends Component {
   }
 
   toggleFiltrer() {
-    var x = document.getElementById('filtrerRapporterDiv');
+    var x = document.getElementById('filtrerRapportTotalDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+  }
+
+  toggleFiltrer2() {
+    var x = document.getElementById('filtrerRapportAnsatteDiv');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
     } else {
@@ -689,8 +809,25 @@ export class Rapport extends Component {
   sok(e) {
     e.preventDefault();
     bestillingService.sok3(this.utlevering_dato, this.faktiskInnlevering_dato, sok => {
-      this.rapporter = sok;
-      this.createTable();
+      this.totalRapport = sok;
+      this.createTable1();
+    });
+  }
+
+  sok2(e) {
+    e.preventDefault();
+    bestillingService.sok4(this.utlevering_dato2, this.faktiskInnlevering_dato2, this.selger, sok => {
+      this.ansatteRapport = sok;
+      this.createTable2();
+
+      ansatteService.getSelger(this.selger, finnNavn => {
+        this.selgerNavn = finnNavn;
+        this.ansattFornavnArray.pop();
+        this.ansattFornavnArray.push(this.selgerNavn[0].fornavn);
+
+        this.ansattEtternavnArray.pop();
+        this.ansattEtternavnArray.push(this.selgerNavn[0].etternavn);
+      });
     });
   }
 
@@ -701,17 +838,31 @@ export class Rapport extends Component {
     document.getElementById('utlevering_dato').value = '';
     document.getElementById('faktiskInnlevering_dato').value = '';
 
-    bestillingService.hentRapport(rapport => {
-      this.rapporter = rapport;
-      this.createTable();
+    bestillingService.hentTotalRapport(rapport => {
+      this.totalRapport = rapport;
+      this.createTable1();
     });
   }
 
-  createTable() {
-    this.tabell = '';
-    this.tabell = [];
+  nullstill2() {
+    this.utlevering_dato2 = '';
+    this.faktiskInnlevering_dato2 = '';
 
-    this.tabell.push(
+    document.getElementById('utlevering_dato2').value = '';
+    document.getElementById('faktiskInnlevering_dato2').value = '';
+    document.getElementById('ansattInput').value = '';
+
+    bestillingService.hentAnsatteRapport(rapport => {
+      this.ansatteRapport = rapport;
+      this.createTable2();
+    });
+  }
+
+  createTable1() {
+    this.tabell1 = '';
+    this.tabell1 = [];
+
+    this.tabell1.push(
       <tr>
         <th>Id</th>
         <th>Bestillingstype</th>
@@ -723,30 +874,74 @@ export class Rapport extends Component {
       </tr>
     );
 
-    for (let i = 0; i < this.rapporter.length; i++) {
-      this.tabell.push(
+    for (let i = 0; i < this.totalRapport.length; i++) {
+      this.tabell1.push(
         <tr>
-          <td>{this.rapporter[i].id}</td>
-          <td>{this.rapporter[i].bestilling_type}</td>
+          <td>{this.totalRapport[i].id}</td>
+          <td>{this.totalRapport[i].bestilling_type}</td>
           <td>
-            {this.rapporter[i].utlevering_dato} {this.rapporter[i].utlevering_tid}
+            {this.totalRapport[i].utlevering_dato} {this.totalRapport[i].utlevering_tid}
           </td>
           <td>
-            {this.rapporter[i].faktiskInnlevering_dato} {this.rapporter[i].faktiskInnlevering_tid}
+            {this.totalRapport[i].faktiskInnlevering_dato} {this.totalRapport[i].faktiskInnlevering_tid}
           </td>
-          <td>{this.rapporter[i].epost}</td>
+          <td>{this.totalRapport[i].epost}</td>
           <td>
-            {this.rapporter[i].fornavn} {this.rapporter[i].etternavn}
+            {this.totalRapport[i].fornavn} {this.totalRapport[i].etternavn}
           </td>
-          <td>{this.rapporter[i].gevinst},-</td>
+          <td>{this.totalRapport[i].gevinst},-</td>
         </tr>
       );
-      let tall = Number(this.rapporter[i].gevinst);
+      let tall = Number(this.totalRapport[i].gevinst);
       this.totalGevinst = Number(this.totalGevinst) + tall;
     }
     this.totalGevinstArray.pop();
     this.totalGevinstArray.push(this.totalGevinst);
     this.totalGevinst = 0;
+  }
+
+  createTable2() {
+    this.tabell2 = '';
+    this.tabell2 = [];
+
+    this.tabell2.push(
+      <tr>
+        <th>Id</th>
+        <th>Bestillingstype</th>
+        <th>Utleveringstid</th>
+        <th>Innleveringstid</th>
+        <th>Kundens epost</th>
+        <th>Ansattes navn</th>
+        <th>Ansattes telefon</th>
+        <th>Inntekt for bestillinga</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.ansatteRapport.length; i++) {
+      this.tabell2.push(
+        <tr>
+          <td>{this.ansatteRapport[i].id}</td>
+          <td>{this.ansatteRapport[i].bestilling_type}</td>
+          <td>
+            {this.ansatteRapport[i].utlevering_dato} {this.ansatteRapport[i].utlevering_tid}
+          </td>
+          <td>
+            {this.ansatteRapport[i].faktiskInnlevering_dato} {this.ansatteRapport[i].faktiskInnlevering_tid}
+          </td>
+          <td>{this.ansatteRapport[i].epost}</td>
+          <td>
+            {this.ansatteRapport[i].fornavn} {this.ansatteRapport[i].etternavn}
+          </td>
+          <td>{this.ansatteRapport[i].telefon}</td>
+          <td>{this.ansatteRapport[i].gevinst},-</td>
+        </tr>
+      );
+      let tall = Number(this.ansatteRapport[i].gevinst);
+      this.ansatteGevinst = Number(this.ansatteGevinst) + tall;
+    }
+    this.ansatteGevinstArray.pop();
+    this.ansatteGevinstArray.push(this.ansatteGevinst);
+    this.ansatteGevinst = 0;
   }
 }
 
