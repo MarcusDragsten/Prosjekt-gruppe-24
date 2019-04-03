@@ -37,13 +37,11 @@ import {
   Reparasjoner,
   EndreReparasjoner,
   HenteSykkel,
-  EndreHenteSykkel,
   LeggTilSykkel,
   LeggTilUtstyr,
   EndreSykkel,
   EndreUtstyrLager,
-  SavnetSykkel,
-  EndreSavnetSykkel
+  SavnetSykkel
 } from '../scripts/lager.js';
 import { loginService } from './services';
 
@@ -205,13 +203,11 @@ ReactDOM.render(
       <Route path="/reparasjoner/" component={Reparasjoner} />
       <Route path="/reparasjoner/:id/edit" component={EndreReparasjoner} />
       <Route path="/henteSykkel/" component={HenteSykkel} />
-      <Route path="/henteSykkel/:id/edit" component={EndreHenteSykkel} />
       <Route path="/leggTilSykkel/" component={LeggTilSykkel} />
       <Route path="/leggTilUtstyr/" component={LeggTilUtstyr} />
       <Route path="/redigerSykkel/:id/edit" component={EndreSykkel} />
       <Route path="/redigerUtstyr/:id/edit" component={EndreUtstyrLager} />
       <Route path="/savnetSykkel/" component={SavnetSykkel} />
-      <Route path="/savnetSykkel/:id/edit" component={EndreSavnetSykkel} />
     </div>
   </HashRouter>,
   document.getElementById('root')

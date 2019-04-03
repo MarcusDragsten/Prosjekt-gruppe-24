@@ -21,10 +21,10 @@ class LagerService extends Component {
       success(results[0]);
     });
   }
-  updateSykkel(sykler, success) {
+  updateSykkel(status, lokasjon, timepris, id, success) {
     connection.query(
       'update Sykkel set status=?, lokasjon_id=?, timepris=? where id=?',
-      [sykler.status, sykler.lokasjon_id, sykler.timepris, sykler.id],
+      [status, lokasjon, timepris, id],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -47,10 +47,10 @@ class LagerService extends Component {
       success(results[0]);
     });
   }
-  updateUtstyr(utstyr, success) {
+  updateUtstyr(status, lokasjon, pris, id, success) {
     connection.query(
       'update Utstyr set status=?, lokasjon_id=?, pris=? where id=?',
-      [utstyr.status, utstyr.lokasjon_id, utstyr.pris, utstyr.id],
+      [status, lokasjon, pris, id],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -171,8 +171,8 @@ class LagerService extends Component {
     });
   }
 
-  ferdigReparasjoner(sykler, success) {
-    connection.query('update Sykkel set status="Ledig" where id=?', [sykler.id], (error, results) => {
+  ferdigReparasjoner(id, success) {
+    connection.query('update Sykkel set status="Ledig" where id=?', [id], (error, results) => {
       if (error) return console.error(error);
 
       success();
@@ -196,20 +196,27 @@ class LagerService extends Component {
       success(results[0]);
     });
   }
-  ferdigHentet(sykkel, success) {
-    connection.query(
-      'update Sykkel set status="Ledig", bestilling_id=NULL where id=?',
-      [sykkel.id],
-      (error, results) => {
-        if (error) return console.error(error);
+  ferdigHentet(id, success) {
+    connection.query('update Sykkel set status="Ledig", bestilling_id=NULL where id=?', [id], (error, results) => {
+      if (error) return console.error(error);
 
-        success();
-      }
-    );
+      success();
+    });
   }
   hentSavnetSykkel(success) {
     connection.query(
       'SELECT Sykkel.bestilling_id, Sykkel.id, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid, Sykkel.modellnavn, Bestilling.kunde_epost, Lokasjoner.område FROM Sykkel INNER JOIN Bestilling ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Lokasjoner.id = Sykkel.lokasjon_id WHERE Bestilling.innlevering_dato < CURRENT_DATE() AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato',
+
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
+  hentLokasjon(success) {
+    connection.query(
+      'SELECT * FROM Lokasjoner',
 
       (error, results) => {
         if (error) return console.error(error);

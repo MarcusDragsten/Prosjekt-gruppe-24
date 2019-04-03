@@ -3,6 +3,7 @@ import { Component } from 'react-simplified';
 import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { lagerService } from '../services/lagerService.js';
+import { bestillingService } from '../services/bestillingService.js';
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
@@ -88,11 +89,12 @@ export class LagerStartside extends Component {
 export class LedigSykkel extends Component {
   sykkelPåLager = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  modellnavn = '';
-  timepris = '';
+  type = '%';
+  lokasjon_id = '%';
+  modellnavn = '%';
+  timepris = '%';
 
   render() {
     return (
@@ -106,14 +108,15 @@ export class LedigSykkel extends Component {
           <form onSubmit={this.sok}>
             <input type="text" id="type" placeholder="Sykkeltype" onChange={e => (this.type = event.target.value)} />
             <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
+              {' '}
               <option value="" selected>
                 Tilhørighet:
               </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
             </select>
             <input
               type="text"
@@ -144,6 +147,9 @@ export class LedigSykkel extends Component {
   mounted() {
     lagerService.hentSykkelPåLager(sykkelPåLager => {
       this.sykkelPåLager = sykkelPåLager;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
   }
@@ -195,14 +201,18 @@ export class LedigSykkel extends Component {
   }
   sok(e) {
     e.preventDefault();
-    if (this.type == '') this.type = '%';
-    if (this.lokasjon_id == '') this.lokasjon_id = '%';
-    if (this.modellnavn == '') this.modellnavn = '%';
-    if (this.timepris == '') this.timepris = '%';
+    if (this.sykkelPåLager.type == '') this.type = '%';
+    if (this.sykkelPåLager.lokasjon_id == '') this.lokasjon_id = '%';
+    if (this.sykkelPåLager.modellnavn == '') this.modellnavn = '%';
+    if (this.sykkelPåLager.timepris == '') this.timepris = '%';
 
     lagerService.sok(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sok => {
       this.sykkelPåLager = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.modellnavn);
+      console.log(this.timepris);
     });
   }
 
@@ -233,11 +243,12 @@ export class LedigSykkel extends Component {
 export class UtleidSykkel extends Component {
   sykkelUtleid = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  modellnavn = '';
-  lokasjon_id = '';
-  timepris = '';
+  type = '%';
+  modellnavn = '%';
+  lokasjon_id = '%';
+  timepris = '%';
 
   render() {
     return (
@@ -251,14 +262,15 @@ export class UtleidSykkel extends Component {
           <form onSubmit={this.sokUtleid}>
             <input type="text" id="type" placeholder="Sykkeltype" onChange={e => (this.type = event.target.value)} />
             <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
+              {' '}
               <option value="" selected>
                 Tilhørighet:
               </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
             </select>
             <input
               type="text"
@@ -289,6 +301,9 @@ export class UtleidSykkel extends Component {
   mounted() {
     lagerService.hentUtleideSykler(sykkelUtleid => {
       this.sykkelUtleid = sykkelUtleid;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
   }
@@ -346,8 +361,11 @@ export class UtleidSykkel extends Component {
 
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
-      console.log(this.sykkelUtleid);
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.modellnavn);
+      console.log(this.timepris);
     });
   }
 
@@ -377,10 +395,11 @@ export class UtleidSykkel extends Component {
 export class LedigUtstyr extends Component {
   utstyrPåLager = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  pris = '';
+  type = '%';
+  lokasjon_id = '%';
+  pris = '%';
 
   render() {
     return (
@@ -404,14 +423,15 @@ export class LedigUtstyr extends Component {
               <option value="Sykkelstativ">Sykkelstativ til hund</option>
             </select>
             <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
+              {' '}
               <option value="" selected>
                 Tilhørighet:
               </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
             </select>
             <input type="number" id="pris" placeholder="Timepris" onChange={e => (this.pris = event.target.value)} />
             <button type="submit">Søk</button>
@@ -431,6 +451,9 @@ export class LedigUtstyr extends Component {
   mounted() {
     lagerService.hentUtstyrPåLager(utstyrPåLager => {
       this.utstyrPåLager = utstyrPåLager;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
   }
@@ -480,6 +503,9 @@ export class LedigUtstyr extends Component {
     lagerService.sokUtstyr(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrPåLager = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.pris);
     });
   }
 
@@ -507,10 +533,11 @@ export class LedigUtstyr extends Component {
 export class UtleidUtstyr extends Component {
   utstyrUtleid = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  pris = '';
+  type = '%';
+  lokasjon_id = '%';
+  pris = '%';
 
   render() {
     return (
@@ -534,14 +561,15 @@ export class UtleidUtstyr extends Component {
               <option value="Sykkelstativ">Sykkelstativ til hund</option>
             </select>
             <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
+              {' '}
               <option value="" selected>
                 Tilhørighet:
               </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
             </select>
             <input type="number" id="pris" placeholder="Timepris" onChange={e => (this.pris = event.target.value)} />
             <button type="submit">Søk</button>
@@ -561,6 +589,9 @@ export class UtleidUtstyr extends Component {
   mounted() {
     lagerService.hentUtleideUtstyr(utstyrUtleid => {
       this.utstyrUtleid = utstyrUtleid;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
   }
@@ -611,6 +642,9 @@ export class UtleidUtstyr extends Component {
     lagerService.sokUtstyrUtleid(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrUtleid = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.pris);
     });
   }
 
@@ -690,29 +724,19 @@ export class Reparasjoner extends Component {
 }
 
 export class EndreReparasjoner extends Component {
-  reparasjoner = null;
-
   render() {
-    if (!this.reparasjoner) return null;
-
     return (
       <div>
-        Helt sikker?
-        <button type="button" onClick={this.save}>
-          Ja
-        </button>
+        <img src="loading.gif" alt="loading GIF" />
       </div>
     );
   }
-  mounted() {
-    lagerService.hentReparasjon(this.props.match.params.id, reparasjoner => {
-      this.reparasjoner = reparasjoner;
-    });
-  }
 
-  save() {
-    lagerService.ferdigReparasjoner(this.reparasjoner, () => {
-      history.push('/reparasjoner/');
+  mounted() {
+    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
+      lagerService.ferdigReparasjoner(this.props.match.params.id, ferdigReparasjoner => {
+        history.push('/lagerStartside/');
+      });
     });
   }
 }
@@ -766,42 +790,12 @@ export class HenteSykkel extends Component {
           <td>{this.sykkel[i].område}</td>
           <td>{this.sykkel[i].innlevering_dato}</td>
           <td>{this.sykkel[i].innlevering_tid}</td>
-          <td>
-            <NavLink to={'/henteSykkel/' + this.sykkel[i].id + '/edit'}>Sykkel er hentet</NavLink>
-          </td>
         </tr>
       );
     }
   }
   tilbake() {
     history.push('/lagerStartside/');
-  }
-}
-export class EndreHenteSykkel extends Component {
-  sykkel = null;
-
-  render() {
-    if (!this.sykkel) return null;
-
-    return (
-      <div>
-        Helt sikker?
-        <button type="button" onClick={this.save}>
-          Ja
-        </button>
-      </div>
-    );
-  }
-  mounted() {
-    lagerService.henteSykkelId(this.props.match.params.id, sykkel => {
-      this.sykkel = sykkel;
-    });
-  }
-
-  save() {
-    lagerService.ferdigHentet(this.sykkel, () => {
-      history.push('/henteSykkel/');
-    });
   }
 }
 
@@ -985,6 +979,7 @@ export class LeggTilUtstyr extends Component {
 }
 export class EndreSykkel extends Component {
   sykler = null;
+  utleveringssteder = [];
 
   render() {
     if (!this.sykler) return null;
@@ -1001,17 +996,17 @@ export class EndreSykkel extends Component {
             </select>
           </li>
           <li>
-            Lokasjon:
+            Tilhørighet:
             <select
               value={this.sykler.lokasjon_id}
-              onChange={e => (this.sykler.lokasjon = event.target.value)}
+              onChange={e => (this.sykler.lokasjon_id = event.target.value)}
               required
             >
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Rallanregen</option>
-              <option value="4">Holbergplassen</option>
-              <option value="5">Myrdal Stasjon</option>
+              {this.utleveringssteder.map(utleveringssteder => (
+                <option value={utleveringssteder.id} key={utleveringssteder.id}>
+                  {utleveringssteder.område}
+                </option>
+              ))}
             </select>
           </li>
           <li>
@@ -1038,12 +1033,22 @@ export class EndreSykkel extends Component {
     lagerService.getSykkel(this.props.match.params.id, sykkel => {
       this.sykler = sykkel;
     });
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
+      console.log(this.utleveringssteder);
+    });
   }
 
   save() {
-    lagerService.updateSykkel(this.sykler, () => {
-      history.push('/lagerStartside/');
-    });
+    lagerService.updateSykkel(
+      this.sykler.status,
+      this.sykler.lokasjon_id,
+      this.sykler.timepris,
+      this.props.match.params.id,
+      updateSykkel => {
+        history.push('/lagerStartside/');
+      }
+    );
   }
   tilbake() {
     history.push('/lagerStartside');
@@ -1052,8 +1057,9 @@ export class EndreSykkel extends Component {
     lagerService.deleteSykkel(this.props.match.params.id, () => history.push('lagerStartside'));
   }
 }
-export class EndreUtstyr extends Component {
+export class EndreUtstyrLager extends Component {
   utstyr = null;
+  utleveringssteder = [];
 
   render() {
     if (!this.utstyr) return null;
@@ -1070,14 +1076,17 @@ export class EndreUtstyr extends Component {
             </select>
           </li>
           <li>
-            Lokasjon:
-            <select value={this.utstyr.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
-              <option>Velg lokasjon</option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
+            Tilhørighet:
+            <select
+              value={this.utstyr.lokasjon_id}
+              onChange={e => (this.utstyr.lokasjon_id = event.target.value)}
+              required
+            >
+              {this.utleveringssteder.map(utleveringssteder => (
+                <option value={utleveringssteder.id} key={utleveringssteder.id}>
+                  {utleveringssteder.område}
+                </option>
+              ))}
             </select>
           </li>
           <li>
@@ -1104,12 +1113,21 @@ export class EndreUtstyr extends Component {
     lagerService.getUtstyr(this.props.match.params.id, utstyr => {
       this.utstyr = utstyr;
     });
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
+    });
   }
 
   save() {
-    lagerService.updateUtstyr(this.utstyr, () => {
-      history.push('/lagerStartside/');
-    });
+    lagerService.updateUtstyr(
+      this.utstyr.status,
+      this.utstyr.lokasjon_id,
+      this.utstyr.pris,
+      this.props.match.params.id,
+      updateUtstyr => {
+        history.push('/lagerStartside/');
+      }
+    );
   }
   tilbake() {
     history.push('/lagerStartside');
@@ -1168,37 +1186,11 @@ export class SavnetSykkel extends Component {
           <td>{this.savnetSykkel[i].innleveringssted}</td>
           <td>{this.savnetSykkel[i].innlevering_dato}</td>
           <td>{this.savnetSykkel[i].innlevering_tid}</td>
-          <td>
-            <NavLink to={'/savnetSykkel/' + this.savnetSykkel[i].id + '/edit'}> Returnert </NavLink>
-          </td>
         </tr>
       );
     }
   }
   tilbake() {
     history.push('/lagerStartside/');
-  }
-}
-export class EndreSavnetSykkel extends Component {
-  sykkel = null;
-
-  render() {
-    var x = confirm('Er sykkel tilbake på lager?');
-    if (x == true) {
-      console.log('Sykkelen er tilbake på lager');
-    } else {
-      console.log('Avbryt');
-    }
-  }
-  mounted() {
-    lagerService.hentSavnetSykkelId(this.props.match.params.id, sykkel => {
-      this.sykkel = sykkel;
-    });
-  }
-
-  save() {
-    lagerService.ferdigSavnetSykkel(this.sykkel, () => {
-      history.push('/lagerStartside/');
-    });
   }
 }
