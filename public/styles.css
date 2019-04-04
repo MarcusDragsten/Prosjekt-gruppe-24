@@ -1,11 +1,18 @@
+@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
 body {
-  background-image: url('../bilder/stripes-light.png');
-  background-color: white;
+background-color: #c4dfe6 !important;
 }
 /*removes all rounded corners in bootstrap buttons*/
 * {
   border-radius: 0 !important;
 }
+#header{
+  background-color: #002c54 !important;
+  color: #fff !important;
+}
+
 
 #velgSykkel,
 #velgUtstyr,
@@ -50,24 +57,32 @@ h1 {
   text-align: center;
 }
 
+.header {
+  background-color: #995c5c;
+}
+
 #loginDiv {
-  background-color: #f2f2f2;
-  padding: 20px;
+
   margin: auto;
   top: 25%;
   position: relative;
   max-width: 50%;
+
 }
+
 
 #brukernavnDiv,
 #passordDiv {
   max-width: 75%;
+  background: transparant;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #inputBrukernavn,
 #inputPassord {
   width: 100%;
 }
+
 #salgStartsideKnapperDiv,
 #adminStartsideKnapperDiv {
   position: absolute;
@@ -82,7 +97,7 @@ h1 {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #4caf50;
+  background-color: #002c54;
   color: white;
   text-align: center;
   padding-bottom: 15px;
@@ -92,7 +107,7 @@ h1 {
 }
 
 .btn {
-  background-color: #4caf50; /* Green */
+  background-color: #2b616d; /* Green */
   border: none;
   color: white;
   padding: 7px 30px;
@@ -252,7 +267,8 @@ img {
 
 #ansatteDiv,
 #ansatteDetailsDiv,
-#lokasjonerDiv {
+#lokasjonerDiv,
+#lokasjonerDetailsDiv {
   position: relative;
   max-width: 45%;
   text-align: center;
@@ -262,18 +278,21 @@ img {
   border-left: 2px solid black;
 }
 
-#ansatteDetailsDiv {
+#ansatteDetailsDiv,
+#lokasjonerDetailsDiv {
   border-top: 2px solid black;
   padding-bottom: 10px;
 }
 
-#ansatteDiv {
+#ansatteDiv,
+#lokasjonerDiv {
   border-bottom: 2px solid black;
   padding-bottom: 10px;
 }
 
 #ansatteEditDiv,
-#nyAnsattDiv {
+#nyAnsattDiv,
+#nyLokasjonDiv {
   position: relative;
   text-align: center;
   padding-bottom: 10px;
