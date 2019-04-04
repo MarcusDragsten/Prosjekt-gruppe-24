@@ -30,7 +30,8 @@ body {
 }
 #filtrerAktiveBestillingerDiv,
 #filtrerRapportTotalDiv,
-#filtrerRapportAnsatteDiv {
+#filtrerRapportAnsatteDiv,
+#leggTilSykkelDiv {
   background-color: #f2f2f2;
   padding-bottom: 20px;
   margin: auto;
@@ -124,7 +125,6 @@ h1 {
   left: 15px;
   top: 10%;
 }
-
 
 #nyKundeDiv {
   position: relative;
