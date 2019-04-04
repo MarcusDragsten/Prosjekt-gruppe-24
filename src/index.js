@@ -6,16 +6,20 @@ import {
   AnsatteAdmin,
   AnsatteSekretær,
   AdminStartside,
+  SekretærStartside,
   AnsatteDetails,
-  AnsatteDetailsSek,
-  AdminStartsideSek,
-  AnsatteNew,
+  AnsatteDetailsSekretær,
+  AdminStartsideSekretær,
+  NyAnsatt,
   AnsatteEdit,
   Rapport,
   Lokasjoner,
   LokasjonerDetails,
   LokasjonNew,
-  LokasjonEdit
+  LokasjonEdit,
+  LokasjonerSekretær,
+  LokasjonerDetailsSekretær,
+  RapportSekretær
 } from '../scripts/admin.js';
 import { Bestilling } from '../scripts/bestilling.js';
 import {
@@ -76,7 +80,7 @@ class Login extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
@@ -140,11 +144,11 @@ class Login extends Component {
         if (this.passord == this.ansatte[i].passord) {
           console.log(this.brukernavn + ' er innlogget!');
           if (this.ansatte[i].rolle == 'Daglig leder') {
-            history.push('/adminStartside/');
+            history.push('/adminStartside/' + this.ansatte[i].id);
             //Daglig leder
           }
           if (this.ansatte[i].rolle == 'Sekretær') {
-            history.push('/ansatteSekretær/');
+            history.push('/sekretærStartside/' + this.ansatte[i].id);
             //Sekretær
           }
           if (this.ansatte[i].rolle == 'Selger') {
@@ -182,20 +186,24 @@ ReactDOM.render(
       <Route exact path="/endreBestillingUtstyr/:ansattId/:bestillingId" component={EndreUtstyr} />
       <Route path="/bestilling/:ansattId" component={Bestilling} />
 
-      <Route path="/nyKunde/" component={NyKunde} />
+      <Route path="/nyKunde/:ansattId" component={NyKunde} />
 
-      <Route path="/adminStartside/" component={AdminStartside} />
-      <Route path="/ansatteAdmin/" component={AnsatteAdmin} />
-      <Route path="/ansatteAdmin/:id" component={AnsatteDetails} />
-      <Route path="/ansatteSekretær" component={AnsatteSekretær} />
-      <Route path="/new_ansatte/" component={AnsatteNew} />
-      <Route path="/ansatteSek/:id" component={AnsatteDetailsSek} />
-      <Route path="/ansatte/:id/edit" component={AnsatteEdit} />
-      <Route path="/rapport/" component={Rapport} />
-      <Route path="/lokasjoner/" component={Lokasjoner} />
-      <Route path="/lokasjoner/:id" component={LokasjonerDetails} />
-      <Route path="/lokasjon/:id/edit" component={LokasjonEdit} />
-      <Route path="/nyLokasjon/" component={LokasjonNew} />
+      <Route path="/adminStartside/:ansattId" component={AdminStartside} />
+      <Route path="/ansatteAdmin/:ansattId" component={AnsatteAdmin} />
+      <Route path="/ansatteAdmin/:ansattId/:ansatteListe" component={AnsatteDetails} />
+      <Route path="/sekretærStartside/:ansattId" component={SekretærStartside} />
+      <Route path="/ansatteSekretær/:ansattId" component={AnsatteSekretær} />
+      <Route path="/ansatteSekretær/:ansattId/:ansatteListe" component={AnsatteDetailsSekretær} />
+      <Route path="/nyAnsatt/:ansattId" component={NyAnsatt} />
+      <Route path="/ansatteEdit/:ansattId/:edit" component={AnsatteEdit} />
+      <Route path="/rapport/:ansattId" component={Rapport} />
+      <Route path="/rapportSekretær/:ansattId" component={RapportSekretær} />
+      <Route path="/lokasjoner/:ansattId" component={Lokasjoner} />
+      <Route path="/lokasjoner/:ansattId/:lokasjonListe" component={LokasjonerDetails} />
+      <Route path="/lokasjonerSekretær/:ansattId" component={LokasjonerSekretær} />
+      <Route path="/lokasjonerSekretær/:ansattId/:lokasjonListe" component={LokasjonerDetailsSekretær} />
+      <Route path="/lokasjon/:ansattId/:edit" component={LokasjonEdit} />
+      <Route path="/nyLokasjon/:ansattId" component={LokasjonNew} />
 
       <Route path="/lagerStartside/" component={LagerStartside} />
       <Route path="/ledigSykkel/" component={LedigSykkel} />

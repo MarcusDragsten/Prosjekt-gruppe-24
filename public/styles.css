@@ -49,6 +49,10 @@ h1 {
   text-align: center;
 }
 
+.header {
+  background-color: #995c5c;
+}
+
 #loginDiv {
   background-color: #f2f2f2;
   padding: 20px;
@@ -124,7 +128,6 @@ h1 {
   left: 15px;
   top: 10%;
 }
-
 
 #nyKundeDiv {
   position: relative;
@@ -252,7 +255,8 @@ img {
 
 #ansatteDiv,
 #ansatteDetailsDiv,
-#lokasjonerDiv {
+#lokasjonerDiv,
+#lokasjonerDetailsDiv {
   position: relative;
   max-width: 45%;
   text-align: center;
@@ -262,18 +266,21 @@ img {
   border-left: 2px solid black;
 }
 
-#ansatteDetailsDiv {
+#ansatteDetailsDiv,
+#lokasjonerDetailsDiv {
   border-top: 2px solid black;
   padding-bottom: 10px;
 }
 
-#ansatteDiv {
+#ansatteDiv,
+#lokasjonerDiv {
   border-bottom: 2px solid black;
   padding-bottom: 10px;
 }
 
 #ansatteEditDiv,
-#nyAnsattDiv {
+#nyAnsattDiv,
+#nyLokasjonDiv {
   position: relative;
   text-align: center;
   padding-bottom: 10px;

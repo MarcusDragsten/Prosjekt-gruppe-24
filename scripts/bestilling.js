@@ -222,19 +222,13 @@ export class Bestilling extends Component {
             <button type="submit" class="btn" id="velgUtstyrKnapp">
               Velg sykler og utstyr
             </button>
+            <button type="button" id="avbrytBestilling" class="btn" onClick={this.return}>
+              Avbryt Bestilling
+            </button>
           </form>
-          <button type="button" id="tilbake" onClick={this.return}>
-            Tilbake til startsiden
-          </button>
-          <button type="button" id="avbrytBestilling" onClick={this.return}>
-            Avbryt Bestilling
-          </button>
         </div>
         <div id="velgSykkel">
           <h1>Velg hvor mange sykler kunden vil ha:</h1>
-          <button type="button" id="avbrytBestilling" onClick={this.avbrytBestilling}>
-            Avbryt Bestilling
-          </button>
           <div id="syklerDiv">
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
               <h4>Ghost Hybrid Herre</h4>
@@ -473,6 +467,9 @@ export class Bestilling extends Component {
           <button type="button" class="btn" id="lagOversiktKnapp" onClick={this.lagOversikt}>
             Gå videre
           </button>
+          <button type="button" id="avbrytBestillingUtstyr" class="btn" onClick={this.avbrytBestillingUtstyr}>
+            Avbryt Bestilling
+          </button>
         </div>
         <div id="bestillingOversikt">
           <h1>Bestillingoversikt</h1>
@@ -507,12 +504,10 @@ export class Bestilling extends Component {
               <u>{this.sumTotalt}</u>
             </b>
           </p>
-          <button type="button" id="tilbake" onClick={this.return}>
+          <button type="button" class="btn" onClick={this.return}>
             Tilbake til startsiden
           </button>
-          <button type="button" id="avbrytBestillingUtstyr" onClick={this.avbrytBestillingUtstyr}>
-            Avbryt Bestilling
-          </button>
+          <br />
         </div>
       </div>
     );
@@ -558,7 +553,7 @@ export class Bestilling extends Component {
   }
 
   nyKundePush() {
-    history.push('/nyKunde/');
+    history.push('/nyKunde/' + this.props.match.params.ansattId);
     // Pusher til et form som skal legge til en ny kunde
   }
 
@@ -569,24 +564,23 @@ export class Bestilling extends Component {
   return() {
     history.push('/salgStartside/' + this.props.match.params.ansattId);
   }
-  avbrytBestilling(){
-          bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
-        history.push('/salgStartside/' + this.props.match.params.ansattId)
-        });
+  avbrytBestilling() {
+    bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
+      history.push('/salgStartside/' + this.props.match.params.ansattId);
+    });
   }
-  avbrytBestillingSykkel(){
-          bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
-        history.push('/salgStartside/' + this.props.match.params.ansattId)
-        });
-  }
-  avbrytBestillingUtstyr(){
+  avbrytBestillingSykkel() {
     bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
-        bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
-  history.push('/salgStartside/' + this.props.match.params.ansattId)
-  });
-  });
-
-}
+      history.push('/salgStartside/' + this.props.match.params.ansattId);
+    });
+  }
+  avbrytBestillingUtstyr() {
+    bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+      bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
+        history.push('/salgStartside/' + this.props.match.params.ansattId);
+      });
+    });
+  }
 
   dagensDato() {
     this.dateNow = new Date();
