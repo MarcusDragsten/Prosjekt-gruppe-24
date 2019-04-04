@@ -145,7 +145,7 @@ class Login extends Component {
             //Selger
           }
           if (this.ansatte[i].rolle == 'Lager') {
-            history.push('/lagerStartside/');
+            history.push('/lagerStartside/' + this.ansatte[i].id);
             //Lager
           }
         } else {
@@ -194,19 +194,19 @@ ReactDOM.render(
       <Route path="/lokasjon/:ansattId/:edit" component={LokasjonEdit} />
       <Route path="/nyLokasjon/:ansattId" component={LokasjonNew} />
 
-      <Route path="/lagerStartside/" component={LagerStartside} />
-      <Route path="/ledigSykkel/" component={LedigSykkel} />
-      <Route path="/utleidSykkel/" component={UtleidSykkel} />
-      <Route path="/ledigUtstyr/" component={LedigUtstyr} />
-      <Route path="/utleidUtstyr/" component={UtleidUtstyr} />
-      <Route path="/reparasjoner/" component={Reparasjoner} />
-      <Route path="/reparasjoner/:id/edit" component={EndreReparasjoner} />
-      <Route path="/henteSykkel/" component={HenteSykkel} />
-      <Route path="/leggTilSykkel/" component={LeggTilSykkel} />
-      <Route path="/leggTilUtstyr/" component={LeggTilUtstyr} />
-      <Route path="/redigerSykkel/:id/edit" component={EndreSykkel} />
-      <Route path="/redigerUtstyr/:id/edit" component={EndreUtstyrLager} />
-      <Route path="/savnetSykkel/" component={SavnetSykkel} />
+      <Route path="/lagerStartside/:ansattId" component={LagerStartside} />
+      <Route path="/ledigSykkel/:ansattId" component={LedigSykkel} />
+      <Route path="/utleidSykkel/:ansattId" component={UtleidSykkel} />
+      <Route path="/ledigUtstyr/:ansattId" component={LedigUtstyr} />
+      <Route path="/utleidUtstyr/:ansattId" component={UtleidUtstyr} />
+      <Route path="/reparasjoner/:ansattId" component={Reparasjoner} />
+      <Route path="/reparasjoner/:ansattId:id/edit" component={EndreReparasjoner} />
+      <Route path="/henteSykkel/:ansattId" component={HenteSykkel} />
+      <Route path="/leggTilSykkel/:ansattId" component={LeggTilSykkel} />
+      <Route path="/leggTilUtstyr/:ansattId" component={LeggTilUtstyr} />
+      <Route path="/redigerSykkel/:ansattId:id/edit" component={EndreSykkel} />
+      <Route path="/redigerUtstyr/:ansattId:id/edit" component={EndreUtstyrLager} />
+      <Route path="/savnetSykkel/:ansattId" component={SavnetSykkel} />
     </div>
   </HashRouter>,
   document.getElementById('root')
