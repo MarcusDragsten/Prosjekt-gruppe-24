@@ -10,6 +10,7 @@ const history = createHashHistory();
 
 export class SalgStartside extends Component {
   ansatt = [];
+
   render() {
     return (
       <div id="yttersteDiv">
