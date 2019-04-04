@@ -1148,6 +1148,7 @@ export class LeggTilSykkel extends Component {
               <input
                 type="number"
                 id="number"
+                min="0"
                 placeholder="Timepris"
                 class="form-control form-control-lg"
                 onChange={e => (this.timepris = e.target.value)}
