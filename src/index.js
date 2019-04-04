@@ -82,41 +82,32 @@ class Login extends Component {
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
-          <form onSubmit={this.login}>
-            <h3>Innlogging ansatte:</h3>
-            <label for="Brukernavn">Brukernavn:</label>
-            <div id="brukernavnDiv" >
-              <span class="input-group-addon">
-                <i class="glyphicon glyphicon-user" />
-              </span>
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
+          </div>
+          <div id="loginInputDiv">
+            <form onSubmit={this.login}>
+              <h3>Innlogging ansatte:</h3>
               <input
                 type="text"
-
                 id="inputBrukernavn"
-                placeholder="Et brukernavn"
+                placeholder="brukernavn"
                 onChange={e => (this.brukernavn = event.target.value)}
                 required
               />
-            </div>
-            <label for="Passord">Passord:</label>
-            <div id="passordDiv" >
-              <span class="input-group-addon">
-                <i class="glyphicon glyphicon-lock" />
-              </span>
               <input
                 type="password"
-                placeholder="*******"
-              
+                placeholder="passord"
                 id="inputPassord"
                 onChange={e => (this.passord = event.target.value)}
                 required
               />
-            </div>
-            <button type="submit" class="btn">
-              Logg inn
-            </button>
-          </form>
-          <p>{this.feilmelding}</p>
+              <button type="submit" id="loginKnapp">
+                Logg inn
+              </button>
+              <p>{this.feilmelding}</p>
+            </form>
+          </div>
         </div>
         <div class="footer">
           <p>

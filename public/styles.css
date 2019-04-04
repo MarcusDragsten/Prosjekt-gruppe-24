@@ -1,18 +1,19 @@
-@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+@import url(https://fonts.googleapis.com/css?family=Exo:100, 200, 400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 400, 300);
 
 body {
-background-color: #c4dfe6 !important;
+  background-color: #c4dfe6 !important;
 }
+
 /*removes all rounded corners in bootstrap buttons*/
 * {
   border-radius: 0 !important;
 }
-#header{
+
+#header {
   background-color: #002c54 !important;
   color: #fff !important;
 }
-
 
 #velgSykkel,
 #velgUtstyr,
@@ -56,31 +57,98 @@ h1 {
   text-align: center;
 }
 
-.header {
-  background-color: #995c5c;
+#loginInputDiv {
+  display: inline-block;
+  text-align: center;
+  height: 150px;
+  width: 350px;
+  padding: 10px;
+  z-index: 2;
+}
+
+#inputBrukernavn {
+  position: relative;
+  text-align: center;
+  width: 250px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 4px;
+}
+
+#inputPassord {
+  position: relative;
+  text-align: center;
+  width: 250px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 4px;
+  margin-top: 10px;
+}
+
+#loginKnapp {
+  width: 250px;
+  height: 35px;
+  background: #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px;
+  margin-top: 10px;
+}
+
+#loginKnapp:hover {
+  opacity: 0.8;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#logo {
+  max-width: 100%;
+  max-height: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #loginDiv {
-
-  margin: auto;
-  top: 25%;
   position: relative;
-  max-width: 50%;
-
+  top: 20%;
+  max-width: 70%;
+  text-align: center;
+  border: 2px solid black;
 }
 
+#loginBildeDiv {
+  display: inline-block;
+  height: 300px;
+  width: 300px;
+  z-index: 2;
+}
 
-#brukernavnDiv,
+/* #brukernavnDiv,
 #passordDiv {
   max-width: 75%;
   background: transparant;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-#inputBrukernavn,
-#inputPassord {
-  width: 100%;
-}
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+} */
 
 #salgStartsideKnapperDiv,
 #adminStartsideKnapperDiv {
@@ -106,7 +174,7 @@ h1 {
 }
 
 .btn {
-  background-color: #2b616d; /* Green */
+  background-color: #2b616d;
   border: none;
   color: white;
   padding: 7px 30px;
@@ -193,11 +261,6 @@ h1 {
   margin: 5px;
   padding-bottom: 5px;
   background-color: white;
-}
-
-img {
-  max-width: 90%;
-  max-height: 90%;
 }
 
 #loggUtKnapp {

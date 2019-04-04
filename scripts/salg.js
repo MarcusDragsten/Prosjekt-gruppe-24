@@ -1805,7 +1805,7 @@ export class NyKunde extends Component {
   }
 
   leggTilKunde() {
-    kundeService.leggTilKunde(this.epost, this.fornavn, this.etternavn, this.telefon, id => {
+    bestillingService.leggTilKunde(this.epost, this.fornavn, this.etternavn, this.telefon, id => {
       history.push('/bestilling/' + this.props.match.params.ansattId);
     });
   }
