@@ -83,6 +83,7 @@ class Login extends Component {
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
+<<<<<<< HEAD
           <form onSubmit={this.login}>
             <h3>Innlogging ansatte:</h3>
             <label for="Brukernavn">Brukernavn:</label>
@@ -90,13 +91,22 @@ class Login extends Component {
               <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user" />
               </span>
+=======
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
+          </div>
+          <div id="loginInputDiv">
+            <form onSubmit={this.login}>
+              <h3>Innlogging ansatte:</h3>
+>>>>>>> 3f2beafe28c44bdcf290c6e602a4d77cee5f4289
               <input
                 type="text"
                 id="inputBrukernavn"
-                placeholder="Et brukernavn"
+                placeholder="brukernavn"
                 onChange={e => (this.brukernavn = event.target.value)}
                 required
               />
+<<<<<<< HEAD
             </div>
             <label for="Passord">Passord:</label>
             <div id="passordDiv">
@@ -106,16 +116,21 @@ class Login extends Component {
               <input
                 type="password"
                 placeholder="*******"
+=======
+              <input
+                type="password"
+                placeholder="passord"
+>>>>>>> 3f2beafe28c44bdcf290c6e602a4d77cee5f4289
                 id="inputPassord"
                 onChange={e => (this.passord = event.target.value)}
                 required
               />
-            </div>
-            <button type="submit" class="btn">
-              Logg inn
-            </button>
-          </form>
-          <p>{this.feilmelding}</p>
+              <button type="submit" id="loginKnapp">
+                Logg inn
+              </button>
+              <p>{this.feilmelding}</p>
+            </form>
+          </div>
         </div>
         <div class="footer">
           <p>
