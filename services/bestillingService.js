@@ -114,6 +114,7 @@ class BestillingService extends Component {
       success(results[0]);
     });
   }
+
   avbrytBestilling(id, success) {
     connection.query('DELETE FROM Bestilling WHERE id=?;', [id], (error, results) => {
       if (error) return console.error(error);
@@ -121,19 +122,29 @@ class BestillingService extends Component {
       success(results[0]);
     });
   }
+
   avbrytBestillingSykkel(id, success) {
-    connection.query('UPDATE Sykkel SET status = "Ledig", bestilling_id = NULL WHERE bestilling_id=?;', [id], (error, results) => {
-      if (error) return console.error(error);
+    connection.query(
+      'UPDATE Sykkel SET status = "Ledig", bestilling_id = NULL WHERE bestilling_id=?;',
+      [id],
+      (error, results) => {
+        if (error) return console.error(error);
 
-      success(results[0]);
-    });
+        success(results[0]);
+      }
+    );
   }
-  avbrytBestillingUtstyr(id, success){
-    connection.query('UPDATE Utstyr SET status = "Ledig", bestilling_id = NULL WHERE bestilling_id=?;', [id], (error, results) => {
-      if (error) return console.error(error);
 
-      success(results[0]);
-    });
+  avbrytBestillingUtstyr(id, success) {
+    connection.query(
+      'UPDATE Utstyr SET status = "Ledig", bestilling_id = NULL WHERE bestilling_id=?;',
+      [id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results[0]);
+      }
+    );
   }
 
   hentAnsatt(id, success) {

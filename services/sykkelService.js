@@ -13,7 +13,7 @@ class SykkelService extends Component {
 
   hvorMangeSyklerLedig(success) {
     connection.query(
-      'select modellnavn, count (status) as ant_ledige from Sykkel where status="Ledig" group by modellnavn',
+      'select type, count (status) as ant_ledige from Sykkel where status="Ledig" group by type',
       (error, results) => {
         if (error) return console.error(error);
 
@@ -41,10 +41,10 @@ class SykkelService extends Component {
     );
   }
 
-  hvorMangeSyklerValgt(bestilling_id, modellnavn, success) {
+  hvorMangeSyklerValgt(bestilling_id, type, success) {
     connection.query(
-      'select count (bestilling_id) as hvorMangeValgt from Sykkel where bestilling_id = ? and modellnavn = ?',
-      [bestilling_id, modellnavn],
+      'select count (bestilling_id) as hvorMangeValgt from Sykkel where bestilling_id = ? and type = ?',
+      [bestilling_id, type],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -53,10 +53,10 @@ class SykkelService extends Component {
     );
   }
 
-  leggInnSykler(id, modell, hvorMange, success) {
+  leggInnSykler(id, type, hvorMange, success) {
     connection.query(
-      'UPDATE Sykkel SET status="Utleid", bestilling_id=? WHERE modellnavn=? AND status="Ledig" LIMIT ?',
-      [id, modell, Number(hvorMange)],
+      'UPDATE Sykkel SET status="Utleid", bestilling_id=? WHERE type=? AND status="Ledig" LIMIT ?',
+      [id, type, Number(hvorMange)],
       (error, results) => {
         if (error) return console.error(error);
 
