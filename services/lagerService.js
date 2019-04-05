@@ -225,6 +225,16 @@ class LagerService extends Component {
       }
     );
   }
+  hentSykkelBestilling(success) {
+    connection.query(
+      'SELECT Sykkel.bestilling_id, Sykkel.id, Sykkel.type, Sykkel.modellnavn, Lokasjoner.område, Bestilling.utleveringssted, Bestilling.utlevering_dato, Bestilling.utlevering_tid FROM Sykkel INNER JOIN Bestilling ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Sykkel.lokasjon_id = Lokasjoner.id WHERE Sykkel.status = "Utleid" AND Sykkel.bestilling_id IS NOT NULL AND Bestilling.utlevering_dato >= CURRENT_DATE() ORDER BY Bestilling.utlevering_dato',
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
 }
 
 export let lagerService = new LagerService();

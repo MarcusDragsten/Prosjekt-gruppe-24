@@ -45,7 +45,8 @@ import {
   LeggTilUtstyr,
   EndreSykkel,
   EndreUtstyrLager,
-  SavnetSykkel
+  SavnetSykkel,
+  SykkelBestilling
 } from '../scripts/lager.js';
 import { loginService } from './services';
 
@@ -85,13 +86,12 @@ class Login extends Component {
           <form onSubmit={this.login}>
             <h3>Innlogging ansatte:</h3>
             <label for="Brukernavn">Brukernavn:</label>
-            <div id="brukernavnDiv" >
+            <div id="brukernavnDiv">
               <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user" />
               </span>
               <input
                 type="text"
-
                 id="inputBrukernavn"
                 placeholder="Et brukernavn"
                 onChange={e => (this.brukernavn = event.target.value)}
@@ -99,14 +99,13 @@ class Login extends Component {
               />
             </div>
             <label for="Passord">Passord:</label>
-            <div id="passordDiv" >
+            <div id="passordDiv">
               <span class="input-group-addon">
                 <i class="glyphicon glyphicon-lock" />
               </span>
               <input
                 type="password"
                 placeholder="*******"
-              
                 id="inputPassord"
                 onChange={e => (this.passord = event.target.value)}
                 required
@@ -216,6 +215,7 @@ ReactDOM.render(
       <Route path="/redigerSykkel/:ansattId:id/edit" component={EndreSykkel} />
       <Route path="/redigerUtstyr/:ansattId:id/edit" component={EndreUtstyrLager} />
       <Route path="/savnetSykkel/:ansattId" component={SavnetSykkel} />
+      <Route path="/sykkelBestilling/:ansattId" component={SykkelBestilling} />
     </div>
   </HashRouter>,
   document.getElementById('root')

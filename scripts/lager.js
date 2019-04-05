@@ -48,6 +48,9 @@ export class LagerStartside extends Component {
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.savnetSykkel}>
             Sykler som ikke er innlevert
           </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.sykkelBestilling}>
+            Sykler som skal ut hos kunde
+          </button>
 
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTilSykkel}>
             Legg til sykler
@@ -92,6 +95,9 @@ export class LagerStartside extends Component {
   }
   savnetSykkel() {
     history.push('/savnetSykkel/' + this.props.match.params.ansattId);
+  }
+  sykkelBestilling() {
+    history.push('/sykkelBestilling/' + this.props.match.params.ansattId);
   }
   tilbake() {
     history.push('/');
@@ -1487,5 +1493,68 @@ export class EndreUtstyrLager extends Component {
     lagerService.deleteUtstyr(this.props.match.params.id, () =>
       history.push('/lagerStartside/' + this.props.match.params.ansattId)
     );
+  }
+}
+export class SykkelBestilling extends Component {
+  syklerIBestilling = [];
+  tabell = [];
+
+  render() {
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over sykler som skal ut i en bestilling</h2>
+        <br />
+        <table id="customers" align="center">
+          <tbody>{this.tabell}</tbody>
+        </table>
+      </div>
+    );
+  }
+
+  mounted() {
+    lagerService.hentSykkelBestilling(syklerIBestilling => {
+      this.syklerIBestilling = syklerIBestilling;
+      this.createTable();
+      console.log(this.syklerIBestilling);
+    });
+  }
+  createTable() {
+    this.tabell.push(
+      <tr>
+        <th>Bestillings ID</th>
+        <th>Sykkel ID</th>
+        <th>Type</th>
+        <th>Modellnavn</th>
+        <th>Tilhørighet</th>
+        <th>Utleveringssted</th>
+        <th>Utleveringssdato</th>
+        <th>Utleveringstid</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.syklerIBestilling.length; i++) {
+      this.tabell.push(
+        <tr>
+          <td>{this.syklerIBestilling[i].bestilling_id}</td>
+          <td>{this.syklerIBestilling[i].id}</td>
+          <td>{this.syklerIBestilling[i].type}</td>
+          <td>{this.syklerIBestilling[i].modellnavn}</td>
+          <td>{this.syklerIBestilling[i].område}</td>
+          <td>{this.syklerIBestilling[i].utleveringssted}</td>
+          <td>{this.syklerIBestilling[i].utlevering_dato}</td>
+          <td>{this.syklerIBestilling[i].utlevering_tid}</td>
+        </tr>
+      );
+    }
+  }
+
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
 }
