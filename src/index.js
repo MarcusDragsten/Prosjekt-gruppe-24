@@ -45,7 +45,8 @@ import {
   LeggTilUtstyr,
   EndreSykkel,
   EndreUtstyrLager,
-  SavnetSykkel
+  SavnetSykkel,
+  SykkelBestilling
 } from '../scripts/lager.js';
 import { loginService } from './services';
 
@@ -207,6 +208,7 @@ ReactDOM.render(
       <Route path="/redigerSykkel/:ansattId:id/edit" component={EndreSykkel} />
       <Route path="/redigerUtstyr/:ansattId:id/edit" component={EndreUtstyrLager} />
       <Route path="/savnetSykkel/:ansattId" component={SavnetSykkel} />
+      <Route path="/sykkelBestilling/:ansattId" component={SykkelBestilling} />
     </div>
   </HashRouter>,
   document.getElementById('root')
