@@ -59,7 +59,7 @@ class Login extends Component {
   brukernavn = '';
   passord = '';
 
-  feilmelding = 'Skriv inn brukernavn og passord';
+  feilmelding = '';
 
   render() {
     return (
@@ -68,9 +68,6 @@ class Login extends Component {
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
-          <div id="loginBildeDiv">
-            <img src="../bilder/logo.png" id="logo" alt="Logo" />
-          </div>
           <div id="loginInputDiv">
             <form onSubmit={this.login}>
               <h3>Innlogging ansatte</h3>
@@ -81,6 +78,7 @@ class Login extends Component {
                 onChange={e => (this.brukernavn = event.target.value)}
                 required
               />
+              <br />
               <input
                 type="password"
                 placeholder="passord"
@@ -88,11 +86,15 @@ class Login extends Component {
                 onChange={e => (this.passord = event.target.value)}
                 required
               />
+              <br />
               <button type="submit" id="loginKnapp">
                 Logg inn
               </button>
               <p>{this.feilmelding}</p>
             </form>
+          </div>
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
           </div>
         </div>
         <div class="footer">
@@ -142,6 +144,7 @@ class Login extends Component {
       }
     }
   }
+
   test() {
     history.push('/ansatte/');
   }
