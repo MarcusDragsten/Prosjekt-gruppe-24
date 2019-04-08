@@ -3,83 +3,101 @@ import { Component } from 'react-simplified';
 import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { lagerService } from '../services/lagerService.js';
+import { bestillingService } from '../services/bestillingService.js';
+import { ansatteService } from '../services/adminService.js';
+import { sykkelService } from '../services/sykkelService.js';
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class LagerStartside extends Component {
+  ansatt = [];
   render() {
     return (
-      <div>
-        <h1>Startside - Lager</h1>
-        <br />
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Startside - Lager</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Logg ut
+          </button>
+        </div>
+        <div id="salgStartsideKnapperDiv">
+          <h2>
+            Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}{' '}
+          </h2>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ledigSykkel}>
+            Sykler på lager
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utleidSykkel}>
+            Utleide sykler
+          </button>
 
-        <button type="button" class="button" onClick={this.ledigSykkel}>
-          Sykler på lager
-        </button>
-        <button type="button" class="button" onClick={this.utleidSykkel}>
-          Utleide sykler
-        </button>
-        <br />
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ledigUtstyr}>
+            Utstyr på lager
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utleidUtstyr}>
+            Utleide utstyr
+          </button>
 
-        <button type="button" class="button" onClick={this.ledigUtstyr}>
-          Utstyr på lager
-        </button>
-        <button type="button" class="button" onClick={this.utleidUtstyr}>
-          Utleide utstyr
-        </button>
-        <br />
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.reparasjoner}>
+            Reparasjoner
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.henteSykkel}>
+            Transport
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.savnetSykkel}>
+            Sykler som ikke er innlevert
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.sykkelBestilling}>
+            Sykler som skal ut hos kunde
+          </button>
 
-        <button type="button" class="button" onClick={this.reparasjoner}>
-          Reparasjoner
-        </button>
-        <button type="button" class="button" onClick={this.henteSykkel}>
-          Transport
-        </button>
-        <br />
-
-        <button type="button" class="button" onClick={this.leggTilSykkel}>
-          Legg til sykler
-        </button>
-        <button type="button" class="button" onClick={this.leggTilUtstyr}>
-          Legg til utstyr
-        </button>
-        <button type="button" class="button" onClick={this.savnetSykkel}>
-          Sykler som ikke er innlevert
-        </button>
-        <button type="button" class="button" onClick={this.tilbake}>
-          Tilbake
-        </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTilSykkel}>
+            Legg til sykler
+          </button>
+          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTilUtstyr}>
+            Legg til utstyr
+          </button>
+        </div>
       </div>
     );
   }
 
+  mounted() {
+    console.log(this.ansatt);
+    ansatteService.getAnsatt(this.props.match.params.ansattId, ansatt => {
+      this.ansatt = ansatt;
+    });
+  }
   leggTilSykkel() {
-    history.push('/leggTilSykkel');
+    history.push('/leggTilSykkel/' + this.props.match.params.ansattId);
   }
   leggTilUtstyr() {
-    history.push('/leggTilUtstyr');
+    history.push('/leggTilUtstyr/' + this.props.match.params.ansattId);
   }
   ledigSykkel() {
-    history.push('/ledigSykkel');
+    history.push('/ledigSykkel/' + this.props.match.params.ansattId);
   }
   utleidSykkel() {
-    history.push('/utleidSykkel');
+    history.push('/utleidSykkel/' + this.props.match.params.ansattId);
   }
   ledigUtstyr() {
-    history.push('/ledigUtstyr');
+    history.push('/ledigUtstyr/' + this.props.match.params.ansattId);
   }
   utleidUtstyr() {
-    history.push('/utleidUtstyr');
+    history.push('/utleidUtstyr/' + this.props.match.params.ansattId);
   }
   reparasjoner() {
-    history.push('/reparasjoner');
+    history.push('/reparasjoner/' + this.props.match.params.ansattId);
   }
   henteSykkel() {
-    history.push('/henteSykkel');
+    history.push('/henteSykkel/' + this.props.match.params.ansattId);
   }
   savnetSykkel() {
-    history.push('/savnetSykkel');
+    history.push('/savnetSykkel/' + this.props.match.params.ansattId);
+  }
+  sykkelBestilling() {
+    history.push('/sykkelBestilling/' + this.props.match.params.ansattId);
   }
   tilbake() {
     history.push('/');
@@ -88,53 +106,77 @@ export class LagerStartside extends Component {
 export class LedigSykkel extends Component {
   sykkelPåLager = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  modellnavn = '';
-  timepris = '';
+  type = '%';
+  lokasjon_id = '%';
+  modellnavn = '%';
+  timepris = '%';
 
   render() {
     return (
-      <div>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake til startsiden
-        </button>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
         <h2>Oversikt over sykler på lager</h2>
-        <h3>Filtrer syklene:</h3>
-        <div>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer
+        </button>
+        <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
-            <input type="text" id="type" placeholder="Sykkeltype" onChange={e => (this.type = event.target.value)} />
-            <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
-              <option value="" selected>
-                Tilhørighet:
-              </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-            <input
-              type="text"
-              id="modellnavn"
-              placeholder="Modellnavn"
-              onChange={e => (this.modellnavn = event.target.value)}
-            />
-            <input
-              type="number"
-              id="timepris"
-              placeholder="Timepris"
-              onChange={e => (this.timepris = event.target.value)}
-            />
-            <button type="submit">Søk</button>
-            <button type="button" onClick={this.nullstill}>
-              Nullstill
-            </button>
+            <div class="form-inline">
+              <h3>Filtrer sykler</h3>
+              <input
+                type="text"
+                id="type"
+                placeholder="Sykkeltype"
+                class="form-control form-control-lg"
+                onChange={e => (this.type = event.target.value)}
+              />
+              <input
+                type="text"
+                id="modellnavn"
+                class="form-control form-control-lg"
+                placeholder="Modellnavn"
+                onChange={e => (this.modellnavn = event.target.value)}
+              />
+              <input
+                type="number"
+                id="timepris"
+                class="form-control form-control-lg"
+                placeholder="Timepris"
+                onChange={e => (this.timepris = event.target.value)}
+              />
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+                Søk
+              </button>
+              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+                Nullstill
+              </button>
+            </div>
           </form>
         </div>
         <br />
-        <table>
+        <table id="customers" align="center">
           <tbody>{this.tabell1}</tbody>
         </table>
       </div>
@@ -142,10 +184,27 @@ export class LedigSykkel extends Component {
   }
 
   mounted() {
+    var number = document.getElementById('timepris');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
     lagerService.hentSykkelPåLager(sykkelPåLager => {
       this.sykkelPåLager = sykkelPåLager;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
+  }
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
   }
 
   createTable1() {
@@ -182,7 +241,10 @@ export class LedigSykkel extends Component {
             <td>{this.sykkelPåLager[i].område}</td>
             <td>{this.sykkelPåLager[i].timepris}</td>
             <td>
-              <NavLink to={'/redigerSykkel/' + this.sykkelPåLager[i].id + '/edit'}> Endre </NavLink>
+              <NavLink to={'/redigerSykkel/' + this.props.match.params.ansattId + this.sykkelPåLager[i].id + '/edit'}>
+                {' '}
+                Endre{' '}
+              </NavLink>
             </td>
           </tr>
         );
@@ -191,18 +253,22 @@ export class LedigSykkel extends Component {
   }
 
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
   sok(e) {
     e.preventDefault();
-    if (this.type == '') this.type = '%';
-    if (this.lokasjon_id == '') this.lokasjon_id = '%';
-    if (this.modellnavn == '') this.modellnavn = '%';
-    if (this.timepris == '') this.timepris = '%';
+    if (this.sykkelPåLager.type == '') this.type = '%';
+    if (this.sykkelPåLager.lokasjon_id == '') this.lokasjon_id = '%';
+    if (this.sykkelPåLager.modellnavn == '') this.modellnavn = '%';
+    if (this.sykkelPåLager.timepris == '') this.timepris = '%';
 
     lagerService.sok(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sok => {
       this.sykkelPåLager = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.modellnavn);
+      console.log(this.timepris);
     });
   }
 
@@ -233,53 +299,77 @@ export class LedigSykkel extends Component {
 export class UtleidSykkel extends Component {
   sykkelUtleid = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  modellnavn = '';
-  lokasjon_id = '';
-  timepris = '';
+  type = '%';
+  modellnavn = '%';
+  lokasjon_id = '%';
+  timepris = '%';
 
   render() {
     return (
-      <div>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake til startsiden
-        </button>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
         <h2>Oversikt over utleide sykler</h2>
-        <h3>Filtrer syklene:</h3>
-        <div>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer
+        </button>
+        <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sokUtleid}>
-            <input type="text" id="type" placeholder="Sykkeltype" onChange={e => (this.type = event.target.value)} />
-            <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
-              <option value="" selected>
-                Tilhørighet:
-              </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-            <input
-              type="text"
-              id="modellnavn"
-              placeholder="Modellnavn"
-              onChange={e => (this.modellnavn = event.target.value)}
-            />
-            <input
-              type="number"
-              id="timepris"
-              placeholder="Timepris"
-              onChange={e => (this.timepris = event.target.value)}
-            />
-            <button type="submit">Søk</button>
-            <button type="button" onClick={this.nullstill}>
-              Nullstill
-            </button>
+            <div class="form-inline">
+              <h3>Filtrer sykler</h3>
+              <input
+                type="text"
+                id="type"
+                placeholder="Sykkeltype"
+                class="form-control form-control-lg"
+                onChange={e => (this.type = event.target.value)}
+              />
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="modellnavn"
+                placeholder="Modellnavn"
+                onChange={e => (this.modellnavn = event.target.value)}
+              />
+              <input
+                type="number"
+                class="form-control form-control-lg"
+                id="timepris"
+                placeholder="Timepris"
+                onChange={e => (this.timepris = event.target.value)}
+              />
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+                Søk
+              </button>
+              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+                Nullstill
+              </button>
+            </div>
           </form>
         </div>
         <br />
-        <table>
+        <table id="customers" align="center">
           <tbody>{this.tabell1}</tbody>
         </table>
       </div>
@@ -287,10 +377,27 @@ export class UtleidSykkel extends Component {
   }
 
   mounted() {
+    var number = document.getElementById('timepris');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
     lagerService.hentUtleideSykler(sykkelUtleid => {
       this.sykkelUtleid = sykkelUtleid;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
+  }
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
   }
 
   createTable1() {
@@ -327,7 +434,10 @@ export class UtleidSykkel extends Component {
             <td>{this.sykkelUtleid[i].område}</td>
             <td>{this.sykkelUtleid[i].timepris}</td>
             <td>
-              <NavLink to={'/redigerSykkel/' + this.sykkelUtleid[i].id + '/edit'}> Endre </NavLink>
+              <NavLink to={'/redigerSykkel/' + this.props.match.params.ansattId + this.sykkelUtleid[i].id + '/edit'}>
+                {' '}
+                Endre{' '}
+              </NavLink>
             </td>
           </tr>
         );
@@ -335,7 +445,7 @@ export class UtleidSykkel extends Component {
     }
   }
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
   sokUtleid(e) {
     e.preventDefault();
@@ -346,8 +456,11 @@ export class UtleidSykkel extends Component {
 
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
-      console.log(this.sykkelUtleid);
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.modellnavn);
+      console.log(this.timepris);
     });
   }
 
@@ -377,51 +490,73 @@ export class UtleidSykkel extends Component {
 export class LedigUtstyr extends Component {
   utstyrPåLager = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  pris = '';
+  type = '%';
+  lokasjon_id = '%';
+  pris = '%';
 
   render() {
     return (
-      <div>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake til startsiden
-        </button>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
         <h2>Oversikt over utstyr på lager</h2>
-        <h3>Filtrer utstyr:</h3>
-        <div>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer
+        </button>
+        <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
-            <select id="type" onChange={e => (this.type = event.target.value)}>
-              <option value="" selected>
-                Utstyrstype:
-              </option>
-              <option value="Hjelm voksne">Hjelm for voksne</option>
-              <option value="Hjelm barn">Hjelm for barn</option>
-              <option value="Sykkellås">Sykkellås</option>
-              <option value="Barnesete">Barnesete</option>
-              <option value="Sykkelkurv">Sykkelkurv</option>
-              <option value="Sykkelstativ">Sykkelstativ til hund</option>
-            </select>
-            <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
-              <option value="" selected>
-                Tilhørighet:
-              </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-            <input type="number" id="pris" placeholder="Timepris" onChange={e => (this.pris = event.target.value)} />
-            <button type="submit">Søk</button>
-            <button type="button" onClick={this.nullstill}>
-              Nullstill
-            </button>
+            <div class="form-inline">
+              <h3>Filtrer utstyr</h3>
+              <select id="type" class="form-control form-control-lg" onChange={e => (this.type = event.target.value)}>
+                <option value="" selected>
+                  Utstyrstype:
+                </option>
+                <option value="Hjelm voksne">Hjelm for voksne</option>
+                <option value="Hjelm barn">Hjelm for barn</option>
+                <option value="Sykkellås">Sykkellås</option>
+                <option value="Barnesete">Barnesete</option>
+                <option value="Sykkelkurv">Sykkelkurv</option>
+                <option value="Sykkelstativ">Sykkelstativ til hund</option>
+              </select>
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                id="pris"
+                class="form-control form-control-lg"
+                placeholder="Timepris"
+                onChange={e => (this.pris = event.target.value)}
+              />
+              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+                Søk
+              </button>
+              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+                Nullstill
+              </button>
+            </div>
           </form>
         </div>
         <br />
-        <table>
+        <table id="customers" align="center">
           <tbody>{this.tabell1}</tbody>
         </table>
       </div>
@@ -429,10 +564,27 @@ export class LedigUtstyr extends Component {
   }
 
   mounted() {
+    var number = document.getElementById('pris');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
     lagerService.hentUtstyrPåLager(utstyrPåLager => {
       this.utstyrPåLager = utstyrPåLager;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
+  }
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
   }
 
   createTable1() {
@@ -461,7 +613,10 @@ export class LedigUtstyr extends Component {
             <td>{this.utstyrPåLager[i].område}</td>
             <td>{this.utstyrPåLager[i].pris}</td>
             <td>
-              <NavLink to={'/redigerUtstyr/' + this.utstyrPåLager[i].id + '/edit'}> Endre </NavLink>
+              <NavLink to={'/redigerUtstyr/' + this.props.match.params.ansattId + this.utstyrPåLager[i].id + '/edit'}>
+                {' '}
+                Endre{' '}
+              </NavLink>
             </td>
           </tr>
         );
@@ -469,7 +624,7 @@ export class LedigUtstyr extends Component {
     }
   }
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
   sok(e) {
     e.preventDefault();
@@ -480,6 +635,9 @@ export class LedigUtstyr extends Component {
     lagerService.sokUtstyr(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrPåLager = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.pris);
     });
   }
 
@@ -507,51 +665,73 @@ export class LedigUtstyr extends Component {
 export class UtleidUtstyr extends Component {
   utstyrUtleid = [];
   tabell1 = [];
+  tilhørighet = [];
 
-  type = '';
-  lokasjon_id = '';
-  pris = '';
+  type = '%';
+  lokasjon_id = '%';
+  pris = '%';
 
   render() {
     return (
-      <div>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake til startsiden
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over utleid utstyr</h2>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer
         </button>
-        <h2>Oversikt over utleide utstyr</h2>
-        <h3>Filtrer utstyr:</h3>
-        <div>
+        <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
-            <select id="type" onChange={e => (this.type = event.target.value)}>
-              <option value="" selected>
-                Utstyrstype:
-              </option>
-              <option value="Hjelm voksne">Hjelm for voksne</option>
-              <option value="Hjelm barn">Hjelm for barn</option>
-              <option value="Sykkellås">Sykkellås</option>
-              <option value="Barnesete">Barnesete</option>
-              <option value="Sykkelkurv">Sykkelkurv</option>
-              <option value="Sykkelstativ">Sykkelstativ til hund</option>
-            </select>
-            <select id="lokasjon_id" onChange={e => (this.lokasjon_id = event.target.value)}>
-              <option value="" selected>
-                Tilhørighet:
-              </option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-            <input type="number" id="pris" placeholder="Timepris" onChange={e => (this.pris = event.target.value)} />
-            <button type="submit">Søk</button>
-            <button type="button" onClick={this.nullstill}>
-              Nullstill
-            </button>
+            <div class="form-inline">
+              <h3>Filtrer utstyr</h3>
+              <select id="type" class="form-control form-control-lg" onChange={e => (this.type = event.target.value)}>
+                <option value="" selected>
+                  Utstyrstype:
+                </option>
+                <option value="Hjelm voksne">Hjelm for voksne</option>
+                <option value="Hjelm barn">Hjelm for barn</option>
+                <option value="Sykkellås">Sykkellås</option>
+                <option value="Barnesete">Barnesete</option>
+                <option value="Sykkelkurv">Sykkelkurv</option>
+                <option value="Sykkelstativ">Sykkelstativ til hund</option>
+              </select>
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                class="form-control form-control-lg"
+                id="pris"
+                placeholder="Timepris"
+                onChange={e => (this.pris = event.target.value)}
+              />
+              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+                Søk
+              </button>
+              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+                Nullstill
+              </button>
+            </div>
           </form>
         </div>
         <br />
-        <table>
+        <table id="customers" align="center">
           <tbody>{this.tabell1}</tbody>
         </table>
       </div>
@@ -559,10 +739,28 @@ export class UtleidUtstyr extends Component {
   }
 
   mounted() {
+    var number = document.getElementById('pris');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
     lagerService.hentUtleideUtstyr(utstyrUtleid => {
       this.utstyrUtleid = utstyrUtleid;
+    });
+    lagerService.hentLokasjon(tilhørighet => {
+      this.tilhørighet = tilhørighet;
       this.createTable1();
     });
+  }
+
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
   }
 
   createTable1() {
@@ -592,7 +790,10 @@ export class UtleidUtstyr extends Component {
             <td>{this.utstyrUtleid[i].område}</td>
             <td>{this.utstyrUtleid[i].pris}</td>
             <td>
-              <NavLink to={'/redigerUtstyr/' + this.utstyrUtleid[i].id + '/edit'}> Endre </NavLink>
+              <NavLink to={'/redigerUtstyr/' + this.props.match.params.ansattId + this.utstyrUtleid[i].id + '/edit'}>
+                {' '}
+                Endre{' '}
+              </NavLink>
             </td>
           </tr>
         );
@@ -600,7 +801,7 @@ export class UtleidUtstyr extends Component {
     }
   }
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
   sok(e) {
     e.preventDefault();
@@ -611,6 +812,9 @@ export class UtleidUtstyr extends Component {
     lagerService.sokUtstyrUtleid(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrUtleid = sok;
       this.createTable1();
+      console.log(this.type);
+      console.log(this.lokasjon_id);
+      console.log(this.pris);
     });
   }
 
@@ -641,14 +845,18 @@ export class Reparasjoner extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Oversikt over sykler som trenger reparasjon</h3>
-        <table>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over sykler som trenger reparasjon</h2>
+        <br />
+        <table id="customers" align="center">
           <tbody>{this.tabell5}</tbody>
         </table>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake
-        </button>
       </div>
     );
   }
@@ -666,6 +874,7 @@ export class Reparasjoner extends Component {
         <th>Type</th>
         <th>Status</th>
         <th>Modellnavn</th>
+        <th>Ferdig Reparert</th>
       </tr>
     );
 
@@ -677,7 +886,10 @@ export class Reparasjoner extends Component {
           <td>{this.reparasjoner[i].status}</td>
           <td>{this.reparasjoner[i].modellnavn}</td>
           <td>
-            <NavLink to={'/reparasjoner/' + this.reparasjoner[i].id + '/edit'}> Ferdig reparert </NavLink>
+            <NavLink to={'/reparasjoner/' + this.props.match.params.ansattId + this.reparasjoner[i].id + '/edit'}>
+              {' '}
+              X{' '}
+            </NavLink>
           </td>
         </tr>
       );
@@ -685,34 +897,20 @@ export class Reparasjoner extends Component {
   }
 
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
 }
 
 export class EndreReparasjoner extends Component {
-  reparasjoner = null;
-
   render() {
-    if (!this.reparasjoner) return null;
-
-    return (
-      <div>
-        Helt sikker?
-        <button type="button" onClick={this.save}>
-          Ja
-        </button>
-      </div>
-    );
+    return <div />;
   }
+
   mounted() {
-    lagerService.hentReparasjon(this.props.match.params.id, reparasjoner => {
-      this.reparasjoner = reparasjoner;
-    });
-  }
-
-  save() {
-    lagerService.ferdigReparasjoner(this.reparasjoner, () => {
-      history.push('/reparasjoner/');
+    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
+      lagerService.ferdigReparasjoner(this.props.match.params.id, ferdigReparasjoner => {
+        history.push('/lagerStartside/' + this.props.match.params.ansattId);
+      });
     });
   }
 }
@@ -723,12 +921,16 @@ export class HenteSykkel extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Oversikt over sykler som trenger transport</h3>
-        <button type="button" onClick={this.tilbake}>
-          Tilbake
-        </button>
-        <table>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over sykler som trenger transport tilbake til lager</h2>
+        <br />
+        <table id="customers" align="center">
           <tbody>{this.tabell6}</tbody>
         </table>
       </div>
@@ -749,8 +951,8 @@ export class HenteSykkel extends Component {
         <th>Bestillings ID</th>
         <th>Sykkel ID</th>
         <th>Modellnavn</th>
-        <th>Innleveringssted</th>
         <th>Tilhørighet</th>
+        <th>Innleveringssted</th>
         <th>Dato</th>
         <th>Tid</th>
       </tr>
@@ -762,374 +964,35 @@ export class HenteSykkel extends Component {
           <td>{this.sykkel[i].bestilling_id}</td>
           <td>{this.sykkel[i].id}</td>
           <td>{this.sykkel[i].modellnavn}</td>
-          <td>{this.sykkel[i].innleveringssted}</td>
           <td>{this.sykkel[i].område}</td>
+          <td>{this.sykkel[i].innleveringssted}</td>
           <td>{this.sykkel[i].innlevering_dato}</td>
           <td>{this.sykkel[i].innlevering_tid}</td>
-          <td>
-            <NavLink to={'/henteSykkel/' + this.sykkel[i].id + '/edit'}>Sykkel er hentet</NavLink>
-          </td>
         </tr>
       );
     }
   }
   tilbake() {
-    history.push('/lagerStartside/');
-  }
-}
-export class EndreHenteSykkel extends Component {
-  sykkel = null;
-
-  render() {
-    if (!this.sykkel) return null;
-
-    return (
-      <div>
-        Helt sikker?
-        <button type="button" onClick={this.save}>
-          Ja
-        </button>
-      </div>
-    );
-  }
-  mounted() {
-    lagerService.henteSykkelId(this.props.match.params.id, sykkel => {
-      this.sykkel = sykkel;
-    });
-  }
-
-  save() {
-    lagerService.ferdigHentet(this.sykkel, () => {
-      history.push('/henteSykkel/');
-    });
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
 }
 
-export class LeggTilSykkel extends Component {
-  status = 'Ledig';
-  hjul_størrelse = '';
-  girsystem = '';
-  ramme = '';
-  lokasjon_id = '';
-  bremse = '';
-  modellnavn = '';
-  timepris = '';
-
-  render() {
-    if (this.modellnavn == 'Barnesykkel') {
-      this.type = 'Barnesykkel';
-    } else if (this.modellnavn == 'Juniorsykkel') {
-      this.type = 'Juniorsykkel';
-    } else if (this.modellnavn == 'El-sykkel') {
-      this.type = 'El-sykkel';
-    } else if (this.modellnavn == 'Ghost Terreng') {
-      this.type = 'Terrengsykkel';
-    } else if (this.modellnavn == 'Racersykkel') {
-      this.type = 'Landeveissykkel';
-    } else {
-      this.type = 'Hybridsykkel';
-    }
-    return (
-      <div>
-        <ul>
-          <li>
-            Modellnavn:
-            <select value={this.modellnavn} onChange={e => (this.modellnavn = event.target.value)} required>
-              <option>Velg modellnavn</option>
-              <option value="Ghost Hybrid Dame m/ bagasjebrett">Ghost Hybrid Dame med bagasjebrett</option>
-              <option value="Ghost Hybrid Herre m/ bagasjebrett">Ghost Hybrid Herre med bagasjebrett</option>
-              <option value="Ghost Hybrid Dame">Ghost Hybrid Dame uten bagasjebrett</option>
-              <option value="Ghost Hybrid Herre">Ghost Hybrid Herre uten bagasjebrett</option>
-              <option value="Barnesykkel">Ghost Barnesykkel</option>
-              <option value="Juniorsykkel">Ghost Juniorsykkel</option>
-              <option value="El-sykkel">Ghost El-sykkel</option>
-              <option value="Ghost Terreng">Ghost Terreng</option>
-              <option value="Racersykkel">Ghost Landeveissykkel</option>
-            </select>
-          </li>
-          <li>
-            Hjulstørrelse
-            <input type="number" onChange={e => (this.hjul_størrelse = e.target.value)} required />
-          </li>
-          <li>
-            Girsystem
-            <select value={this.girsystem} onChange={e => (this.girsystem = event.target.value)} required>
-              <option>Velg girtype</option>
-              <option value="Derailleurgir">Derailleurgir</option>
-              <option value="Navgir">Navgir</option>
-            </select>
-          </li>
-          <li>
-            Ramme
-            <input type="text" onChange={e => (this.ramme = e.target.value)} required />
-          </li>
-          <li>
-            Lokasjon:
-            <select value={this.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
-              <option>Velg lokasjon</option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-          </li>
-          <li>
-            Bremser:
-            <select name="bremse" value={this.bremse} onChange={e => (this.bremse = event.target.value)} required>
-              <option>Velg bremsetype</option>
-              <option value="Hydraulisk Skivebrems">Hydraulisk Skivebrems</option>
-              <option value="Bremsekloss">Bremsekloss</option>
-            </select>
-          </li>
-          <li>
-            Timepris
-            <input type="number" onChange={e => (this.timepris = e.target.value)} required />
-          </li>
-        </ul>
-        <button type="save" onClick={this.add}>
-          Legg til
-        </button>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake
-        </button>
-      </div>
-    );
-  }
-
-  add() {
-    sykkelService.addSykkel(
-      this.type,
-      this.status,
-      this.hjul_størrelse,
-      this.girsystem,
-      this.ramme,
-      this.lokasjon_id,
-      this.bremse,
-      this.modellnavn,
-      this.timepris,
-      id => {
-        history.push('/lagerStartside/' + id);
-      }
-    );
-  }
-
-  tilbake() {
-    history.push('/lagerStartside/');
-  }
-}
-
-export class LeggTilUtstyr extends Component {
-  type = '';
-  lokasjon_id = '';
-  beskrivelse = '';
-  status = 'Ledig';
-  pris = '';
-
-  render() {
-    return (
-      <div>
-        <ul>
-          <li>
-            Type:
-            <select value={this.type} onChange={e => (this.type = event.target.value)} required>
-              <option>Velg utstyrstype</option>
-              <option value="Hjelm voksne">Hjelm voksne</option>
-              <option value="Hjelm barn">Hjelm barn</option>
-              <option value="Sykkellås">Sykkellås</option>
-              <option value="Barnesete">Barnesete</option>
-              <option value="Sykkelvogn">Sykkelvogn</option>
-              <option value="Sykkelkurv">Sykkelkurv</option>
-              <option value="Sykkelstativ">Sykkelstativ</option>
-            </select>
-          </li>
-          <li>
-            Lokasjon:
-            <select value={this.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
-              <option>Velg lokasjon</option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-          </li>
-          <li>
-            Beskrivelse:
-            <input type="text" value={this.beskrivelse} onChange={e => (this.beskrivelse = e.target.value)} required />
-          </li>
-          <li>
-            Pris:
-            <input type="number" onChange={e => (this.pris = event.target.value)} required />
-          </li>
-        </ul>
-        <button type="save" onClick={this.add}>
-          Legg til
-        </button>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake
-        </button>
-      </div>
-    );
-  }
-
-  add() {
-    lagerService.addUtstyr(this.type, this.lokasjon_id, this.beskrivelse, this.status, this.pris, id => {
-      history.push('/lagerStartside/' + id);
-    });
-  }
-
-  tilbake() {
-    history.push('/lagerStartside/');
-  }
-}
-export class EndreSykkel extends Component {
-  sykler = null;
-
-  render() {
-    if (!this.sykler) return null;
-
-    return (
-      <div>
-        <ul>
-          <li>
-            Status:
-            <select value={this.sykler.status} onChange={e => (this.sykler.status = event.target.value)} required>
-              <option value="Ledig">Ledig</option>
-              <option value="Utleid">Utleid</option>
-              <option value="Reparasjon">Til reparasjon</option>
-            </select>
-          </li>
-          <li>
-            Lokasjon:
-            <select
-              value={this.sykler.lokasjon_id}
-              onChange={e => (this.sykler.lokasjon = event.target.value)}
-              required
-            >
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Rallanregen</option>
-              <option value="4">Holbergplassen</option>
-              <option value="5">Myrdal Stasjon</option>
-            </select>
-          </li>
-          <li>
-            Timepris:
-            <input
-              type="number"
-              value={this.sykler.timepris}
-              onChange={e => (this.sykler.timepris = event.target.value)}
-              required
-            />
-          </li>
-        </ul>
-
-        <button type="save" onClick={this.save}>
-          Save
-        </button>
-        <button type="save" onClick={this.tilbake}>
-          Tilbake
-        </button>
-      </div>
-    );
-  }
-  mounted() {
-    lagerService.getSykkel(this.props.match.params.id, sykkel => {
-      this.sykler = sykkel;
-    });
-  }
-
-  save() {
-    lagerService.updateSykkel(this.sykler, () => {
-      history.push('/lagerStartside/');
-    });
-  }
-  tilbake() {
-    history.push('/lagerStartside');
-  }
-  delete() {
-    lagerService.deleteSykkel(this.props.match.params.id, () => history.push('lagerStartside'));
-  }
-}
-export class EndreUtstyr extends Component {
-  utstyr = null;
-
-  render() {
-    if (!this.utstyr) return null;
-
-    return (
-      <div>
-        <ul>
-          <li>
-            Status:
-            <select value={this.utstyr.status} onChange={e => (this.utstyr.status = event.target.value)} required>
-              <option value="Ledig">Ledig</option>
-              <option value="Utleid">Utleid</option>
-              <option value="Reparasjon">Til reparasjon</option>
-            </select>
-          </li>
-          <li>
-            Lokasjon:
-            <select value={this.utstyr.lokasjon_id} onChange={e => (this.lokasjon_id = event.target.value)} required>
-              <option>Velg lokasjon</option>
-              <option value="1">Haugastøl</option>
-              <option value="2">Finse</option>
-              <option value="3">Flåm</option>
-              <option value="4">Voss</option>
-              <option value="5">Myrdal</option>
-            </select>
-          </li>
-          <li>
-            Timepris:
-            <input
-              type="number"
-              value={this.utstyr.pris}
-              onChange={e => (this.utstyr.pris = event.target.value)}
-              required
-            />
-          </li>
-        </ul>
-
-        <button type="save" onClick={this.save}>
-          Save
-        </button>
-        <button type="save" onClick={this.tilbake}>
-          Tilbake
-        </button>
-      </div>
-    );
-  }
-  mounted() {
-    lagerService.getUtstyr(this.props.match.params.id, utstyr => {
-      this.utstyr = utstyr;
-    });
-  }
-
-  save() {
-    lagerService.updateUtstyr(this.utstyr, () => {
-      history.push('/lagerStartside/');
-    });
-  }
-  tilbake() {
-    history.push('/lagerStartside');
-  }
-  delete() {
-    lagerService.deleteUtstyr(this.props.match.params.id, () => history.push('lagerStartside'));
-  }
-}
 export class SavnetSykkel extends Component {
   savnetSykkel = [];
   tabell = [];
 
   render() {
     return (
-      <div>
-        <h3>Oversikt over sykler som ikke er levert tilbake i tide</h3>
-        <button type="Add" onClick={this.tilbake}>
-          Tilbake
-        </button>
-        <table>
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over sykler som ikke er levert i tide</h2>
+        <br />
+        <table id="customers" align="center">
           <tbody>{this.tabell}</tbody>
         </table>
       </div>
@@ -1168,37 +1031,530 @@ export class SavnetSykkel extends Component {
           <td>{this.savnetSykkel[i].innleveringssted}</td>
           <td>{this.savnetSykkel[i].innlevering_dato}</td>
           <td>{this.savnetSykkel[i].innlevering_tid}</td>
-          <td>
-            <NavLink to={'/savnetSykkel/' + this.savnetSykkel[i].id + '/edit'}> Returnert </NavLink>
-          </td>
         </tr>
       );
     }
   }
   tilbake() {
-    history.push('/lagerStartside/');
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
 }
-export class EndreSavnetSykkel extends Component {
-  sykkel = null;
+
+export class LeggTilSykkel extends Component {
+  tilhørighet = [];
+
+  status = 'Ledig';
+  hjul_størrelse = '';
+  girsystem = '';
+  ramme = '';
+  lokasjon_id = '';
+  bremse = '';
+  modellnavn = '';
+  timepris = '';
 
   render() {
-    var x = confirm('Er sykkel tilbake på lager?');
-    if (x == true) {
-      console.log('Sykkelen er tilbake på lager');
+    if (this.modellnavn == 'Barnesykkel') {
+      this.type = 'Barnesykkel';
+    } else if (this.modellnavn == 'Juniorsykkel') {
+      this.type = 'Juniorsykkel';
+    } else if (this.modellnavn == 'El-sykkel') {
+      this.type = 'El-sykkel';
+    } else if (this.modellnavn == 'Ghost Terreng') {
+      this.type = 'Terrengsykkel';
+    } else if (this.modellnavn == 'Racersykkel') {
+      this.type = 'Landeveissykkel';
     } else {
-      console.log('Avbryt');
+      this.type = 'Hybridsykkel';
     }
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <div id="leggTilSykkelDiv">
+          <form onSubmit={this.add}>
+            <div class="form-inline">
+              <h3>Legg til nye sykler</h3>
+              <select
+                value={this.modellnavn}
+                class="form-control form-control-lg"
+                onChange={e => (this.modellnavn = event.target.value)}
+                required
+              >
+                <option>Velg modellnavn</option>
+                <option value="Ghost Hybrid Dame m/ bagasjebrett">Ghost Hybrid Dame med bagasjebrett</option>
+                <option value="Ghost Hybrid Herre m/ bagasjebrett">Ghost Hybrid Herre med bagasjebrett</option>
+                <option value="Ghost Hybrid Dame">Ghost Hybrid Dame uten bagasjebrett</option>
+                <option value="Ghost Hybrid Herre">Ghost Hybrid Herre uten bagasjebrett</option>
+                <option value="Barnesykkel">Ghost Barnesykkel</option>
+                <option value="Juniorsykkel">Ghost Juniorsykkel</option>
+                <option value="El-sykkel">Ghost El-sykkel</option>
+                <option value="Ghost Terreng">Ghost Terreng</option>
+                <option value="Racersykkel">Ghost Landeveissykkel</option>
+              </select>
+              <br />
+              <input
+                type="number"
+                placeholder="Hjulstørrelse"
+                class="form-control form-control-lg"
+                onChange={e => (this.hjul_størrelse = e.target.value)}
+                required
+              />
+              <br />
+              <select
+                value={this.girsystem}
+                class="form-control form-control-lg"
+                onChange={e => (this.girsystem = event.target.value)}
+                required
+              >
+                <option>Velg girtype</option>
+                <option value="Derailleurgir">Derailleurgir</option>
+                <option value="Navgir">Navgir</option>
+              </select>
+              <br />
+              <input
+                type="text"
+                placeholder="Ramme"
+                class="form-control form-control-lg"
+                onChange={e => (this.ramme = e.target.value)}
+                required
+              />
+              <br />
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Velg tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <select
+                name="bremse"
+                value={this.bremse}
+                class="form-control form-control-lg"
+                onChange={e => (this.bremse = event.target.value)}
+                required
+              >
+                <option>Velg bremsetype</option>
+                <option value="Hydraulisk Skivebrems">Hydraulisk Skivebrems</option>
+                <option value="Bremsekloss">Bremsekloss</option>
+              </select>
+              <br />
+              <input
+                type="number"
+                id="number"
+                min="0"
+                placeholder="Timepris"
+                class="form-control form-control-lg"
+                onChange={e => (this.timepris = e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              Legg til
+            </button>
+          </form>
+        </div>
+      </div>
+    );
   }
   mounted() {
-    lagerService.hentSavnetSykkelId(this.props.match.params.id, sykkel => {
-      this.sykkel = sykkel;
+    var number = document.getElementById('number');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
+    bestillingService.hentUtleveringsted(tilhørighet => {
+      this.tilhørighet = tilhørighet;
+    });
+  }
+
+  add(e) {
+    e.preventDefault();
+    sykkelService.addSykkel(
+      this.type,
+      this.status,
+      this.hjul_størrelse,
+      this.girsystem,
+      this.ramme,
+      this.lokasjon_id,
+      this.bremse,
+      this.modellnavn,
+      this.timepris,
+      id => {
+        history.push('/lagerStartside/' + this.props.match.params.ansattId);
+      }
+    );
+  }
+
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
+  }
+}
+
+export class LeggTilUtstyr extends Component {
+  tilhørighet = [];
+
+  type = '';
+  lokasjon_id = '';
+  beskrivelse = '';
+  status = 'Ledig';
+  pris = '';
+
+  render() {
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <div id="leggTilSykkelDiv">
+          <form onSubmit={this.add}>
+            <div class="form-inline">
+              <h3>Legg til nytt utsyr</h3>
+              <select
+                value={this.type}
+                class="form-control form-control-lg"
+                onChange={e => (this.type = event.target.value)}
+                required
+              >
+                <option>Velg utstyrstype</option>
+                <option value="Hjelm voksne">Hjelm voksne</option>
+                <option value="Hjelm barn">Hjelm barn</option>
+                <option value="Sykkellås">Sykkellås</option>
+                <option value="Barnesete">Barnesete</option>
+                <option value="Sykkelvogn">Sykkelvogn</option>
+                <option value="Sykkelkurv">Sykkelkurv</option>
+                <option value="Sykkelstativ">Sykkelstativ</option>
+              </select>
+              <br />
+              <select
+                id="lokasjon_id"
+                class="form-control form-control-lg"
+                onChange={e => (this.lokasjon_id = event.target.value)}
+              >
+                {' '}
+                <option value="" selected>
+                  Velg tilhørighet:
+                </option>
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <input
+                type="text"
+                placeholder="Beskrivelse"
+                value={this.beskrivelse}
+                class="form-control form-control-lg"
+                onChange={e => (this.beskrivelse = e.target.value)}
+                required
+              />
+              <br />
+              <input
+                type="number"
+                min="0"
+                id="number"
+                placeholder="Timepris"
+                class="form-control form-control-lg"
+                onChange={e => (this.pris = event.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              Legg til
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+  mounted() {
+    var number = document.getElementById('number');
+    number.onkeydown = function(e) {
+      if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
+        return false;
+      }
+    };
+    bestillingService.hentUtleveringsted(tilhørighet => {
+      this.tilhørighet = tilhørighet;
+    });
+  }
+
+  add(e) {
+    e.preventDefault();
+    lagerService.addUtstyr(this.type, this.lokasjon_id, this.beskrivelse, this.status, this.pris, id => {
+      history.push('/lagerStartside/' + this.props.match.params.ansattId);
+    });
+  }
+
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
+  }
+}
+export class EndreSykkel extends Component {
+  sykler = null;
+  tilhørighet = [];
+
+  render() {
+    if (!this.sykler) return null;
+
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <div id="leggTilSykkelDiv">
+          <form onSubmit={this.save}>
+            <div class="form-inline">
+              <h3>
+                {this.sykler.modellnavn} med ID-nummer {this.sykler.id}{' '}
+              </h3>
+              <select
+                value={this.sykler.status}
+                class="form-control form-control-lg"
+                onChange={e => (this.sykler.status = event.target.value)}
+                required
+              >
+                <option value="Ledig">Ledig</option>
+                <option value="Utleid">Utleid</option>
+                <option value="Reparasjon">Til reparasjon</option>
+              </select>
+              <br />
+              <select
+                value={this.sykler.lokasjon_id}
+                class="form-control form-control-lg"
+                onChange={e => (this.sykler.lokasjon_id = event.target.value)}
+                required
+              >
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <input
+                type="number"
+                class="form-control form-control-lg"
+                value={this.sykler.timepris}
+                onChange={e => (this.sykler.timepris = event.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              Lagre
+            </button>
+            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.delete}>
+              Slett
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+  mounted() {
+    lagerService.getSykkel(this.props.match.params.id, sykler => {
+      this.sykler = sykler;
+    });
+    bestillingService.hentUtleveringsted(tilhørighet => {
+      this.tilhørighet = tilhørighet;
+      console.log(this.tilhørighet);
     });
   }
 
   save() {
-    lagerService.ferdigSavnetSykkel(this.sykkel, () => {
-      history.push('/lagerStartside/');
+    lagerService.updateSykkel(
+      this.sykler.status,
+      this.sykler.lokasjon_id,
+      this.sykler.timepris,
+      this.props.match.params.id,
+      updateSykkel => {
+        history.push('/lagerStartside/' + this.props.match.params.ansattId);
+      }
+    );
+  }
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
+  }
+  delete() {
+    lagerService.deleteSykkel(this.props.match.params.id, () =>
+      history.push('/lagerStartside/' + this.props.match.params.ansattId)
+    );
+  }
+}
+export class EndreUtstyrLager extends Component {
+  utstyr = null;
+  tilhørighet = [];
+
+  render() {
+    if (!this.utstyr) return null;
+
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <div id="leggTilSykkelDiv">
+          <form onSubmit={this.save}>
+            <div class="form-inline">
+              <h3>
+                {this.utstyr.type} med ID-nummer {this.utstyr.id}{' '}
+              </h3>
+              <select
+                value={this.utstyr.status}
+                class="form-control form-control-lg"
+                onChange={e => (this.utstyr.status = event.target.value)}
+                required
+              >
+                <option value="Ledig">Ledig</option>
+                <option value="Utleid">Utleid</option>
+                <option value="Reparasjon">Til reparasjon</option>
+              </select>
+              <br />
+              <select
+                value={this.utstyr.lokasjon_id}
+                class="form-control form-control-lg"
+                onChange={e => (this.utstyr.lokasjon_id = event.target.value)}
+                required
+              >
+                {this.tilhørighet.map(tilhørighet => (
+                  <option value={tilhørighet.id} key={tilhørighet.id}>
+                    {tilhørighet.område}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <input
+                type="number"
+                class="form-control form-control-lg"
+                value={this.utstyr.pris}
+                onChange={e => (this.utstyr.pris = event.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              Lagre
+            </button>
+            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.delete}>
+              Slett
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+  mounted() {
+    lagerService.getUtstyr(this.props.match.params.id, utstyr => {
+      this.utstyr = utstyr;
     });
+    bestillingService.hentUtleveringsted(tilhørighet => {
+      this.tilhørighet = tilhørighet;
+    });
+  }
+
+  save() {
+    lagerService.updateUtstyr(
+      this.utstyr.status,
+      this.utstyr.lokasjon_id,
+      this.utstyr.pris,
+      this.props.match.params.id,
+      updateUtstyr => {
+        history.push('/lagerStartside/' + this.props.match.params.ansattId);
+      }
+    );
+  }
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
+  }
+  delete() {
+    lagerService.deleteUtstyr(this.props.match.params.id, () =>
+      history.push('/lagerStartside/' + this.props.match.params.ansattId)
+    );
+  }
+}
+export class SykkelBestilling extends Component {
+  syklerIBestilling = [];
+  tabell = [];
+
+  render() {
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container w3-green">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
+          </button>
+        </div>
+        <h2>Oversikt over sykler som skal ut i en bestilling</h2>
+        <br />
+        <table id="customers" align="center">
+          <tbody>{this.tabell}</tbody>
+        </table>
+      </div>
+    );
+  }
+
+  mounted() {
+    lagerService.hentSykkelBestilling(syklerIBestilling => {
+      this.syklerIBestilling = syklerIBestilling;
+      this.createTable();
+      console.log(this.syklerIBestilling);
+    });
+  }
+  createTable() {
+    this.tabell.push(
+      <tr>
+        <th>Bestillings ID</th>
+        <th>Sykkel ID</th>
+        <th>Type</th>
+        <th>Modellnavn</th>
+        <th>Tilhørighet</th>
+        <th>Utleveringssted</th>
+        <th>Utleveringssdato</th>
+        <th>Utleveringstid</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.syklerIBestilling.length; i++) {
+      this.tabell.push(
+        <tr>
+          <td>{this.syklerIBestilling[i].bestilling_id}</td>
+          <td>{this.syklerIBestilling[i].id}</td>
+          <td>{this.syklerIBestilling[i].type}</td>
+          <td>{this.syklerIBestilling[i].modellnavn}</td>
+          <td>{this.syklerIBestilling[i].område}</td>
+          <td>{this.syklerIBestilling[i].utleveringssted}</td>
+          <td>{this.syklerIBestilling[i].utlevering_dato}</td>
+          <td>{this.syklerIBestilling[i].utlevering_tid}</td>
+        </tr>
+      );
+    }
+  }
+
+  tilbake() {
+    history.push('/lagerStartside/' + this.props.match.params.ansattId);
   }
 }

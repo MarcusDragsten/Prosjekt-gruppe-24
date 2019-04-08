@@ -112,7 +112,7 @@ export class Bestilling extends Component {
           </button>
         </div>
         <div id="nyBestilling" class="form-group">
-          <h1>Fyll inn bestillingskjema for kunden her:</h1>
+          <h1>Fyll inn bestillingskjema for kunden her</h1>
           <hr />
           <div id="nyKundeDiv">
             <label for="nyKundeKnapp">Er det en ny kunde?</label>
@@ -222,16 +222,16 @@ export class Bestilling extends Component {
             <button type="submit" class="btn" id="velgUtstyrKnapp">
               Velg sykler og utstyr
             </button>
+            <button type="button" id="avbrytBestilling" class="btn" onClick={this.return}>
+              Avbryt Bestilling
+            </button>
           </form>
-          <button type="button" id="tilbake" onClick={this.return}>
-            Tilbake til startsiden
-          </button>
         </div>
         <div id="velgSykkel">
           <h1>Velg hvor mange sykler kunden vil ha:</h1>
           <div id="syklerDiv">
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
-              <h4>Ghost Hybrid Herre</h4>
+              <h4>Hybridsykkel Herre</h4>
               <hr />
               <img src="../bilder/sykkel-herre-uten.jpeg" />
               <input
@@ -245,7 +245,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHerreArray[0]}</div>
             </div>
             <div id="ghostHybridDameDiv" class="sykkelDiver">
-              <h4>Ghost Hybrid Dame</h4>
+              <h4>Hybridsykkel Dame</h4>
               <hr />
               <img src="../bilder/sykkel-dame-uten.jpeg" />
               <input
@@ -259,7 +259,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteDameArray[0]}</div>
             </div>
             <div id="ghostHybridHerreBagasjeDiv" class="sykkelDiver">
-              <h4>Ghost Hybrid Herre m/ Bagasjebrett</h4>
+              <h4>Hybridsykkel Herre m/ Bagasjebrett</h4>
               <hr />
               <img src="../bilder/sykkel-herre.jpeg" />
               <input
@@ -273,7 +273,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHerreBagasjeArray[0]}</div>
             </div>
             <div id="ghostHybridDameBagasjeDiv" class="sykkelDiver">
-              <h4>Ghost Hybrid Dame m/ Bagasjebrett</h4>
+              <h4>Hybridsykkel Dame m/ Bagasjebrett</h4>
               <hr />
               <img src="../bilder/sykkel-dame.jpeg" />
               <input
@@ -287,7 +287,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteDameBagasjeArray[0]}</div>
             </div>
             <div id="barnesykkelDiv" class="sykkelDiver">
-              <h4>Barnesykkel 20"</h4>
+              <h4>Barnesykkel</h4>
               <hr />
               <img src="../bilder/sykkel-barn.jpeg" />
               <input
@@ -301,7 +301,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteBarnArray[0]}</div>
             </div>
             <div id="juniorsykkelDiv" class="sykkelDiver">
-              <h4>Juniorsykkel 24"</h4>
+              <h4>Juniorsykkel</h4>
               <hr />
               <img src="../bilder/sykkel-junior.jpg" />
               <input
@@ -315,7 +315,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteJuniorArray[0]}</div>
             </div>
             <div id="ghostTerrengDiv" class="sykkelDiver">
-              <h4>Ghost Terreng</h4>
+              <h4>Terrengsykkel</h4>
               <hr />
               <img src="../bilder/sykkel-terreng.jpeg" />
               <input
@@ -343,7 +343,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteElsykkelArray[0]}</div>
             </div>
             <div id="racerSykkelDiv" class="sykkelDiver">
-              <h4>Racersykkel</h4>
+              <h4>Landeveissykkel</h4>
               <hr />
               <img src="../bilder/sykkel-racer.jpg" />
               <input
@@ -365,6 +365,9 @@ export class Bestilling extends Component {
           </button>
           <button type="button" id="hentOversiktKnapp" class="btn" onClick={this.hentSyklerOversikt}>
             Gå videre
+          </button>
+          <button type="button" id="avbrytBestillingSykkel" class="btn" onClick={this.avbrytBestillingSykkel}>
+            Avbryt bestilling
           </button>
         </div>
         <div id="velgUtstyr">
@@ -464,6 +467,9 @@ export class Bestilling extends Component {
           <button type="button" class="btn" id="lagOversiktKnapp" onClick={this.lagOversikt}>
             Gå videre
           </button>
+          <button type="button" id="avbrytBestillingUtstyr" class="btn" onClick={this.avbrytBestillingUtstyr}>
+            Avbryt Bestilling
+          </button>
         </div>
         <div id="bestillingOversikt">
           <h1>Bestillingoversikt</h1>
@@ -498,9 +504,11 @@ export class Bestilling extends Component {
               <u>{this.sumTotalt}</u>
             </b>
           </p>
-          <button type="button" id="tilbake" onClick={this.return}>
+          <button type="button" class="btn" onClick={this.return}>
             Tilbake til startsiden
           </button>
+          <br />
+          <br />
         </div>
       </div>
     );
@@ -546,7 +554,7 @@ export class Bestilling extends Component {
   }
 
   nyKundePush() {
-    history.push('/nyKunde/');
+    history.push('/nyKunde/' + this.props.match.params.ansattId);
     // Pusher til et form som skal legge til en ny kunde
   }
 
@@ -555,7 +563,28 @@ export class Bestilling extends Component {
   }
 
   return() {
-    history.push('/salgStartside/' + this.props.match.params.id);
+    history.push('/salgStartside/' + this.props.match.params.ansattId);
+  }
+
+  avbrytBestilling() {
+    history.push('/salgStartside/' + this.props.match.params.ansattId);
+  }
+
+  avbrytBestillingSykkel() {
+    bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
+      bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+        history.push('/salgStartside/' + this.props.match.params.ansattId);
+      });
+    });
+  }
+  avbrytBestillingUtstyr() {
+    bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
+      bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+        bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
+          history.push('/salgStartside/' + this.props.match.params.ansattId);
+        });
+      });
+    });
   }
 
   dagensDato() {
@@ -609,7 +638,7 @@ export class Bestilling extends Component {
       this.utlevering_tid,
       this.innlevering_dato,
       this.innlevering_tid,
-      this.props.match.params.id,
+      this.props.match.params.ansattId,
       id => {
         console.log(this.utlevering_dato);
       }
@@ -651,8 +680,8 @@ export class Bestilling extends Component {
   leggInnValgteSykler() {
     if (this.herre > 0) {
       if (this.syklerLedig[4].ant_ledige > this.herre) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Ghost Hybrid Herre', this.herre, herre => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Ghost Hybrid Herre', herreValgt => {
+        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Hybrid Herre', this.herre, herre => {
+          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Hybrid Herre', herreValgt => {
             let tall = herreValgt;
             this.antallValgteHerre = tall[0].hvorMangeValgt;
             this.antallValgteHerreArray.pop();
@@ -661,7 +690,7 @@ export class Bestilling extends Component {
         });
       } else {
         alert(
-          'Vi har ikke nok Ghost Hybrid herre på lager for øyeblikket. Lagerstatus er ' +
+          'Vi har ikke nok hybridsykler for herre på lager for øyeblikket. Lagerstatus er ' +
             (Number(this.syklerLedig[4].ant_ledige) - 1)
         );
       }
@@ -669,8 +698,8 @@ export class Bestilling extends Component {
 
     if (this.dame > 0) {
       if (this.syklerLedig[2].ant_ledige > this.dame) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Ghost Hybrid Dame', this.dame, dame => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Ghost Hybrid Dame', dameValgt => {
+        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Hybrid Dame', this.dame, dame => {
+          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Hybrid Dame', dameValgt => {
             let tall = dameValgt;
             this.antallValgteDame = tall[0].hvorMangeValgt;
             this.antallValgteDameArray.pop();
@@ -679,7 +708,7 @@ export class Bestilling extends Component {
         });
       } else {
         alert(
-          'Vi har ikke nok Ghost Hybrid dame på lager for øyeblikket. Lagerstatus er ' +
+          'Vi har ikke nok hybridsykler for dame på lager for øyeblikket. Lagerstatus er ' +
             (Number(this.syklerLedig[2].ant_ledige) - 1)
         );
       }
@@ -688,12 +717,12 @@ export class Bestilling extends Component {
       if (this.syklerLedig[5].ant_ledige > this.herreBagasje) {
         sykkelService.leggInnSykler(
           this.id[0].lastInsertId,
-          'Ghost Hybrid Herre m/ bagasjebrett',
+          'Hybrid Herre m/bagasjebrett',
           this.herreBagasje,
           herreBagasje => {
             sykkelService.hvorMangeSyklerValgt(
               this.id[0].lastInsertId,
-              'Ghost Hybrid Herre m/ bagasjebrett',
+              'Hybrid Herre m/bagasjebrett',
               herreBagasjeValgt => {
                 let tall = herreBagasjeValgt;
                 this.antallValgteHerreBagasje = tall[0].hvorMangeValgt;
@@ -705,7 +734,7 @@ export class Bestilling extends Component {
         );
       } else {
         alert(
-          'Vi har ikke nok Ghost Hybrid herre m/ bagasjebrett på lager for øyeblikket. Lagerstatus er ' +
+          'Vi har ikke nok hybridsykler for herre m/ bagasjebrett på lager for øyeblikket. Lagerstatus er ' +
             (Number(this.syklerLedig[5].ant_ledige) - 1)
         );
       }
@@ -715,12 +744,12 @@ export class Bestilling extends Component {
       if (this.syklerLedig[3].ant_ledige > this.dameBagasje) {
         sykkelService.leggInnSykler(
           this.id[0].lastInsertId,
-          'Ghost Hybrid Dame m/ bagasjebrett',
+          'Hybrid Dame m/bagasjebrett',
           this.dameBagasje,
           dameBagasje => {
             sykkelService.hvorMangeSyklerValgt(
               this.id[0].lastInsertId,
-              'Ghost Hybrid Dame m/ bagasjebrett',
+              'Hybrid Dame m/bagasjebrett',
               dameBagasjeValgt => {
                 let tall = dameBagasjeValgt;
                 this.antallValgteDameBagasje = tall[0].hvorMangeValgt;
@@ -732,7 +761,7 @@ export class Bestilling extends Component {
         );
       } else {
         alert(
-          'Vi har ikke nok Ghost Hybrid dame m/ bagasjebrett på lager for øyeblikket. Lagerstatus er ' +
+          'Vi har ikke nok hybridsykler for dame m/ bagasjebrett på lager for øyeblikket. Lagerstatus er ' +
             (Number(this.syklerLedig[3].ant_ledige) - 1)
         );
       }
@@ -776,8 +805,8 @@ export class Bestilling extends Component {
 
     if (this.terreng > 0) {
       if (this.syklerLedig[6].ant_ledige > this.terreng) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Ghost Terreng', this.terreng, terreng => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Ghost Terreng', terrengValgt => {
+        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Terrengsykkel', this.terreng, terreng => {
+          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Terrengsykkel', terrengValgt => {
             let tall = terrengValgt;
             this.antallValgteTerreng = tall[0].hvorMangeValgt;
             this.antallValgteTerrengArray.pop();
@@ -812,8 +841,8 @@ export class Bestilling extends Component {
 
     if (this.racer > 0) {
       if (this.syklerLedig[8].ant_ledige > this.racer) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Racersykkel', this.racer, racer => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Racersykkel', racerValgt => {
+        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Landeveissykkel', this.racer, racer => {
+          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Landeveissykkel', racerValgt => {
             let tall = racerValgt;
             this.antallValgteRacer = tall[0].hvorMangeValgt;
             this.antallValgteRacerArray.pop();
@@ -822,7 +851,7 @@ export class Bestilling extends Component {
         });
       } else {
         alert(
-          'Vi har ikke nok racersykler på lager for øyeblikket. Lagerstatus er ' +
+          'Vi har ikke nok landeveissykler på lager for øyeblikket. Lagerstatus er ' +
             (Number(this.syklerLedig[8].ant_ledige) - 1)
         );
       }
@@ -838,12 +867,6 @@ export class Bestilling extends Component {
       Number(this.dame) +
       Number(this.herreBagasje) +
       Number(this.herre);
-
-    /* if (this.innlagteSykler == 0) {
-      alert('Ingen sykler er lagt til');
-    } else if (this.innlagteSykler > 0 && ){
-      alert(this.innlagteSykler + ' sykler lagt til');
-    } */
 
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;

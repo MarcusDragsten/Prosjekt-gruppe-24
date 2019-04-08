@@ -6,16 +6,20 @@ import {
   AnsatteAdmin,
   AnsatteSekretær,
   AdminStartside,
+  SekretærStartside,
   AnsatteDetails,
-  AnsatteDetailsSek,
-  AdminStartsideSek,
-  AnsatteNew,
+  AnsatteDetailsSekretær,
+  AdminStartsideSekretær,
+  NyAnsatt,
   AnsatteEdit,
   Rapport,
   Lokasjoner,
   LokasjonerDetails,
   LokasjonNew,
-  LokasjonEdit
+  LokasjonEdit,
+  LokasjonerSekretær,
+  LokasjonerDetailsSekretær,
+  RapportSekretær
 } from '../scripts/admin.js';
 import { Bestilling } from '../scripts/bestilling.js';
 import {
@@ -37,13 +41,12 @@ import {
   Reparasjoner,
   EndreReparasjoner,
   HenteSykkel,
-  EndreHenteSykkel,
   LeggTilSykkel,
   LeggTilUtstyr,
   EndreSykkel,
   EndreUtstyrLager,
   SavnetSykkel,
-  EndreSavnetSykkel
+  SykkelBestilling
 } from '../scripts/lager.js';
 import { loginService } from './services';
 
@@ -76,45 +79,36 @@ class Login extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
-          <form onSubmit={this.login}>
-            <h3>Innlogging ansatte:</h3>
-            <label for="Brukernavn">Brukernavn:</label>
-            <div id="brukernavnDiv" class="input-group">
-              <span class="input-group-addon">
-                <i class="glyphicon glyphicon-user" />
-              </span>
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
+          </div>
+          <div id="loginInputDiv">
+            <form onSubmit={this.login}>
+              <h3>Innlogging ansatte:</h3>
               <input
                 type="text"
-                class="form-control form-control-lg"
                 id="inputBrukernavn"
-                placeholder="Et brukernavn"
+                placeholder="brukernavn"
                 onChange={e => (this.brukernavn = event.target.value)}
                 required
               />
-            </div>
-            <label for="Passord">Passord:</label>
-            <div id="passordDiv" class="input-group">
-              <span class="input-group-addon">
-                <i class="glyphicon glyphicon-lock" />
-              </span>
               <input
                 type="password"
-                placeholder="*******"
-                class="form-control"
+                placeholder="passord"
                 id="inputPassord"
                 onChange={e => (this.passord = event.target.value)}
                 required
               />
-            </div>
-            <button type="submit" class="btn">
-              Logg inn
-            </button>
-          </form>
-          <p>{this.feilmelding}</p>
+              <button type="submit" id="loginKnapp">
+                Logg inn
+              </button>
+              <p>{this.feilmelding}</p>
+            </form>
+          </div>
         </div>
         <div class="footer">
           <p>
@@ -140,11 +134,11 @@ class Login extends Component {
         if (this.passord == this.ansatte[i].passord) {
           console.log(this.brukernavn + ' er innlogget!');
           if (this.ansatte[i].rolle == 'Daglig leder') {
-            history.push('/adminStartside/');
+            history.push('/adminStartside/' + this.ansatte[i].id);
             //Daglig leder
           }
           if (this.ansatte[i].rolle == 'Sekretær') {
-            history.push('/ansatteSekretær/');
+            history.push('/sekretærStartside/' + this.ansatte[i].id);
             //Sekretær
           }
           if (this.ansatte[i].rolle == 'Selger') {
@@ -152,7 +146,7 @@ class Login extends Component {
             //Selger
           }
           if (this.ansatte[i].rolle == 'Lager') {
-            history.push('/lagerStartside/');
+            history.push('/lagerStartside/' + this.ansatte[i].id);
             //Lager
           }
         } else {
@@ -180,38 +174,41 @@ ReactDOM.render(
       <Route path="/bestillingHistorikk/:ansattId" component={BestillingHistorikk} />
       <Route exact path="/endreBestillingSykler/:ansattId/:bestillingId" component={EndreSykler} />
       <Route exact path="/endreBestillingUtstyr/:ansattId/:bestillingId" component={EndreUtstyr} />
-      <Route path="/bestilling/:id" component={Bestilling} />
+      <Route path="/bestilling/:ansattId" component={Bestilling} />
 
-      <Route path="/nyKunde/" component={NyKunde} />
+      <Route path="/nyKunde/:ansattId" component={NyKunde} />
 
-      <Route path="/adminStartside/" component={AdminStartside} />
-      <Route path="/ansatteAdmin/" component={AnsatteAdmin} />
-      <Route path="/ansatteAdmin/:id" component={AnsatteDetails} />
-      <Route path="/ansatteSekretær" component={AnsatteSekretær} />
-      <Route path="/new_ansatte/" component={AnsatteNew} />
-      <Route path="/ansatteSek/:id" component={AnsatteDetailsSek} />
-      <Route path="/ansatte/:id/edit" component={AnsatteEdit} />
-      <Route path="/rapport/" component={Rapport} />
-      <Route path="/lokasjoner/" component={Lokasjoner} />
-      <Route path="/lokasjoner/:id" component={LokasjonerDetails} />
-      <Route path="/lokasjon/:id/edit" component={LokasjonEdit} />
-      <Route path="/nyLokasjon/" component={LokasjonNew} />
+      <Route path="/adminStartside/:ansattId" component={AdminStartside} />
+      <Route path="/ansatteAdmin/:ansattId" component={AnsatteAdmin} />
+      <Route path="/ansatteAdmin/:ansattId/:ansatteListe" component={AnsatteDetails} />
+      <Route path="/sekretærStartside/:ansattId" component={SekretærStartside} />
+      <Route path="/ansatteSekretær/:ansattId" component={AnsatteSekretær} />
+      <Route path="/ansatteSekretær/:ansattId/:ansatteListe" component={AnsatteDetailsSekretær} />
+      <Route path="/nyAnsatt/:ansattId" component={NyAnsatt} />
+      <Route path="/ansatteEdit/:ansattId/:edit" component={AnsatteEdit} />
+      <Route path="/rapport/:ansattId" component={Rapport} />
+      <Route path="/rapportSekretær/:ansattId" component={RapportSekretær} />
+      <Route path="/lokasjoner/:ansattId" component={Lokasjoner} />
+      <Route path="/lokasjoner/:ansattId/:lokasjonListe" component={LokasjonerDetails} />
+      <Route path="/lokasjonerSekretær/:ansattId" component={LokasjonerSekretær} />
+      <Route path="/lokasjonerSekretær/:ansattId/:lokasjonListe" component={LokasjonerDetailsSekretær} />
+      <Route path="/lokasjon/:ansattId/:edit" component={LokasjonEdit} />
+      <Route path="/nyLokasjon/:ansattId" component={LokasjonNew} />
 
-      <Route path="/lagerStartside/" component={LagerStartside} />
-      <Route path="/ledigSykkel/" component={LedigSykkel} />
-      <Route path="/utleidSykkel/" component={UtleidSykkel} />
-      <Route path="/ledigUtstyr/" component={LedigUtstyr} />
-      <Route path="/utleidUtstyr/" component={UtleidUtstyr} />
-      <Route path="/reparasjoner/" component={Reparasjoner} />
-      <Route path="/reparasjoner/:id/edit" component={EndreReparasjoner} />
-      <Route path="/henteSykkel/" component={HenteSykkel} />
-      <Route path="/henteSykkel/:id/edit" component={EndreHenteSykkel} />
-      <Route path="/leggTilSykkel/" component={LeggTilSykkel} />
-      <Route path="/leggTilUtstyr/" component={LeggTilUtstyr} />
-      <Route path="/redigerSykkel/:id/edit" component={EndreSykkel} />
-      <Route path="/redigerUtstyr/:id/edit" component={EndreUtstyrLager} />
-      <Route path="/savnetSykkel/" component={SavnetSykkel} />
-      <Route path="/savnetSykkel/:id/edit" component={EndreSavnetSykkel} />
+      <Route path="/lagerStartside/:ansattId" component={LagerStartside} />
+      <Route path="/ledigSykkel/:ansattId" component={LedigSykkel} />
+      <Route path="/utleidSykkel/:ansattId" component={UtleidSykkel} />
+      <Route path="/ledigUtstyr/:ansattId" component={LedigUtstyr} />
+      <Route path="/utleidUtstyr/:ansattId" component={UtleidUtstyr} />
+      <Route path="/reparasjoner/:ansattId" component={Reparasjoner} />
+      <Route path="/reparasjoner/:ansattId:id/edit" component={EndreReparasjoner} />
+      <Route path="/henteSykkel/:ansattId" component={HenteSykkel} />
+      <Route path="/leggTilSykkel/:ansattId" component={LeggTilSykkel} />
+      <Route path="/leggTilUtstyr/:ansattId" component={LeggTilUtstyr} />
+      <Route path="/redigerSykkel/:ansattId:id/edit" component={EndreSykkel} />
+      <Route path="/redigerUtstyr/:ansattId:id/edit" component={EndreUtstyrLager} />
+      <Route path="/savnetSykkel/:ansattId" component={SavnetSykkel} />
+      <Route path="/sykkelBestilling/:ansattId" component={SykkelBestilling} />
     </div>
   </HashRouter>,
   document.getElementById('root')

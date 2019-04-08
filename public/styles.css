@@ -1,16 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Exo:100, 200, 400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 400, 300);
+
 body {
-  background-image: url('../bilder/stripes-light.png');
-  background-color: white;
+  background-color: #c4dfe6 !important;
 }
+
 /*removes all rounded corners in bootstrap buttons*/
 * {
   border-radius: 0 !important;
 }
 
+#header {
+  background-color: #002c54 !important;
+  color: #fff !important;
+}
+
 #velgSykkel,
 #velgUtstyr,
 #bestillingOversikt,
-#filtrerAktiveBestillingerDiv {
+#filtrerAktiveBestillingerDiv,
+#filtrerRapportTotalDiv,
+#filtrerRapportAnsatteDiv {
   display: none;
 }
 
@@ -27,7 +37,9 @@ body {
   max-width: 50%;
 }
 #filtrerAktiveBestillingerDiv,
-#filtrerRapporterDiv {
+#filtrerRapportTotalDiv,
+#filtrerRapportAnsatteDiv,
+#leggTilSykkelDiv {
   background-color: #f2f2f2;
   padding-bottom: 20px;
   margin: auto;
@@ -37,34 +49,108 @@ body {
 }
 
 #toggleFiltrerKnapp {
-  position: absolute;
-  top: 10%;
-  right: 20px;
+  position: relative;
 }
 
 /*positions all headings*/
-h2 {
+h2,
+h1 {
   text-align: center;
 }
 
-#loginDiv {
-  background-color: #f2f2f2;
-  padding: 20px;
-  margin: auto;
-  top: 25%;
-  position: relative;
-  max-width: 50%;
+#loginInputDiv {
+  display: inline-block;
+  text-align: center;
+  height: 150px;
+  width: 350px;
+  padding: 10px;
+  z-index: 2;
 }
 
-#brukernavnDiv,
+#inputBrukernavn {
+  position: relative;
+  text-align: center;
+  width: 250px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 4px;
+}
+
+#inputPassord {
+  position: relative;
+  text-align: center;
+  width: 250px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 4px;
+  margin-top: 10px;
+}
+
+#loginKnapp {
+  width: 250px;
+  height: 35px;
+  background: #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
+  border-radius: 2px;
+  color: black;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px;
+  margin-top: 10px;
+}
+
+#loginKnapp:hover {
+  opacity: 0.8;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#logo {
+  max-width: 100%;
+  max-height: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#loginDiv {
+  position: relative;
+  top: 20%;
+  max-width: 70%;
+  text-align: center;
+  border: 2px solid black;
+}
+
+#loginBildeDiv {
+  display: inline-block;
+  height: 300px;
+  width: 300px;
+  z-index: 2;
+}
+
+/* #brukernavnDiv,
 #passordDiv {
   max-width: 75%;
-}
+  background: transparant;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+} */
 
-#inputBrukernavn,
-#inputPassord {
-  width: 100%;
-}
 #salgStartsideKnapperDiv,
 #adminStartsideKnapperDiv {
   position: absolute;
@@ -79,7 +165,7 @@ h2 {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #4caf50;
+  background-color: #002c54;
   color: white;
   text-align: center;
   padding-bottom: 15px;
@@ -89,7 +175,7 @@ h2 {
 }
 
 .btn {
-  background-color: #4caf50; /* Green */
+  background-color: #2b616d;
   border: none;
   color: white;
   padding: 7px 30px;
@@ -178,11 +264,6 @@ h2 {
   background-color: white;
 }
 
-img {
-  max-width: 90%;
-  max-height: 90%;
-}
-
 #loggUtKnapp {
   position: absolute;
   top: 3%;
@@ -200,6 +281,7 @@ img {
 
 #customers td,
 #customers th {
+  text-align: center;
   border: 1px solid #ddd;
   padding: 8px;
 }
@@ -215,7 +297,7 @@ img {
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #4caf50;
   color: white;
 }
@@ -248,7 +330,8 @@ img {
 
 #ansatteDiv,
 #ansatteDetailsDiv,
-#lokasjonerDiv {
+#lokasjonerDiv,
+#lokasjonerDetailsDiv {
   position: relative;
   max-width: 45%;
   text-align: center;
@@ -258,18 +341,21 @@ img {
   border-left: 2px solid black;
 }
 
-#ansatteDetailsDiv {
+#ansatteDetailsDiv,
+#lokasjonerDetailsDiv {
   border-top: 2px solid black;
   padding-bottom: 10px;
 }
 
-#ansatteDiv {
+#ansatteDiv,
+#lokasjonerDiv {
   border-bottom: 2px solid black;
   padding-bottom: 10px;
 }
 
 #ansatteEditDiv,
-#nyAnsattDiv {
+#nyAnsattDiv,
+#nyLokasjonDiv {
   position: relative;
   text-align: center;
   padding-bottom: 10px;
@@ -287,11 +373,12 @@ img {
   margin: auto;
 }
 
-#rapportTabellDiv {
+#rapportTotalTabellDiv,
+#rapportAnsatteTabellDiv {
   text-align: center;
 }
 
-#totalGevinstDiv {
+.gevinstDiver {
   padding: 15px;
   border: 2px solid black;
   max-width: 30%;
