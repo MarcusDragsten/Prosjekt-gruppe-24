@@ -32,11 +32,15 @@ class AnsatteService {
   }
 
   getAnsatt(id, success) {
-    connection.query('select * from Ansatte where id = ?', [id], (error, results) => {
-      if (error) return console.error(error);
+    connection.query(
+      'select Ansatte.id, Ansatte.passord, Ansatte.fornavn, Ansatte.etternavn, Ansatte.brukernavn, Ansatte.epost, Ansatte.telefon, Ansatte.rolle, Lokasjoner.id, Lokasjoner.område from Ansatte inner join Lokasjoner on Ansatte.lokasjon_id = Lokasjoner.id where Ansatte.id = ?',
+      [id],
+      (error, results) => {
+        if (error) return console.error(error);
 
-      success(results[0]);
-    });
+        success(results[0]);
+      }
+    );
   }
 
   addAnsatte(fornavn, etternavn, brukernavn, passord, epost, telefon, lokasjon_id, rolle, success) {
@@ -61,7 +65,7 @@ class AnsatteService {
         ansatte.passord,
         ansatte.epost,
         ansatte.telefon,
-        ansatte.lokasjon_id,
+        ansatte.id,
         ansatte.rolle,
         ansatte.id
       ],

@@ -740,8 +740,8 @@ export class EndreBestilling extends Component {
               onChange={e => (this.utleveringssted = event.target.value)}
               required
             >
-              <option value="" selected hidden>
-                Velg utleveringssted
+              <option value={this.bestillinger.utleveringssted} selected hidden>
+                {this.bestillinger.utleveringssted}
               </option>
               {this.utleveringssteder.map(steder => (
                 <option value={steder.id} key={steder.id}>
@@ -756,8 +756,8 @@ export class EndreBestilling extends Component {
               onChange={e => (this.innleveringssted = event.target.value)}
               required
             >
-              <option value="" selected hidden>
-                Velg utleveringssted
+              <option value={this.bestillinger.innleveringssted} selected hidden>
+                {this.bestillinger.innleveringssted}
               </option>
               {this.innleveringssteder.map(steder => (
                 <option value={steder.id} key={steder.id}>

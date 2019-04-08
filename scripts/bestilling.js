@@ -114,7 +114,7 @@ export class Bestilling extends Component {
         <div id="nyBestilling" class="form-group">
           <h1>Fyll inn bestillingskjema for kunden her</h1>
           <hr />
-          <div id="nyKundeDiv">
+          <div>
             <label for="nyKundeKnapp">Er det en ny kunde?</label>
             <button type="button" class="btn" id="nyKundeKnapp" onClick={this.nyKundePush}>
               Klikk her
@@ -1481,6 +1481,9 @@ export class Bestilling extends Component {
           this.leggInnValgtUtstyr();
           this.hentUtstyrOversikt();
         }
+      } else {
+        this.leggInnValgtUtstyr();
+        this.hentUtstyrOversikt();
       }
     }
   }

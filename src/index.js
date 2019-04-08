@@ -68,6 +68,9 @@ class Login extends Component {
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
+          </div>
           <div id="loginInputDiv">
             <form onSubmit={this.login}>
               <h3>Innlogging ansatte</h3>
@@ -92,9 +95,6 @@ class Login extends Component {
               </button>
               <p>{this.feilmelding}</p>
             </form>
-          </div>
-          <div id="loginBildeDiv">
-            <img src="../bilder/logo.png" id="logo" alt="Logo" />
           </div>
         </div>
         <div class="footer">

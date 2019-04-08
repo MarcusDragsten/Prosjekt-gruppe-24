@@ -135,7 +135,7 @@ export class AnsatteDetails extends Component {
         <p>Brukernavn: {this.ansatte.brukernavn}</p>
         <p>Epost: {this.ansatte.epost}</p>
         <p>Telefon: {this.ansatte.telefon}</p>
-        <p>Lokasjons ID: {this.ansatte.lokasjon_id}</p>
+        <p>Lokasjons ID: {this.ansatte.område}</p>
         <p>Rolle: {this.ansatte.rolle}</p>
         <button type="button" class="btn" onClick={this.edit}>
           Endre
@@ -149,11 +149,12 @@ export class AnsatteDetails extends Component {
   mounted() {
     ansatteService.getAnsatt(this.props.match.params.ansatteListe, ansatte => {
       this.ansatte = ansatte;
+      console.log(this.ansatte);
     });
   }
 
   edit() {
-    history.push('/ansatteEdit/' + this.props.match.params.ansattId + '/' + this.ansatte.id);
+    history.push('/ansatteEdit/' + this.props.match.params.ansattId + '/' + this.props.match.params.ansatteListe);
   }
 
   delete() {
@@ -177,6 +178,8 @@ export class NyAnsatt extends Component {
   telefon = '';
   lokasjon_id = '';
   rolle = '';
+
+  utleveringssteder = [];
 
   render() {
     return (
@@ -248,15 +251,21 @@ export class NyAnsatt extends Component {
               onChange={e => (this.telefon = e.target.value)}
               required
             />
-            <h3>ID for lokasjon</h3>
-            <input
-              type="text"
-              class="form-control"
+            <h3>Arbeidslokasjon</h3>
+            <select
               id="nyAnsattLokasjonInput"
-              value={this.lokasjon_id}
-              onChange={e => (this.lokasjon_id = e.target.value)}
-              required
-            />
+              class="form-control form-control-lg"
+              onChange={e => (this.lokasjon_id = event.target.value)}
+            >
+              <option value="" selected hidden>
+                Velg hvor ansatten skal jobbe
+              </option>
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id} value={steder.id}>
+                  {steder.område}
+                </option>
+              ))}
+            </select>
             <h3>Rolle</h3>
             <select
               name="rolle"
@@ -279,6 +288,12 @@ export class NyAnsatt extends Component {
         </div>
       </div>
     );
+  }
+
+  mounted() {
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
+    });
   }
 
   add(e) {
@@ -311,6 +326,8 @@ export class AnsatteEdit extends Component {
   //Redigere informasjon om ansatte
   ansatte = [];
 
+  utleveringssteder = [];
+
   render() {
     return (
       <div>
@@ -342,12 +359,21 @@ export class AnsatteEdit extends Component {
           <input type="text" value={this.ansatte.epost} onChange={e => (this.ansatte.epost = e.target.value)} />
           <h3>Telefonnummer</h3>
           <input type="text" value={this.ansatte.telefon} onChange={e => (this.ansatte.telefon = e.target.value)} />
-          <h3>ID for lokasjon</h3>
-          <input
-            type="text"
-            value={this.ansatte.lokasjon_id}
-            onChange={e => (this.ansatte.lokasjon_id = e.target.value)}
-          />
+          <h3>Arbeidslokasjon</h3>
+          <select
+            id="nyAnsattLokasjonInput"
+            class="form-control form-control-lg"
+            onChange={e => (this.lokasjon_id = event.target.value)}
+          >
+            <option value={this.ansatte.id} hidden selected>
+              {this.ansatte.område}
+            </option>
+            {this.utleveringssteder.map(steder => (
+              <option key={steder.id} value={steder.id}>
+                {steder.område}
+              </option>
+            ))}
+          </select>
           <h3>Rolle</h3>
           <select
             name="rolle"
@@ -374,6 +400,10 @@ export class AnsatteEdit extends Component {
     ansatteService.getAnsatt(this.props.match.params.edit, ansatte => {
       this.ansatte = ansatte;
       console.log(this.ansatte);
+    });
+
+    bestillingService.hentUtleveringsted(utleveringssteder => {
+      this.utleveringssteder = utleveringssteder;
     });
   }
 
