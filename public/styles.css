@@ -2,7 +2,9 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 400, 300);
 
 body {
-  background-color: #c4dfe6 !important;
+/*  background-color: #c4dfe6 !important;
+*/
+background-image: url("../bilder/eb285e21.png") !important;
 }
 
 /*removes all rounded corners in bootstrap buttons*/
