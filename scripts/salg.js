@@ -141,7 +141,9 @@ export class AktiveBestillinger extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.utleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <label for="innleveringssted">Innleveringssted:</label>
             <select
@@ -152,7 +154,9 @@ export class AktiveBestillinger extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.innleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <button type="submit" class="btn btn-sucess btn-lg btn-block">
               Søk
@@ -378,7 +382,9 @@ export class BestillingHistorikk extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.utleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <label for="innleveringssted">Innleveringssted:</label>
             <select
@@ -389,7 +395,9 @@ export class BestillingHistorikk extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.innleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <button type="submit" class="btn btn-sucess btn-lg btn-block">
               Søk
@@ -613,8 +621,8 @@ export class Innlevering extends Component {
               <option value="" defaultValue hidden>
                 Velg status
               </option>
-              <option value="Ledig">Ledig</option>
-              <option value="Reparasjon">Reparasjon</option>
+              <option value="Ledig">Godkjent</option>
+              <option value="Reparasjon">Må til reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
           </td>
@@ -647,8 +655,8 @@ export class Innlevering extends Component {
               <option value="" defaultValue hidden>
                 Velg status
               </option>
-              <option value="Ledig">Ledig</option>
-              <option value="Reparasjon">Reparasjon</option>
+              <option value="Ledig">Godkjent</option>
+              <option value="Reparasjon">Må til reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
           </td>
