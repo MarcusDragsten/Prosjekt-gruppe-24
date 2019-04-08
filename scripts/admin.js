@@ -15,14 +15,14 @@ export class AdminStartside extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Administrasjonssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
         <div id="adminStartsideKnapperDiv">
           <h2>
-            Velkommen til adminsiden: {this.ansatt.fornavn} {this.ansatt.etternavn}
+            Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}
           </h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ansattePush}>
             Administere ansatte
@@ -69,7 +69,7 @@ export class AnsatteAdmin extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Ansatte</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -78,7 +78,7 @@ export class AnsatteAdmin extends Component {
           Tilbake
         </button>
         <div id="ansatteDiv">
-          <h1>Ansatte</h1>
+          <h1>Ansatte info</h1>
           <hr />
           {this.ansatte.map(ansatte => (
             <p key={ansatte.id}>
@@ -182,7 +182,7 @@ export class NyAnsatt extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Nye ansatte</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -191,76 +191,83 @@ export class NyAnsatt extends Component {
           Tilbake
         </button>
         <div id="nyAnsattDiv">
-          <h1>Legg til ny ansatt</h1>
+          <h2>Legg til ansatt</h2>
           <hr />
-          <h3>Fornavn</h3>
+          <h4>Fornavn</h4>
           <form onSubmit={this.add}>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
               id="nyAnsattFornavnInput"
+              placeholder="Skriv fornavn"
               value={this.fornavn}
               onChange={e => (this.fornavn = e.target.value)}
               required
             />
-            <h3>Etternavn</h3>
+            <h4>Etternavn</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv etternavn"
               id="nyAnsattEtternavnInput"
               value={this.etternavn}
               onChange={e => (this.etternavn = e.target.value)}
               required
             />
-            <h3>Brukernavn</h3>
+            <h4>Brukernavn</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv brukernavn"
               id="nyAnsattBrukernavnInput"
               value={this.brukernavn}
               onChange={e => (this.brukernavn = e.target.value)}
               required
             />
-            <h3>Passord</h3>
+            <h4>Passord</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv passord"
               id="nyAnsattPassordInput"
               value={this.passord}
               onChange={e => (this.passord = e.target.value)}
               required
             />
-            <h3>Epost</h3>
+            <h4>Epost</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv epost"
               id="nyAnsattEpostInput"
               value={this.epost}
               onChange={e => (this.epost = e.target.value)}
               required
             />
-            <h3>Telefonnummer</h3>
+            <h4>Telefonnummer</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv telefonnummer"
               id="nyAnsattTlfInput"
               value={this.telefon}
               onChange={e => (this.telefon = e.target.value)}
               required
             />
-            <h3>ID for lokasjon</h3>
+            <h4>ID for lokasjon</h4>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder="Skriv lokasjons id"
               id="nyAnsattLokasjonInput"
               value={this.lokasjon_id}
               onChange={e => (this.lokasjon_id = e.target.value)}
               required
             />
-            <h3>Rolle</h3>
+            <h4>Rolle</h4>
             <select
               name="rolle"
-              class="form-control"
+              class="form-control form-control-lg"
               id="nyAnsattRolleInput"
               value={this.rolle}
               onChange={e => (this.rolle = event.target.value)}
@@ -315,7 +322,7 @@ export class AnsatteEdit extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Ansattesiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -324,33 +331,76 @@ export class AnsatteEdit extends Component {
           Tilbake
         </button>
         <div id="ansatteEditDiv">
-          <h1>Endre informasjonen til {this.ansatte.fornavn}</h1>
+          <h2>Endre informasjonen til {this.ansatte.fornavn}</h2>
           <hr />
-          <h3>Fornavn</h3>
-          <input type="text" value={this.ansatte.fornavn} onChange={e => (this.ansatte.fornavn = e.target.value)} />
-          <h3>Etternavn</h3>
-          <input type="text" value={this.ansatte.etternavn} onChange={e => (this.ansatte.etternavn = e.target.value)} />
-          <h3>Brukernavn</h3>
+          <h4>Fornavn</h4>
           <input
             type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv Fornavn"
+            id="nyAnsattFornavnInput"
+            value={this.ansatte.fornavn}
+            onChange={e => (this.ansatte.fornavn = e.target.value)}
+          />
+          <h4>Etternavn</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv etternavn"
+            id="nyAnsattEtternavnInput"
+            value={this.ansatte.etternavn}
+            onChange={e => (this.ansatte.etternavn = e.target.value)}
+          />
+          <h4>Brukernavn</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv brukernavn"
+            id="nyAnsattBrukernavnInput"
             value={this.ansatte.brukernavn}
             onChange={e => (this.ansatte.brukernavn = e.target.value)}
           />
-          <h3>Passord</h3>
-          <input type="text" value={this.ansatte.passord} onChange={e => (this.ansatte.passord = e.target.value)} />
-          <h3>Epost</h3>
-          <input type="text" value={this.ansatte.epost} onChange={e => (this.ansatte.epost = e.target.value)} />
-          <h3>Telefonnummer</h3>
-          <input type="text" value={this.ansatte.telefon} onChange={e => (this.ansatte.telefon = e.target.value)} />
-          <h3>ID for lokasjon</h3>
+          <h4>Passord</h4>
           <input
             type="text"
+            class="form-control form-control-lg"
+            placeholder="Passord"
+            id="nyAnsattPassordInput"
+            value={this.ansatte.passord}
+            onChange={e => (this.ansatte.passord = e.target.value)}
+          />
+          <h4>Epost</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv epost"
+            id="nyAnsattEpostInput"
+            value={this.ansatte.epost}
+            onChange={e => (this.ansatte.epost = e.target.value)}
+          />
+          <h4>Telefonnummer</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv telefonnummer"
+            id="nyAnsattTlfInput"
+            value={this.ansatte.telefon}
+            onChange={e => (this.ansatte.telefon = e.target.value)}
+          />
+          <h4>ID for lokasjon</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv lokasjonsid"
+            id="nyAnsattLokasjonInput"
             value={this.ansatte.lokasjon_id}
             onChange={e => (this.ansatte.lokasjon_id = e.target.value)}
           />
-          <h3>Rolle</h3>
+          <h4>Rolle</h4>
           <select
             name="rolle"
+            class="form-control form-control-lg"
+            id="nyAnsattRolleInput"
             value={this.ansatte.rolle}
             onChange={e => (this.ansatte.rolle = event.target.value)}
             required
@@ -399,7 +449,7 @@ export class Lokasjoner extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Lokasjonssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -455,7 +505,7 @@ export class LokasjonerDetails extends Component {
   render() {
     return (
       <div id="lokasjonerDetailsDiv">
-        <h1>Detaljer for {this.lokasjoner.område}</h1>
+        <h2>Detaljer for {this.lokasjoner.område}</h2>
         <hr />
         <p>Adresse: {this.lokasjoner.adresse}</p>
         <p>Postkode: {this.lokasjoner.postkode}</p>
@@ -502,7 +552,7 @@ export class LokasjonNew extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Lokasjonssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -511,40 +561,43 @@ export class LokasjonNew extends Component {
           Tilbake
         </button>
         <div id="nyLokasjonDiv">
-          <h1>Legg til ny lokasjon</h1>
+          <h2>Legg til ny lokasjon</h2>
           <hr />
-          <h3>Adresse</h3>
+          <h4>Adresse</h4>
           <form onSubmit={this.add}>
             <input
               type="text"
-              class="form-control"
-              id="nyAnsattFornavnInput"
+              class="form-control form-control-lg"
+              id="nyLokasjonAdresseInput"
+              placeholder="Skriv adresse"
               value={this.adresse}
               onChange={e => (this.adresse = e.target.value)}
               required
             />
-            <h3>Postkode</h3>
+            <h4>Postkode</h4>
             <input
               type="text"
-              class="form-control"
-              id="nyAnsattEtternavnInput"
+              class="form-control form-control-lg"
+              id="nyLokasjonPostKodeInput"
+              placeholder="Skriv postkode"
               value={this.postkode}
               onChange={e => (this.postkode = e.target.value)}
               required
             />
-            <h3>Område</h3>
+            <h4>Område</h4>
             <input
               type="text"
-              class="form-control"
-              id="nyAnsattBrukernavnInput"
+              class="form-control form-control-lg"
+              id="nyLokasjonOmrådeInput"
+              placeholder="Skriv område"
               value={this.område}
               onChange={e => (this.område = e.target.value)}
               required
             />
-            <h3>Har lokasjonen lager?</h3>
+            <h4>Har lokasjonen lager?</h4>
             <select
-              class="form-control"
-              id="nyAnsattRolleInput"
+              class="form-control form-control-lg"
+              id="nyLokasjonOmrådeInput"
               value={this.har_lager}
               onChange={e => (this.har_lager = event.target.value)}
               required
@@ -586,7 +639,7 @@ export class LokasjonEdit extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Lokasjonssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -595,25 +648,40 @@ export class LokasjonEdit extends Component {
           Tilbake
         </button>
         <div id="ansatteEditDiv">
-          <h1>Endre informasjonen til {this.lokasjoner.område}</h1>
+          <h2>Endre informasjonen til {this.lokasjoner.område}</h2>
           <hr />
-          <h3>Adresse</h3>
+          <h4>Adresse</h4>
           <input
             type="text"
+            class="form-control form-control-lg"
+            id="nyLokasjonAdresseInput"
+            placeholder="Skriv adressen"
             value={this.lokasjoner.adresse}
             onChange={e => (this.lokasjoner.adresse = e.target.value)}
           />
-          <h3>Postkode</h3>
+          <h4>Postkode</h4>
           <input
             type="text"
+            class="form-control form-control-lg"
+            id="nyLokasjonPostKodeInput"
+            placeholder="Skriv postkode"
             value={this.lokasjoner.postkode}
             onChange={e => (this.lokasjoner.postkode = e.target.value)}
           />
-          <h3>Område</h3>
-          <input type="text" value={this.lokasjoner.område} onChange={e => (this.lokasjoner.område = e.target.value)} />
-          <h3>Har lokasjonen lager?</h3>
+          <h4>Område</h4>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Skriv område"
+            id="nyLokasjonOmrådeInput"
+            value={this.lokasjoner.område}
+            onChange={e => (this.lokasjoner.område = e.target.value)}
+          />
+          <h4>Har lokasjonen lager?</h4>
           <select
             name="rolle"
+            class="form-control form-control-lg"
+            id="nyLokasjonOmrådeInput"
             value={this.lokasjoner.har_lager}
             onChange={e => (this.lokasjoner.har_lager = event.target.value)}
             required
@@ -679,7 +747,7 @@ export class Rapport extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Rapportsiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -687,10 +755,9 @@ export class Rapport extends Component {
             Tilbake
           </button>
         </div>
-        <h1>Rapportsiden</h1>
+        <h2>Rapport over inntekter</h2>
         <hr />
         <div id="rapportTotalTabellDiv">
-          <h2>Rapport over alle inntekter</h2>
           <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
             Filtrer bestillingene?
           </button>

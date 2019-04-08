@@ -376,7 +376,10 @@ img {
 #nyAnsattLokasjonInput,
 #nyAnsattEtternavnInput,
 #nyAnsattBrukernavnInput,
-#nyAnsattTlfInput {
+#nyAnsattTlfInput,
+#nyLokasjonAdresseInput,
+#nyLokasjonPostKodeInput,
+#nyLokasjonOmrådeInput {
   max-width: 34%;
   margin: auto;
 }

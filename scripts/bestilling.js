@@ -106,13 +106,13 @@ export class Bestilling extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Bestillingssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
         <div id="nyBestilling" class="form-group">
-          <h1>Fyll inn bestillingskjema for kunden her</h1>
+          <h1>Fyll inn bestillingskjema for kunden</h1>
           <hr />
           <div id="nyKundeDiv">
             <label for="nyKundeKnapp">Er det en ny kunde?</label>
