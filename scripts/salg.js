@@ -15,24 +15,38 @@ export class SalgStartside extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Salgssiden</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
+          <h1>Salgstartsiden</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
-
         <div id="salgStartsideKnapperDiv">
           <h2>
             Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}
           </h2>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.nyBestillingPush}
+          >
             Ny Bestilling
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.aktiveBestillingerPush}>
-            Aktive bestillinger
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.aktiveBestillingerPush}
+          >
+            Se aktive bestillinger
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.bestillingHistorikkPush}>
-            Bestillingshistorikk
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.bestillingHistorikkPush}
+          >
+            Se bestillingshistorikk
           </button>
         </div>
       </div>
@@ -77,17 +91,14 @@ export class AktiveBestillinger extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Bestillingssiden</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Aktive bestillinger</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.return}>
+            Tilbake til startsiden
           </button>
         </div>
-        <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
-          Tilbake
-        </button>
         <h2>Aktive bestillinger</h2>
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
+          Filtrer tabellen?
         </button>
         <br />
         <div id="filtrerAktiveBestillingerDiv">
@@ -1894,51 +1905,44 @@ export class NyKunde extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Er det en ny kunde?</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <button onClick={this.tilbake} id="tilbake" class="btn">
-          Tilbake
-        </button>
         <div id="nyKundeDiv">
           <h1>Legg til ny kunde</h1>
           <hr />
           <form onSubmit={this.leggTilKunde}>
-            <h4>Fornavn:</h4>
+            <h3>Fornavn:</h3>
             <input
               type="text"
-              id="kundeFornavnInput"
-              class="form-control form-control-lg"
-              placeholder=" Skriv fornavn"
+              class="genereltInputer form-control form-control-lg"
+              placeholder="Skriv fornavn"
               onChange={e => (this.fornavn = e.target.value)}
               required
             />
-            <h4>Etternavn:</h4>
+            <h3>Etternavn:</h3>
             <input
               type="text"
-              id="kundeEtternavnInput"
-              class="form-control form-control-lg"
-              placeholder=" Skriv etternavn"
+              class="genereltInputer form-control form-control-lg"
+              placeholder="Skriv etternavn"
               onChange={e => (this.etternavn = e.target.value)}
               required
             />
-            <h4>Kundens epost:</h4>
+            <h3>Kundens epost:</h3>
             <input
               type="text"
-              id="kundeEpostInput"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               placeholder=" Skriv epost"
               onChange={e => (this.epost = e.target.value)}
               required
             />
-            <h4>Telefonnummer:</h4>
+            <h3>Telefonnummer:</h3>
             <input
               type="number"
-              id="kundeTlfInput"
-              class="form-control form-control-lg"
-              placeholder=" Skriv telefonnummer"
+              class="genereltInputer form-control form-control-lg"
+              placeholder="Skriv telefonnummer"
               onChange={e => (this.telefon = e.target.value)}
               required
             />
@@ -1952,7 +1956,7 @@ export class NyKunde extends Component {
     );
   }
 
-  tilbake() {
+  return() {
     history.push('/bestilling/' + this.props.match.params.ansattId);
   }
 

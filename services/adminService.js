@@ -94,11 +94,15 @@ class AnsatteService {
   }
 
   hentLokasjon(id, success) {
-    connection.query('select * from Lokasjoner where id=?', [id], (error, results) => {
-      if (error) return console.error(error);
+    connection.query(
+      'select id, område, adresse, postkode, har_lager from Lokasjoner where id=?',
+      [id],
+      (error, results) => {
+        if (error) return console.error(error);
 
-      success(results[0]);
-    });
+        success(results[0]);
+      }
+    );
   }
 
   deleteLokasjon(id, success) {

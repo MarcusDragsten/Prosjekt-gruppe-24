@@ -106,22 +106,19 @@ export class Bestilling extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Bestillingssiden</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
-          </button>
+          <h1>Bestillingsiden</h1>
         </div>
         <div id="nyBestilling" class="form-group">
           <h1>Fyll inn bestillingskjema for kunden</h1>
           <hr />
-          <div>
-            <label for="nyKundeKnapp">Er det en ny kunde?</label>
+          <div id="nyKundeTekst">
+            <label for="nyKundeKnapp">Er det en ny kunde?</label>{' '}
             <button type="button" class="btn" id="nyKundeKnapp" onClick={this.nyKundePush}>
               Klikk her
             </button>
           </div>
           <form onSubmit={this.wrapper1}>
-            <h4>Bestillingstype:</h4>
+            <h3>Bestillingstype:</h3>
             <select
               class="form-control"
               id="bestilling_typeInput"
@@ -136,7 +133,7 @@ export class Bestilling extends Component {
               <option value="Dagsutleie">Dagsutleie</option>
               <option value="Helgeutleie">Helgeutleie</option>
             </select>
-            <h4>Utleveringssted:</h4>
+            <h3>Utleveringssted:</h3>
             <select
               class="form-control"
               id="utleveringsstedInput"
@@ -151,7 +148,7 @@ export class Bestilling extends Component {
                 <option key={utleveringssteder.id}>{utleveringssteder.område}</option>
               ))}
             </select>
-            <h4>Innleveringssted:</h4>
+            <h3>Innleveringssted:</h3>
             <select
               class="form-control"
               id="innleveringsstedInput"
@@ -166,7 +163,7 @@ export class Bestilling extends Component {
                 <option key={innleveringssteder.id}>{innleveringssteder.område}</option>
               ))}
             </select>
-            <h4>Utleveringstid:</h4>
+            <h3>Utleveringstid:</h3>
             <div class="form-inline">
               <input
                 class="form-control"
@@ -186,7 +183,7 @@ export class Bestilling extends Component {
                 required
               />
             </div>
-            <h4>Innleveringstid:</h4>
+            <h3>Innleveringstid:</h3>
             <div class="form-inline">
               <input
                 class="form-control"
@@ -206,7 +203,7 @@ export class Bestilling extends Component {
                 required
               />
             </div>
-            <h4>Skriv inn en eksisterende kundes epost:</h4>
+            <h3>En eksisterende kundes epost:</h3>
             <input
               class="form-control"
               id="kunde_epostInput"
@@ -220,7 +217,7 @@ export class Bestilling extends Component {
             />
             <br />
             <button type="submit" class="btn" id="velgUtstyrKnapp">
-              Velg sykler og utstyr
+              Gå videre
             </button>
             <button type="button" id="avbrytBestilling" class="btn" onClick={this.return}>
               Avbryt Bestilling
@@ -229,6 +226,12 @@ export class Bestilling extends Component {
         </div>
         <div id="velgSykkel">
           <h1>Velg hvor mange sykler kunden vil ha:</h1>
+          <i>
+            <p>
+              Velg ønsket antall sykler per type som kunden ønsker. Deretter klikk "Legg inn sykler i bestilling".
+              Deretter gå videre til valg av utstyr
+            </p>
+          </i>
           <div id="syklerDiv">
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
               <h4>Hybridsykkel Herre</h4>
@@ -363,6 +366,7 @@ export class Bestilling extends Component {
           <button type="button" id="fjernSyklerKnapp" class="btn" onClick={this.fjernSyklerFraBestilling}>
             Fjern sykler som er lagt inn i bestillingen
           </button>
+          <br />
           <button type="button" id="hentOversiktKnapp" class="btn" onClick={this.hentSyklerOversikt}>
             Gå videre
           </button>
@@ -464,6 +468,7 @@ export class Bestilling extends Component {
           <button type="button" class="btn" onClick={this.fjernUtstyrFraBestilling}>
             Fjern utstyr som er lagt inn i bestillingen
           </button>
+          <br />
           <button type="button" class="btn" id="lagOversiktKnapp" onClick={this.lagOversikt}>
             Gå videre
           </button>
@@ -899,6 +904,7 @@ export class Bestilling extends Component {
 
   fjernSyklerFraBestilling() {
     sykkelService.fjernSyklerFraBestilling(this.id[0].lastInsertId, fjernSykler => {
+      document.getElementById('hentOversiktKnapp').disabled = true;
       sykkelService.hvorMangeSyklerLedig(syklerLedig => {
         this.syklerLedig = syklerLedig;
         this.antallValgteHerreArray[0] = '';

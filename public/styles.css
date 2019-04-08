@@ -45,8 +45,6 @@ body {
 #filtrerRapportTotalDiv,
 #filtrerRapportAnsatteDiv,
 #leggTilSykkelDiv {
-  background-color: #f2f2f2;
-  padding-bottom: 20px;
   margin: auto;
   position: relative;
   max-width: 65%;
@@ -471,4 +469,8 @@ img {
   max-width: 30%;
   margin: auto;
   text-align: center;
+}
+
+#nyKundeTekst {
+  padding-bottom: 10px;
 }
