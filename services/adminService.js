@@ -33,7 +33,7 @@ class AnsatteService {
 
   getAnsatt(id, success) {
     connection.query(
-      'select Ansatte.id, Ansatte.passord, Ansatte.fornavn, Ansatte.etternavn, Ansatte.brukernavn, Ansatte.epost, Ansatte.telefon, Ansatte.rolle, Lokasjoner.id, Lokasjoner.område from Ansatte inner join Lokasjoner on Ansatte.lokasjon_id = Lokasjoner.id where Ansatte.id = ?',
+      'select Ansatte.id as id_ansatt, Ansatte.passord, Ansatte.fornavn, Ansatte.etternavn, Ansatte.brukernavn, Ansatte.epost, Ansatte.telefon, Ansatte.rolle, Lokasjoner.id as id_lokasjon, Lokasjoner.område from Ansatte inner join Lokasjoner on Ansatte.lokasjon_id = Lokasjoner.id where Ansatte.id = ?',
       [id],
       (error, results) => {
         if (error) return console.error(error);
@@ -65,9 +65,9 @@ class AnsatteService {
         ansatte.passord,
         ansatte.epost,
         ansatte.telefon,
-        ansatte.id,
+        ansatte.id_lokasjon,
         ansatte.rolle,
-        ansatte.id
+        ansatte.id_ansatt
       ],
       (error, results) => {
         if (error) return console.error(error);

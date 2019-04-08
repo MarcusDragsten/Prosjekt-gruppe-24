@@ -155,11 +155,17 @@ img {
 
 #salgStartsideKnapperDiv,
 #adminStartsideKnapperDiv {
-  position: absolute;
-  left: 30%;
-  right: 30%;
-  top: 25%;
+  position: relative;
+  margin: auto;
+  top: 20%;
   text-align: center;
+}
+
+#knapperStartside {
+  position: relative;
+  margin: auto;
+  max-width: 50%;
+  margin-bottom: 5px;
 }
 
 .footer {
@@ -267,8 +273,9 @@ img {
 
 #loggUtKnapp {
   position: absolute;
-  top: 3%;
-  right: 3%;
+  background-color: #c4dfe6;
+  top: 2%;
+  right: 2%;
   color: black;
 }
 /*EndreBestilling tabell*/
@@ -365,14 +372,6 @@ img {
   padding-bottom: 10px;
 }
 
-#nyAnsattEpostInput,
-#nyAnsattRolleInput,
-#nyAnsattFornavnInput,
-#nyAnsattPassordInput,
-#nyAnsattLokasjonInput,
-#nyAnsattEtternavnInput,
-#nyAnsattBrukernavnInput,
-#nyAnsattTlfInput,
 #nyLokasjonAdresseInput,
 #nyLokasjonPostKodeInput,
 #nyLokasjonOmrådeInput {
@@ -465,5 +464,11 @@ img {
 
 #leverInnForm {
   position: relative;
+  text-align: center;
+}
+
+.genereltInputer {
+  max-width: 30%;
+  margin: auto;
   text-align: center;
 }

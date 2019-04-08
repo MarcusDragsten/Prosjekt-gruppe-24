@@ -15,8 +15,8 @@ export class AdminStartside extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Administrasjonssiden</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
+          <h1>Administrasjonsiden</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
@@ -24,13 +24,28 @@ export class AdminStartside extends Component {
           <h2>
             Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}
           </h2>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ansattePush}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.ansattePush}
+          >
             Administere ansatte
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.lokasjonPush}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.lokasjonPush}
+          >
             Administere lokasjoner
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.rapportPush}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.rapportPush}
+          >
             Se rapporter
           </button>
         </div>
@@ -69,16 +84,16 @@ export class AnsatteAdmin extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Ansatte</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Administere ansatte</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake til startsiden
           </button>
         </div>
-        <button type="button" class="btn" id="tilbake" onClick={this.return}>
-          Tilbake
-        </button>
         <div id="ansatteDiv">
-          <h1>Ansatte info</h1>
+          <h1>Liste over ansatte</h1>
+          <i>
+            <p>Klikk på en ansatt for flere valg</p>
+          </i>
           <hr />
           {this.ansatte.map(ansatte => (
             <p key={ansatte.id}>
@@ -91,7 +106,7 @@ export class AnsatteAdmin extends Component {
             </p>
           ))}
           <button type="button" class="btn" onClick={this.new}>
-            Legg til
+            Legg til en ansatt
           </button>
         </div>
         <br />
@@ -104,10 +119,6 @@ export class AnsatteAdmin extends Component {
       this.ansatte = ansatte;
       console.log(this.ansatte);
     });
-  }
-
-  loggUtPush() {
-    history.push('/');
   }
 
   new() {
@@ -135,13 +146,13 @@ export class AnsatteDetails extends Component {
         <p>Brukernavn: {this.ansatte.brukernavn}</p>
         <p>Epost: {this.ansatte.epost}</p>
         <p>Telefon: {this.ansatte.telefon}</p>
-        <p>Lokasjons ID: {this.ansatte.område}</p>
+        <p>Arbeidslokasjon: {this.ansatte.område}</p>
         <p>Rolle: {this.ansatte.rolle}</p>
         <button type="button" class="btn" onClick={this.edit}>
-          Endre
+          Endre valgt ansatt
         </button>
         <button type="button" class="btn" onClick={this.delete}>
-          Slett
+          Slett valgt ansatt
         </button>
       </div>
     );
@@ -164,6 +175,7 @@ export class AnsatteDetails extends Component {
       ansatteService.deleteAnsatte(this.props.match.params.ansatteListe, () =>
         history.push('/ansatteAdmin/' + this.props.match.params.ansattId)
       );
+      location.reload();
     }
   }
 }
@@ -186,84 +198,74 @@ export class NyAnsatt extends Component {
       <div>
         <div class="header w3-container" id="header">
           <h1>Nye ansatte</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <button type="Add" class="btn" id="tilbake" onClick={this.return}>
-          Tilbake
-        </button>
         <div id="nyAnsattDiv">
-          <h2>Legg til ansatt</h2>
+          <h1>Legg til en ansatt</h1>
           <hr />
-          <h4>Fornavn</h4>
+          <h3>Fornavn</h3>
           <form onSubmit={this.add}>
             <input
               type="text"
-              class="form-control form-control-lg"
-              id="nyAnsattFornavnInput"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv fornavn"
               value={this.fornavn}
               onChange={e => (this.fornavn = e.target.value)}
               required
             />
-            <h4>Etternavn</h4>
+            <h3>Etternavn</h3>
             <input
               type="text"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv etternavn"
-              id="nyAnsattEtternavnInput"
               value={this.etternavn}
               onChange={e => (this.etternavn = e.target.value)}
               required
             />
-            <h4>Brukernavn</h4>
+            <h3>Brukernavn</h3>
             <input
               type="text"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv brukernavn"
-              id="nyAnsattBrukernavnInput"
               value={this.brukernavn}
               onChange={e => (this.brukernavn = e.target.value)}
               required
             />
-            <h4>Passord</h4>
+            <h3>Passord</h3>
             <input
               type="text"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv passord"
-              id="nyAnsattPassordInput"
               value={this.passord}
               onChange={e => (this.passord = e.target.value)}
               required
             />
-            <h4>Epost</h4>
+            <h3>Epost</h3>
             <input
               type="text"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv epost"
-              id="nyAnsattEpostInput"
               value={this.epost}
               onChange={e => (this.epost = e.target.value)}
               required
             />
-            <h4>Telefonnummer</h4>
+            <h3>Telefonnummer</h3>
             <input
-              type="text"
-              class="form-control form-control-lg"
+              type="number"
+              class="genereltInputer form-control form-control-lg"
               placeholder="Skriv telefonnummer"
-              id="nyAnsattTlfInput"
               value={this.telefon}
               onChange={e => (this.telefon = e.target.value)}
               required
             />
             <h3>Arbeidslokasjon</h3>
             <select
-              id="nyAnsattLokasjonInput"
-              class="form-control form-control-lg"
+              class="genereltInputer form-control form-control-lg"
               onChange={e => (this.lokasjon_id = event.target.value)}
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg hvor ansatten skal jobbe
               </option>
               {this.utleveringssteder.map(steder => (
@@ -275,12 +277,14 @@ export class NyAnsatt extends Component {
             <h3>Rolle</h3>
             <select
               name="rolle"
-              class="form-control form-control-lg"
-              id="nyAnsattRolleInput"
+              class="genereltInputer form-control form-control-lg"
               value={this.rolle}
               onChange={e => (this.rolle = event.target.value)}
               required
             >
+              <option value="" hidden defaultValue>
+                Velg en rolle
+              </option>
               <option value="Daglig leder">Daglig leder</option>
               <option value="Sekretær">Sekretær</option>
               <option value="Selger">Selger</option>
@@ -322,10 +326,6 @@ export class NyAnsatt extends Component {
   return() {
     history.push('/ansatteAdmin/' + this.props.match.params.ansattId);
   }
-
-  loggUtPush() {
-    history.push('/');
-  }
 }
 
 export class AnsatteEdit extends Component {
@@ -349,7 +349,7 @@ export class AnsatteEdit extends Component {
         <div id="ansatteEditDiv">
           <h2>Endre informasjonen til {this.ansatte.fornavn}</h2>
           <hr />
-          <h4>Fornavn</h4>
+          <h3>Fornavn</h3>
           <input
             type="text"
             class="form-control form-control-lg"
@@ -358,7 +358,7 @@ export class AnsatteEdit extends Component {
             value={this.ansatte.fornavn}
             onChange={e => (this.ansatte.fornavn = e.target.value)}
           />
-          <h4>Etternavn</h4>
+          <h3>Etternavn</h3>
           <input
             type="text"
             class="form-control form-control-lg"
@@ -367,7 +367,7 @@ export class AnsatteEdit extends Component {
             value={this.ansatte.etternavn}
             onChange={e => (this.ansatte.etternavn = e.target.value)}
           />
-          <h4>Brukernavn</h4>
+          <h3>Brukernavn</h3>
           <input
             type="text"
             class="form-control form-control-lg"
@@ -386,11 +386,9 @@ export class AnsatteEdit extends Component {
           <select
             id="nyAnsattLokasjonInput"
             class="form-control form-control-lg"
-            onChange={e => (this.lokasjon_id = event.target.value)}
+            value={this.ansatte.id_lokasjon}
+            onChange={e => (this.ansatte.id_lokasjon = event.target.value)}
           >
-            <option value={this.ansatte.id} hidden selected>
-              {this.ansatte.område}
-            </option>
             {this.utleveringssteder.map(steder => (
               <option key={steder.id} value={steder.id}>
                 {steder.område}
@@ -845,7 +843,7 @@ export class Rapport extends Component {
                   class="form-control form-control-lg"
                   onChange={e => (this.selger = event.target.value)}
                 >
-                  <option value="" selected>
+                  <option value="" defaultValue>
                     Filtrer med ansatt
                   </option>
                   {this.selgere.map(selgere => (
@@ -1389,7 +1387,7 @@ export class RapportSekretær extends Component {
                   class="form-control form-control-lg"
                   onChange={e => (this.selger = event.target.value)}
                 >
-                  <option value="" selected>
+                  <option value="" defaultValue>
                     Filtrer med ansatt
                   </option>
                   {this.selgere.map(selgere => (
