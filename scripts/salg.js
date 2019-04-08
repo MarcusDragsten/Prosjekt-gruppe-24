@@ -15,14 +15,15 @@ export class SalgStartside extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Salgssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
+
         <div id="salgStartsideKnapperDiv">
           <h2>
-            Velkommen til selgersiden {this.ansatt.fornavn} {this.ansatt.etternavn}
+            Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}
           </h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
             Ny Bestilling
@@ -76,7 +77,7 @@ export class AktiveBestillinger extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Bestillingssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -317,7 +318,7 @@ export class BestillingHistorikk extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Bestillingssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
@@ -1027,7 +1028,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridHerreDiv" class="sykkelDiver">
             <h4>Hybridsykkel Herre</h4>
             <hr />
-            <img src="../bilder/sykkel-herre-uten.jpeg" />
+            <img src="../bilder/sykkel-herre-uten.jpeg" alt="Hybridsykkel Herre" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1041,7 +1042,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridDameDiv" class="sykkelDiver">
             <h4>Hybridsykkel Dame</h4>
             <hr />
-            <img src="../bilder/sykkel-dame-uten.jpeg" />
+            <img src="../bilder/sykkel-dame-uten.jpeg" alt="Hybridsykkel Dame" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1055,7 +1056,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridHerreBagasjeDiv" class="sykkelDiver">
             <h4>Hybridsykkel Herre m/ Bagasjebrett</h4>
             <hr />
-            <img src="../bilder/sykkel-herre.jpeg" />
+            <img src="../bilder/sykkel-herre.jpeg" alt="Hybridsykkel Herre m/ Bagasjebrett" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1069,7 +1070,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridDameBagasjeDiv" class="sykkelDiver">
             <h4>Hybridsykkel Dame m/ Bagasjebrett</h4>
             <hr />
-            <img src="../bilder/sykkel-dame.jpeg" />
+            <img src="../bilder/sykkel-dame.jpeg" alt="Hybridsykkel Dame m/ Bagasjebrett" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1083,7 +1084,7 @@ export class EndreSykler extends Component {
           <div id="barnesykkelDiv" class="sykkelDiver">
             <h4>Barnesykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-barn.jpeg" />
+            <img src="../bilder/sykkel-barn.jpeg" alt="Barnesykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1097,7 +1098,7 @@ export class EndreSykler extends Component {
           <div id="juniorsykkelDiv" class="sykkelDiver">
             <h4>Juniorsykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-junior.jpg" />
+            <img src="../bilder/sykkel-junior.jpg" alt="Juniorsykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1111,7 +1112,7 @@ export class EndreSykler extends Component {
           <div id="ghostTerrengDiv" class="sykkelDiver">
             <h4>Terrengsykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-terreng.jpeg" />
+            <img src="../bilder/sykkel-terreng.jpeg" alt="Terrengsykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1125,7 +1126,7 @@ export class EndreSykler extends Component {
           <div id="elSykkelDiv" class="sykkelDiver">
             <h4>El-sykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-el.jpeg" />
+            <img src="../bilder/sykkel-el.jpeg" alt="El-sykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1139,7 +1140,7 @@ export class EndreSykler extends Component {
           <div id="racerSykkelDiv" class="sykkelDiver">
             <h4>Landeveissykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-racer.jpg" />
+            <img src="../bilder/sykkel-racer.jpg" alt="Landeveissykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1535,7 +1536,7 @@ export class EndreUtstyr extends Component {
           <h1>Velg Utstyr</h1>
           <div id="barneseteDiv" class="utstyrDiver">
             <h4>Barnesete</h4>
-            <img src="../bilder/barnesete.jpeg" />
+            <img src="../bilder/barnesete.jpeg" alt="Barnesete" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1547,7 +1548,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="hjelmBarnDiv" class="utstyrDiver">
             <h4>Hjelm for barn</h4>
-            <img src="../bilder/hjelm-barn.jpeg" />
+            <img src="../bilder/hjelm-barn.jpeg" alt="Hjelm Barn" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1559,7 +1560,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="hjelmVoksneDiv" class="utstyrDiver">
             <h4>Hjelm for voksne</h4>
-            <img src="../bilder/hjelm-voksne.jpeg" />
+            <img src="../bilder/hjelm-voksne.jpeg" alt="Hjelm Voksne" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1571,7 +1572,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelkurvDiv" class="utstyrDiver">
             <h4>Sykkelkurv</h4>
-            <img src="../bilder/sykkelkurv.jpeg" />
+            <img src="../bilder/sykkelkurv.jpeg" alt="Sykkelkurv" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1583,7 +1584,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkellåsDiv" class="utstyrDiver">
             <h4>Sykkellås</h4>
-            <img src="../bilder/sykkellås.jpeg" />
+            <img src="../bilder/sykkellås.jpeg" alt="Sykkellås" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1595,7 +1596,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelstativDiv" class="utstyrDiver">
             <h4>Sykkelstativ</h4>
-            <img src="../bilder/sykkelstativ-hund.jpeg" />
+            <img src="../bilder/sykkelstativ-hund.jpeg" alt="Sykkelstativ" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1607,7 +1608,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelvogn" class="utstyrDiver">
             <h4>Sykkelvogn</h4>
-            <img src="../bilder/sykkelvogn.jpeg" />
+            <img src="../bilder/sykkelvogn.jpeg" alt="Sykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1909,7 +1910,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeFornavnInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv fornavn"
               onChange={e => (this.fornavn = e.target.value)}
               required
             />
@@ -1917,7 +1919,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeEtternavnInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv etternavn"
               onChange={e => (this.etternavn = e.target.value)}
               required
             />
@@ -1925,7 +1928,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeEpostInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv epost"
               onChange={e => (this.epost = e.target.value)}
               required
             />
@@ -1933,7 +1937,8 @@ export class NyKunde extends Component {
             <input
               type="number"
               id="kundeTlfInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv telefonnummer"
               onChange={e => (this.telefon = e.target.value)}
               required
             />
