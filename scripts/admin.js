@@ -14,7 +14,7 @@ export class AdminStartside extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut

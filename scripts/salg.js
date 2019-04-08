@@ -14,12 +14,13 @@ export class SalgStartside extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
+
         <div id="salgStartsideKnapperDiv">
           <h2>
             Velkommen til selgersiden {this.ansatt.fornavn} {this.ansatt.etternavn}
@@ -75,7 +76,7 @@ export class AktiveBestillinger extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -311,7 +312,7 @@ export class BestillingHistorikk extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -558,7 +559,7 @@ export class EndreBestilling extends Component {
 
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -858,7 +859,7 @@ export class EndreSykler extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1367,7 +1368,7 @@ export class EndreUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1428,7 +1429,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkellåsDiv" class="utstyrDiver">
             <h4>Sykkellås</h4>
-            <img src="../bilder/sykkellås.jpeg" />
+            <img src="../bilder/sykkellås.jpeg" alt="Sykkellås" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1440,7 +1441,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelstativDiv" class="utstyrDiver">
             <h4>Sykkelstativ</h4>
-            <img src="../bilder/sykkelstativ-hund.jpeg" />
+            <img src="../bilder/sykkelstativ-hund.jpeg" alt="Sykkelstativ" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1452,7 +1453,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelvogn" class="utstyrDiver">
             <h4>Sykkelvogn</h4>
-            <img src="../bilder/sykkelvogn.jpeg" />
+            <img src="../bilder/sykkelvogn.jpeg" alt="Sykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"

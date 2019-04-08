@@ -88,7 +88,7 @@ class Login extends Component {
           </div>
           <div id="loginInputDiv">
             <form onSubmit={this.login}>
-              <h3>Innlogging ansatte:</h3>
+              <h3>Innlogging ansatte</h3>
               <input
                 type="text"
                 id="inputBrukernavn"
