@@ -82,13 +82,14 @@ export class AktiveBestillinger extends Component {
             Logg ut
           </button>
         </div>
-        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
-        </button>
-        <h2>Aktive bestillinger</h2>
         <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
+        <h2>Aktive bestillinger</h2>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer bestillingene?
+        </button>
+        <br />
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
@@ -318,13 +319,14 @@ export class BestillingHistorikk extends Component {
             Logg ut
           </button>
         </div>
-        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
-        </button>
-        <h2>Bestillingshistorikk</h2>
         <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
+        <h2>Bestillingshistorikk</h2>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer bestillingene?
+        </button>
+        <br />
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
@@ -520,21 +522,156 @@ export class BestillingHistorikk extends Component {
 }
 
 export class Innlevering extends Component {
+  syklerIbestilling = [];
+  utstyrIbestilling = [];
+
+  tabell1 = [];
+  tabell2 = [];
+
+  bestilling = [];
+
   render() {
     return (
       <div>
-        <h1>Jobber med saken</h1>
+        <div class="header w3-container" id="header">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
+            Logg ut
+          </button>
+        </div>
+        <u>
+          <h1>Innlevering for bestilling {this.bestilling.id}</h1>
+        </u>
+        <hr />
+        <form id="leverInnForm" onSubmit={this.gåVidere}>
+          <div id="innholdIBestilling">
+            <h2>Innholdet i bestillingen:</h2>
+            <p>
+              Gå over alt av innleverte sykler og utstyr, deretter velg om sykkelen er i god nok stand til å leveres
+              inn. Om ikke, velg om sykkelen trenger reparasjon eller er forsvunnet.
+            </p>
+            <div id="syklerIbestilling">
+              <h3>Sykler i bestillingen:</h3>
+              <table align="center" id="customers">
+                <tbody>{this.tabell1}</tbody>
+              </table>
+            </div>
+            <div id="utstyrIbestilling">
+              <h4>Utstyr i bestillingen:</h4>
+              <table align="center" id="customers">
+                <tbody>{this.tabell2}</tbody>
+              </table>
+            </div>
+          </div>
+          <hr />
+          <button type="submit" class="btn">
+            Lever inn
+          </button>
+        </form>
       </div>
     );
   }
 
   mounted() {
+    bestillingService.hentBestilling(this.props.match.params.bestillingId, bestilling => {
+      this.bestilling = bestilling;
+    });
+
+    sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
+      this.syklerPerBestilling = sykkelOversikt;
+      this.lagSykkelOversikt();
+      console.log(this.syklerPerBestilling);
+    });
+
+    sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
+      this.utstyrPerBestilling = utstyrOversikt;
+      this.lagUtstyrOversikt();
+      console.log(this.utstyrPerBestilling);
+    });
+  }
+
+  lagSykkelOversikt() {
+    this.tabell1.push(
+      <tr>
+        <th>SykkelID</th>
+        <th>Modell</th>
+        <th>Velg status på sykkelen</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.syklerPerBestilling.length; i++) {
+      this.tabell1.push(
+        <tr>
+          <td>{this.syklerPerBestilling[i].id}</td>
+          <td>{this.syklerPerBestilling[i].modellnavn},-</td>
+          <td>
+            <select
+              class="form-control"
+              id="selectInnlevering"
+              onChange={e => this.endreStatusSykkel(this.syklerPerBestilling[i].id, event.target.value)}
+              required
+            >
+              <option value="" defaultValue hidden>
+                Velg status
+              </option>
+              <option value="Ledig">Ledig</option>
+              <option value="Reparasjon">Reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+          </td>
+        </tr>
+      );
+    }
+  }
+
+  lagUtstyrOversikt() {
+    this.tabell2.push(
+      <tr>
+        <th>UtstyrID</th>
+        <th>Type</th>
+        <th>Velg status på utstyret</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.utstyrPerBestilling.length; i++) {
+      this.tabell2.push(
+        <tr>
+          <td>{this.utstyrPerBestilling[i].id}</td>
+          <td>{this.utstyrPerBestilling[i].type},-</td>
+          <td>
+            <select
+              class="form-control"
+              id="selectInnlevering"
+              onChange={e => this.endreStatusUtstyr(this.utstyrPerBestilling[i].id, event.target.value)}
+              required
+            >
+              <option value="" defaultValue hidden>
+                Velg status
+              </option>
+              <option value="Ledig">Ledig</option>
+              <option value="Reparasjon">Reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+          </td>
+        </tr>
+      );
+    }
+  }
+
+  endreStatusSykkel(id, status) {
+    console.log(id, status);
+    bestillingService.endreStatusSykkelInnlevering(status, id, endreStatus => {});
+  }
+
+  endreStatusUtstyr(id, status) {
+    console.log(id, status);
+    bestillingService.endreStatusUtstyrInnlevering(status, id, endreStatus => {});
+  }
+
+  gåVidere(e) {
+    e.preventDefault();
     bestillingService.leverInn(this.props.match.params.bestillingId, leverInn => {
-      bestillingService.updateSykkel(this.props.match.params.bestillingId, leverInnSykkel => {
-        bestillingService.updateUtstyr(this.props.match.params.bestillingId, leverInnUtstyr => {
-          history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
-        });
-      });
+      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
     });
   }
 }
@@ -554,6 +691,8 @@ export class EndreBestilling extends Component {
 
   sumSykler = 0;
 
+  ansatt = [];
+
   render() {
     if (!this.bestillinger) return null;
 
@@ -569,7 +708,7 @@ export class EndreBestilling extends Component {
           Tilbake
         </button>
         <div id="endreInfoBestilling">
-          <h2>Endre informasjon om bestillingen</h2>
+          <h2>Endring av bestillingen {this.bestillinger.id}</h2>
           <hr />
           <div>
             <h3>Bestillingstype:</h3>
@@ -738,9 +877,17 @@ export class EndreBestilling extends Component {
     });
   }
   delete() {
-    bestillingService.deleteBestillinger(this.props.match.params.bestillingId, () => {
-      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
-    });
+    var x = confirm('Er du sikker på at du vil slette denne bestillingen og sette alt innholdet til tilgjengelig?');
+
+    if (x == true) {
+      bestillingService.avbrytBestillingUtstyr(this.props.match.params.bestillingId, id => {
+        bestillingService.avbrytBestillingSykkel(this.props.match.params.bestillingId, id => {
+          bestillingService.avbrytBestilling(this.props.match.params.bestillingId, id => {
+            history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
+          });
+        });
+      });
+    }
   }
 
   tilbake() {
@@ -1738,7 +1885,7 @@ export class NyKunde extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut

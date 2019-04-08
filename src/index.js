@@ -53,28 +53,13 @@ import { loginService } from './services';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 
-class Tilbake extends Component {
-  render() {
-    return (
-      <div>
-        <button type="button" onClick={this.tilbake}>
-          Tilbake til login
-        </button>
-      </div>
-    );
-  }
-  tilbake() {
-    history.push('/');
-  }
-}
-
 class Login extends Component {
   ansatte = [];
 
   brukernavn = '';
   passord = '';
 
-  feilmelding = '';
+  feilmelding = 'Skriv inn brukernavn og passord';
 
   render() {
     return (

@@ -68,7 +68,7 @@ export class AnsatteAdmin extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -153,13 +153,17 @@ export class AnsatteDetails extends Component {
   }
 
   edit() {
-    history.push('/ansatteEdit/' + +this.props.match.params.ansattId + '/' + this.ansatte.id);
+    history.push('/ansatteEdit/' + this.props.match.params.ansattId + '/' + this.ansatte.id);
   }
 
   delete() {
-    ansatteService.deleteAnsatte(this.props.match.params.ansatteListe, () =>
-      history.push('/ansatteAdmin/' + this.props.match.params.ansattId)
-    );
+    var x = confirm('Er du sikker på at du vil slette denne ansatten fra databasen?');
+
+    if (x == true) {
+      ansatteService.deleteAnsatte(this.props.match.params.ansatteListe, () =>
+        history.push('/ansatteAdmin/' + this.props.match.params.ansattId)
+      );
+    }
   }
 }
 
@@ -177,7 +181,7 @@ export class NyAnsatt extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -310,7 +314,7 @@ export class AnsatteEdit extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -394,7 +398,7 @@ export class Lokasjoner extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -477,9 +481,13 @@ export class LokasjonerDetails extends Component {
   }
 
   delete() {
-    ansatteService.deleteLokasjon(this.props.match.params.lokasjonListe, () =>
-      history.push('/lokasjoner/' + this.props.match.params.ansattId)
-    );
+    var x = confirm('Er du sikker på at du vil slette denne lokasjonen?');
+
+    if (x == true) {
+      ansatteService.deleteLokasjon(this.props.match.params.lokasjonListe, () =>
+        history.push('/lokasjoner/' + this.props.match.params.ansattId)
+      );
+    }
   }
 }
 
@@ -493,7 +501,7 @@ export class LokasjonNew extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -577,7 +585,7 @@ export class LokasjonEdit extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -670,7 +678,7 @@ export class Rapport extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -989,7 +997,7 @@ export class SekretærStartside extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1042,7 +1050,7 @@ export class AnsatteSekretær extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1119,7 +1127,7 @@ export class LokasjonerSekretær extends Component {
   render() {
     return (
       <div>
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1214,7 +1222,7 @@ export class RapportSekretær extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
