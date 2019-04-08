@@ -2,7 +2,9 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 400, 300);
 
 body {
-  background-color: #c4dfe6 !important;
+/*  background-color: #c4dfe6 !important;
+*/
+background-image: url("../bilder/8f2e7f8c.png") !important;
 }
 
 /*removes all rounded corners in bootstrap buttons*/
@@ -26,9 +28,11 @@ body {
 
 #yttersteDiv {
   position: relative;
+  text-align: center;
   height: 100vh;
   width: 100vw;
 }
+
 .container {
   padding: 20px;
   margin: auto;
@@ -36,6 +40,7 @@ body {
   position: relative;
   max-width: 50%;
 }
+
 #filtrerAktiveBestillingerDiv,
 #filtrerRapportTotalDiv,
 #filtrerRapportAnsatteDiv,
@@ -54,24 +59,27 @@ body {
 
 /*positions all headings*/
 h2,
-h1 {
+h1,
+h3,
+h4,
+h5 {
   text-align: center;
 }
 
 #loginInputDiv {
-  display: inline-block;
   text-align: center;
-  height: 150px;
-  width: 350px;
+  max-width: 35%;
+  margin: auto;
   padding: 10px;
+  display: inline-block;
   z-index: 2;
 }
 
 #inputBrukernavn {
   position: relative;
   text-align: center;
-  width: 250px;
-  height: 30px;
+  max-height: 5%;
+  max-width: 100%;
   background: transparent;
   border: 1px solid black;
   border-radius: 2px;
@@ -85,8 +93,8 @@ h1 {
 #inputPassord {
   position: relative;
   text-align: center;
-  width: 250px;
-  height: 30px;
+  max-height: 5%;
+  max-width: 100%;
   background: transparent;
   border: 1px solid black;
   border-radius: 2px;
@@ -99,8 +107,7 @@ h1 {
 }
 
 #loginKnapp {
-  width: 250px;
-  height: 35px;
+  position: relative;
   background: #fff;
   border: 1px solid #fff;
   cursor: pointer;
@@ -111,6 +118,8 @@ h1 {
   font-weight: 400;
   padding: 6px;
   margin-top: 10px;
+  max-height: 10%;
+  width: 100%;
 }
 
 #loginKnapp:hover {
@@ -131,6 +140,7 @@ img {
 
 #loginDiv {
   position: relative;
+  margin: auto;
   top: 20%;
   max-width: 70%;
   text-align: center;
@@ -138,18 +148,12 @@ img {
 }
 
 #loginBildeDiv {
+  position: relative;
   display: inline-block;
-  height: 300px;
-  width: 300px;
+  margin: auto;
+  width: 35%;
   z-index: 2;
 }
-
-/* #brukernavnDiv,
-#passordDiv {
-  max-width: 75%;
-  background: transparant;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-} */
 
 #salgStartsideKnapperDiv,
 #adminStartsideKnapperDiv {
@@ -168,8 +172,8 @@ img {
   background-color: #002c54;
   color: white;
   text-align: center;
-  padding-bottom: 15px;
-  padding-top: 15px;
+  padding-bottom: 5px;
+  padding-top: 10px;
   font-family: Fjalla One, sans-serif;
   font-size: 15px;
 }
@@ -290,15 +294,19 @@ img {
   background-color: #f2f2f2;
 }
 
-#customers tr:hover {
+#customers tr:nth-child(odd) {
   background-color: #ddd;
+}
+
+#customers tr:hover {
+  background-color: #c4dfe6;
 }
 
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #4caf50;
+  background-color: #002c54;
   color: white;
 }
 #velgSykkel,
@@ -368,7 +376,10 @@ img {
 #nyAnsattLokasjonInput,
 #nyAnsattEtternavnInput,
 #nyAnsattBrukernavnInput,
-#nyAnsattTlfInput {
+#nyAnsattTlfInput,
+#nyLokasjonAdresseInput,
+#nyLokasjonPostKodeInput,
+#nyLokasjonOmrådeInput {
   max-width: 34%;
   margin: auto;
 }
@@ -429,14 +440,14 @@ img {
 
 #syklerIbestilling {
   position: relative;
-  width: 30%;
+  width: 45%;
   display: inline-block;
 }
 
 #utstyrIbestilling {
   position: relative;
   display: inline-block;
-  width: 30%;
+  width: 45%;
 }
 
 #endreInfoBestilling {
@@ -446,6 +457,17 @@ img {
 
 #syklerDiv,
 #utstyrDiv {
+  position: relative;
+  text-align: center;
+}
+
+#selectInnlevering {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+#leverInnForm {
   position: relative;
   text-align: center;
 }

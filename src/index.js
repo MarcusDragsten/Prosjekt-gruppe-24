@@ -65,21 +65,6 @@ import { loginService } from './services';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 
-class Tilbake extends Component {
-  render() {
-    return (
-      <div>
-        <button type="button" onClick={this.tilbake}>
-          Tilbake til login
-        </button>
-      </div>
-    );
-  }
-  tilbake() {
-    history.push('/');
-  }
-}
-
 class Login extends Component {
   ansatte = [];
 
@@ -95,12 +80,9 @@ class Login extends Component {
           <h1>Book & Bike</h1>
         </div>
         <div id="loginDiv">
-          <div id="loginBildeDiv">
-            <img src="../bilder/logo.png" id="logo" alt="Logo" />
-          </div>
           <div id="loginInputDiv">
             <form onSubmit={this.login}>
-              <h3>Innlogging ansatte:</h3>
+              <h3>Innlogging ansatte</h3>
               <input
                 type="text"
                 id="inputBrukernavn"
@@ -108,6 +90,7 @@ class Login extends Component {
                 onChange={e => (this.brukernavn = event.target.value)}
                 required
               />
+              <br />
               <input
                 type="password"
                 placeholder="passord"
@@ -115,11 +98,15 @@ class Login extends Component {
                 onChange={e => (this.passord = event.target.value)}
                 required
               />
+              <br />
               <button type="submit" id="loginKnapp">
                 Logg inn
               </button>
               <p>{this.feilmelding}</p>
             </form>
+          </div>
+          <div id="loginBildeDiv">
+            <img src="../bilder/logo.png" id="logo" alt="Logo" />
           </div>
         </div>
         <div class="footer">
@@ -169,6 +156,7 @@ class Login extends Component {
       }
     }
   }
+
   test() {
     history.push('/ansatte/');
   }

@@ -284,6 +284,22 @@ class BestillingService extends Component {
       }
     );
   }
+
+  endreStatusSykkelInnlevering(status, id, success) {
+    connection.query('update Sykkel set status=? , bestilling_id = NULL where id=?', [status, id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  endreStatusUtstyrInnlevering(status, id, success) {
+    connection.query('update Utstyr set status=? , bestilling_id = NULL where id=?', [status, id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
 }
 
 export let bestillingService = new BestillingService();

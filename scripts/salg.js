@@ -14,15 +14,16 @@ export class SalgStartside extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
+        <div class="header w3-container" id="header">
+          <h1>Salgssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
+
         <div id="salgStartsideKnapperDiv">
           <h2>
-            Velkommen til selgersiden {this.ansatt.fornavn} {this.ansatt.etternavn}
+            Velkommen {this.ansatt.fornavn} {this.ansatt.etternavn}
           </h2>
           <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nyBestillingPush}>
             Ny Bestilling
@@ -75,19 +76,20 @@ export class AktiveBestillinger extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
+        <div class="header w3-container" id="header">
+          <h1>Bestillingssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
-        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
-        </button>
-        <h2>Aktive bestillinger</h2>
         <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
+        <h2>Aktive bestillinger</h2>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer bestillingene?
+        </button>
+        <br />
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
@@ -140,7 +142,9 @@ export class AktiveBestillinger extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.utleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <label for="innleveringssted">Innleveringssted:</label>
             <select
@@ -151,7 +155,9 @@ export class AktiveBestillinger extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.innleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <button type="submit" class="btn btn-sucess btn-lg btn-block">
               Søk
@@ -311,19 +317,20 @@ export class BestillingHistorikk extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
+        <div class="header w3-container" id="header">
+          <h1>Bestillingssiden</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
           </button>
         </div>
-        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
-        </button>
-        <h2>Bestillingshistorikk</h2>
         <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
           Tilbake
         </button>
+        <h2>Bestillingshistorikk</h2>
+        <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+          Filtrer bestillingene?
+        </button>
+        <br />
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
@@ -376,7 +383,9 @@ export class BestillingHistorikk extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.utleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.utleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <label for="innleveringssted">Innleveringssted:</label>
             <select
@@ -387,7 +396,9 @@ export class BestillingHistorikk extends Component {
               <option value="" selected>
                 Velg utleveringssted
               </option>
-              {this.innleveringssteder.map(steder => <option key={steder.id}>{steder.område}</option>)}
+              {this.innleveringssteder.map(steder => (
+                <option key={steder.id}>{steder.område}</option>
+              ))}
             </select>
             <button type="submit" class="btn btn-sucess btn-lg btn-block">
               Søk
@@ -519,21 +530,156 @@ export class BestillingHistorikk extends Component {
 }
 
 export class Innlevering extends Component {
+  syklerIbestilling = [];
+  utstyrIbestilling = [];
+
+  tabell1 = [];
+  tabell2 = [];
+
+  bestilling = [];
+
   render() {
     return (
       <div>
-        <h1>Jobber med saken</h1>
+        <div class="header w3-container" id="header">
+          <h1>Book & Bike</h1>
+          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
+            Logg ut
+          </button>
+        </div>
+        <u>
+          <h1>Innlevering for bestilling {this.bestilling.id}</h1>
+        </u>
+        <hr />
+        <form id="leverInnForm" onSubmit={this.gåVidere}>
+          <div id="innholdIBestilling">
+            <h2>Innholdet i bestillingen:</h2>
+            <p>
+              Gå over alt av innleverte sykler og utstyr, deretter velg om sykkelen er i god nok stand til å leveres
+              inn. Om ikke, velg om sykkelen trenger reparasjon eller er forsvunnet.
+            </p>
+            <div id="syklerIbestilling">
+              <h3>Sykler i bestillingen:</h3>
+              <table align="center" id="customers">
+                <tbody>{this.tabell1}</tbody>
+              </table>
+            </div>
+            <div id="utstyrIbestilling">
+              <h4>Utstyr i bestillingen:</h4>
+              <table align="center" id="customers">
+                <tbody>{this.tabell2}</tbody>
+              </table>
+            </div>
+          </div>
+          <hr />
+          <button type="submit" class="btn">
+            Lever inn
+          </button>
+        </form>
       </div>
     );
   }
 
   mounted() {
+    bestillingService.hentBestilling(this.props.match.params.bestillingId, bestilling => {
+      this.bestilling = bestilling;
+    });
+
+    sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
+      this.syklerPerBestilling = sykkelOversikt;
+      this.lagSykkelOversikt();
+      console.log(this.syklerPerBestilling);
+    });
+
+    sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
+      this.utstyrPerBestilling = utstyrOversikt;
+      this.lagUtstyrOversikt();
+      console.log(this.utstyrPerBestilling);
+    });
+  }
+
+  lagSykkelOversikt() {
+    this.tabell1.push(
+      <tr>
+        <th>SykkelID</th>
+        <th>Modell</th>
+        <th>Velg status på sykkelen</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.syklerPerBestilling.length; i++) {
+      this.tabell1.push(
+        <tr>
+          <td>{this.syklerPerBestilling[i].id}</td>
+          <td>{this.syklerPerBestilling[i].modellnavn},-</td>
+          <td>
+            <select
+              class="form-control"
+              id="selectInnlevering"
+              onChange={e => this.endreStatusSykkel(this.syklerPerBestilling[i].id, event.target.value)}
+              required
+            >
+              <option value="" defaultValue hidden>
+                Velg status
+              </option>
+              <option value="Ledig">Godkjent</option>
+              <option value="Reparasjon">Må til reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+          </td>
+        </tr>
+      );
+    }
+  }
+
+  lagUtstyrOversikt() {
+    this.tabell2.push(
+      <tr>
+        <th>UtstyrID</th>
+        <th>Type</th>
+        <th>Velg status på utstyret</th>
+      </tr>
+    );
+
+    for (let i = 0; i < this.utstyrPerBestilling.length; i++) {
+      this.tabell2.push(
+        <tr>
+          <td>{this.utstyrPerBestilling[i].id}</td>
+          <td>{this.utstyrPerBestilling[i].type},-</td>
+          <td>
+            <select
+              class="form-control"
+              id="selectInnlevering"
+              onChange={e => this.endreStatusUtstyr(this.utstyrPerBestilling[i].id, event.target.value)}
+              required
+            >
+              <option value="" defaultValue hidden>
+                Velg status
+              </option>
+              <option value="Ledig">Godkjent</option>
+              <option value="Reparasjon">Må til reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+          </td>
+        </tr>
+      );
+    }
+  }
+
+  endreStatusSykkel(id, status) {
+    console.log(id, status);
+    bestillingService.endreStatusSykkelInnlevering(status, id, endreStatus => {});
+  }
+
+  endreStatusUtstyr(id, status) {
+    console.log(id, status);
+    bestillingService.endreStatusUtstyrInnlevering(status, id, endreStatus => {});
+  }
+
+  gåVidere(e) {
+    e.preventDefault();
     bestillingService.leverInn(this.props.match.params.bestillingId, leverInn => {
-      bestillingService.updateSykkel(this.props.match.params.bestillingId, leverInnSykkel => {
-        bestillingService.updateUtstyr(this.props.match.params.bestillingId, leverInnUtstyr => {
-          history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
-        });
-      });
+      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
     });
   }
 }
@@ -553,12 +699,14 @@ export class EndreBestilling extends Component {
 
   sumSykler = 0;
 
+  ansatt = [];
+
   render() {
     if (!this.bestillinger) return null;
 
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -568,7 +716,7 @@ export class EndreBestilling extends Component {
           Tilbake
         </button>
         <div id="endreInfoBestilling">
-          <h2>Endre informasjon om bestillingen</h2>
+          <h2>Endring av bestillingen {this.bestillinger.id}</h2>
           <hr />
           <div>
             <h3>Bestillingstype:</h3>
@@ -737,9 +885,17 @@ export class EndreBestilling extends Component {
     });
   }
   delete() {
-    bestillingService.deleteBestillinger(this.props.match.params.bestillingId, () => {
-      history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
-    });
+    var x = confirm('Er du sikker på at du vil slette denne bestillingen og sette alt innholdet til tilgjengelig?');
+
+    if (x == true) {
+      bestillingService.avbrytBestillingUtstyr(this.props.match.params.bestillingId, id => {
+        bestillingService.avbrytBestillingSykkel(this.props.match.params.bestillingId, id => {
+          bestillingService.avbrytBestilling(this.props.match.params.bestillingId, id => {
+            history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
+          });
+        });
+      });
+    }
   }
 
   tilbake() {
@@ -858,7 +1014,7 @@ export class EndreSykler extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -872,7 +1028,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridHerreDiv" class="sykkelDiver">
             <h4>Hybridsykkel Herre</h4>
             <hr />
-            <img src="../bilder/sykkel-herre-uten.jpeg" />
+            <img src="../bilder/sykkel-herre-uten.jpeg" alt="Hybridsykkel Herre" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -886,7 +1042,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridDameDiv" class="sykkelDiver">
             <h4>Hybridsykkel Dame</h4>
             <hr />
-            <img src="../bilder/sykkel-dame-uten.jpeg" />
+            <img src="../bilder/sykkel-dame-uten.jpeg" alt="Hybridsykkel Dame" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -900,7 +1056,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridHerreBagasjeDiv" class="sykkelDiver">
             <h4>Hybridsykkel Herre m/ Bagasjebrett</h4>
             <hr />
-            <img src="../bilder/sykkel-herre.jpeg" />
+            <img src="../bilder/sykkel-herre.jpeg" alt="Hybridsykkel Herre m/ Bagasjebrett" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -914,7 +1070,7 @@ export class EndreSykler extends Component {
           <div id="ghostHybridDameBagasjeDiv" class="sykkelDiver">
             <h4>Hybridsykkel Dame m/ Bagasjebrett</h4>
             <hr />
-            <img src="../bilder/sykkel-dame.jpeg" />
+            <img src="../bilder/sykkel-dame.jpeg" alt="Hybridsykkel Dame m/ Bagasjebrett" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -928,7 +1084,7 @@ export class EndreSykler extends Component {
           <div id="barnesykkelDiv" class="sykkelDiver">
             <h4>Barnesykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-barn.jpeg" />
+            <img src="../bilder/sykkel-barn.jpeg" alt="Barnesykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -942,7 +1098,7 @@ export class EndreSykler extends Component {
           <div id="juniorsykkelDiv" class="sykkelDiver">
             <h4>Juniorsykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-junior.jpg" />
+            <img src="../bilder/sykkel-junior.jpg" alt="Juniorsykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -956,7 +1112,7 @@ export class EndreSykler extends Component {
           <div id="ghostTerrengDiv" class="sykkelDiver">
             <h4>Terrengsykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-terreng.jpeg" />
+            <img src="../bilder/sykkel-terreng.jpeg" alt="Terrengsykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -970,7 +1126,7 @@ export class EndreSykler extends Component {
           <div id="elSykkelDiv" class="sykkelDiver">
             <h4>El-sykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-el.jpeg" />
+            <img src="../bilder/sykkel-el.jpeg" alt="El-sykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -984,7 +1140,7 @@ export class EndreSykler extends Component {
           <div id="racerSykkelDiv" class="sykkelDiver">
             <h4>Landeveissykkel</h4>
             <hr />
-            <img src="../bilder/sykkel-racer.jpg" />
+            <img src="../bilder/sykkel-racer.jpg" alt="Landeveissykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1367,7 +1523,7 @@ export class EndreUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1380,7 +1536,7 @@ export class EndreUtstyr extends Component {
           <h1>Velg Utstyr</h1>
           <div id="barneseteDiv" class="utstyrDiver">
             <h4>Barnesete</h4>
-            <img src="../bilder/barnesete.jpeg" />
+            <img src="../bilder/barnesete.jpeg" alt="Barnesete" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1392,7 +1548,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="hjelmBarnDiv" class="utstyrDiver">
             <h4>Hjelm for barn</h4>
-            <img src="../bilder/hjelm-barn.jpeg" />
+            <img src="../bilder/hjelm-barn.jpeg" alt="Hjelm Barn" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1404,7 +1560,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="hjelmVoksneDiv" class="utstyrDiver">
             <h4>Hjelm for voksne</h4>
-            <img src="../bilder/hjelm-voksne.jpeg" />
+            <img src="../bilder/hjelm-voksne.jpeg" alt="Hjelm Voksne" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1416,7 +1572,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelkurvDiv" class="utstyrDiver">
             <h4>Sykkelkurv</h4>
-            <img src="../bilder/sykkelkurv.jpeg" />
+            <img src="../bilder/sykkelkurv.jpeg" alt="Sykkelkurv" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1428,7 +1584,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkellåsDiv" class="utstyrDiver">
             <h4>Sykkellås</h4>
-            <img src="../bilder/sykkellås.jpeg" />
+            <img src="../bilder/sykkellås.jpeg" alt="Sykkellås" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1440,7 +1596,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelstativDiv" class="utstyrDiver">
             <h4>Sykkelstativ</h4>
-            <img src="../bilder/sykkelstativ-hund.jpeg" />
+            <img src="../bilder/sykkelstativ-hund.jpeg" alt="Sykkelstativ" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1452,7 +1608,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelvogn" class="utstyrDiver">
             <h4>Sykkelvogn</h4>
-            <img src="../bilder/sykkelvogn.jpeg" />
+            <img src="../bilder/sykkelvogn.jpeg" alt="Sykkel" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
@@ -1737,7 +1893,7 @@ export class NyKunde extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -1754,7 +1910,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeFornavnInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv fornavn"
               onChange={e => (this.fornavn = e.target.value)}
               required
             />
@@ -1762,7 +1919,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeEtternavnInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv etternavn"
               onChange={e => (this.etternavn = e.target.value)}
               required
             />
@@ -1770,7 +1928,8 @@ export class NyKunde extends Component {
             <input
               type="text"
               id="kundeEpostInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv epost"
               onChange={e => (this.epost = e.target.value)}
               required
             />
@@ -1778,7 +1937,8 @@ export class NyKunde extends Component {
             <input
               type="number"
               id="kundeTlfInput"
-              class="form-control"
+              class="form-control form-control-lg"
+              placeholder=" Skriv telefonnummer"
               onChange={e => (this.telefon = e.target.value)}
               required
             />
