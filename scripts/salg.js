@@ -1255,8 +1255,8 @@ export class EndreSykler extends Component {
   leggTilSykler() {
     if (this.herre > 0) {
       if (this.syklerLedig[4].ant_ledige > this.herre) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Hybrid Herre', this.herre, herre => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Hybrid Herre', herreValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Hybrid Herre', this.herre, herre => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Hybrid Herre', herreValgt => {
             let tall = herreValgt;
             this.antallValgteHerre = tall[0].hvorMangeValgt;
             this.antallValgteHerreArray.pop();
@@ -1273,8 +1273,8 @@ export class EndreSykler extends Component {
 
     if (this.dame > 0) {
       if (this.syklerLedig[2].ant_ledige > this.dame) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Hybrid Dame', this.dame, dame => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Hybrid Dame', dameValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Hybrid Dame', this.dame, dame => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Hybrid Dame', dameValgt => {
             let tall = dameValgt;
             this.antallValgteDame = tall[0].hvorMangeValgt;
             this.antallValgteDameArray.pop();
@@ -1291,12 +1291,12 @@ export class EndreSykler extends Component {
     if (this.herreBagasje > 0) {
       if (this.syklerLedig[5].ant_ledige > this.herreBagasje) {
         sykkelService.leggInnSykler(
-          this.id[0].lastInsertId,
+          this.props.match.params.bestillingId,
           'Hybrid Herre m/bagasjebrett',
           this.herreBagasje,
           herreBagasje => {
             sykkelService.hvorMangeSyklerValgt(
-              this.id[0].lastInsertId,
+              this.props.match.params.bestillingId,
               'Hybrid Herre m/bagasjebrett',
               herreBagasjeValgt => {
                 let tall = herreBagasjeValgt;
@@ -1318,12 +1318,12 @@ export class EndreSykler extends Component {
     if (this.dameBagasje > 0) {
       if (this.syklerLedig[3].ant_ledige > this.dameBagasje) {
         sykkelService.leggInnSykler(
-          this.id[0].lastInsertId,
+          this.props.match.params.bestillingId,
           'Hybrid Dame m/bagasjebrett',
           this.dameBagasje,
           dameBagasje => {
             sykkelService.hvorMangeSyklerValgt(
-              this.id[0].lastInsertId,
+              this.props.match.params.bestillingId,
               'Hybrid Dame m/bagasjebrett',
               dameBagasjeValgt => {
                 let tall = dameBagasjeValgt;
@@ -1344,8 +1344,8 @@ export class EndreSykler extends Component {
 
     if (this.barn > 0) {
       if (this.syklerLedig[0].ant_ledige > this.barn) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Barnesykkel', this.barn, barn => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Barnesykkel', barnValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Barnesykkel', this.barn, barn => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Barnesykkel', barnValgt => {
             let tall = barnValgt;
             this.antallValgteBarn = tall[0].hvorMangeValgt;
             this.antallValgteBarnArray.pop();
@@ -1362,8 +1362,8 @@ export class EndreSykler extends Component {
 
     if (this.junior > 0) {
       if (this.syklerLedig[7].ant_ledige > this.junior) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Juniorsykkel', this.junior, junior => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Juniorsykkel', juniorValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Juniorsykkel', this.junior, junior => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Juniorsykkel', juniorValgt => {
             let tall = juniorValgt;
             this.antallValgteJunior = tall[0].hvorMangeValgt;
             this.antallValgteJuniorArray.pop();
@@ -1380,8 +1380,8 @@ export class EndreSykler extends Component {
 
     if (this.terreng > 0) {
       if (this.syklerLedig[6].ant_ledige > this.terreng) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Terrengsykkel', this.terreng, terreng => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Terrengsykkel', terrengValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Terrengsykkel', this.terreng, terreng => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Terrengsykkel', terrengValgt => {
             let tall = terrengValgt;
             this.antallValgteTerreng = tall[0].hvorMangeValgt;
             this.antallValgteTerrengArray.pop();
@@ -1398,8 +1398,8 @@ export class EndreSykler extends Component {
 
     if (this.elSykkel > 0) {
       if (this.syklerLedig[1].ant_ledige > this.elSykkel) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'El-sykkel', this.elSykkel, elSykkel => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'El-sykkel', elSykkelValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'El-sykkel', this.elSykkel, elSykkel => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'El-sykkel', elSykkelValgt => {
             let tall = elSykkelValgt;
             this.antallValgteElsykkel = tall[0].hvorMangeValgt;
             this.antallValgteElsykkelArray.pop();
@@ -1416,8 +1416,8 @@ export class EndreSykler extends Component {
 
     if (this.racer > 0) {
       if (this.syklerLedig[8].ant_ledige > this.racer) {
-        sykkelService.leggInnSykler(this.id[0].lastInsertId, 'Landeveissykkel', this.racer, racer => {
-          sykkelService.hvorMangeSyklerValgt(this.id[0].lastInsertId, 'Landeveissykkel', racerValgt => {
+        sykkelService.leggInnSykler(this.props.match.params.bestillingId, 'Landeveissykkel', this.racer, racer => {
+          sykkelService.hvorMangeSyklerValgt(this.props.match.params.bestillingId, 'Landeveissykkel', racerValgt => {
             let tall = racerValgt;
             this.antallValgteRacer = tall[0].hvorMangeValgt;
             this.antallValgteRacerArray.pop();
