@@ -15,7 +15,7 @@ export class LagerStartside extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Startside - Lager</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Logg ut
@@ -116,7 +116,7 @@ export class LedigSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -309,7 +309,7 @@ export class UtleidSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -499,7 +499,7 @@ export class LedigUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -674,7 +674,7 @@ export class UtleidUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -846,7 +846,7 @@ export class Reparasjoner extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -922,7 +922,7 @@ export class HenteSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -984,7 +984,7 @@ export class SavnetSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -1068,7 +1068,7 @@ export class LeggTilSykkel extends Component {
     }
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -1216,7 +1216,7 @@ export class LeggTilUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -1317,7 +1317,7 @@ export class EndreSykkel extends Component {
 
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -1411,7 +1411,7 @@ export class EndreUtstyrLager extends Component {
 
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden
@@ -1502,7 +1502,7 @@ export class SykkelBestilling extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
             Tilbake til startsiden

@@ -105,7 +105,7 @@ export class Bestilling extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
           <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
             Logg ut
@@ -571,16 +571,16 @@ export class Bestilling extends Component {
   }
 
   avbrytBestillingSykkel() {
-    bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
-      bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+    bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
+      bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
         history.push('/salgStartside/' + this.props.match.params.ansattId);
       });
     });
   }
   avbrytBestillingUtstyr() {
-    bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
+    bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
       bestillingService.avbrytBestillingSykkel(this.id[0].lastInsertId, id => {
-        bestillingService.avbrytBestillingUtstyr(this.id[0].lastInsertId, id => {
+        bestillingService.avbrytBestilling(this.id[0].lastInsertId, id => {
           history.push('/salgStartside/' + this.props.match.params.ansattId);
         });
       });
@@ -1421,8 +1421,8 @@ export class Bestilling extends Component {
 
   wrapper3() {
     for (let i = 0; i < this.sykkelOversikt.length; i++) {
-      if (this.sykkelkurv > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Herre m/ bagasjebrett') {
-        if (this.sykkelkurv > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Dame m/ bagasjebrett') {
+      if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
+        if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
           var x = confirm(
             'OBS! Du har valgt sykkelkurv som utstyr med en/flere sykler som ikke støtter dette. Vil du fremdeles bestille sykkelkurv?'
           );
@@ -1432,9 +1432,12 @@ export class Bestilling extends Component {
             this.hentUtstyrOversikt();
           }
           break;
+        } else {
+          this.leggInnValgtUtstyr();
+          this.hentUtstyrOversikt();
         }
-      } else if (this.sykkelkurv > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Dame m/ bagasjebrett') {
-        if (this.sykkelkurv > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Herre m/ bagasjebrett') {
+      } else if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
+        if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
           var y = confirm(
             'OBS! Du har valgt sykkelkurv som utstyr med en/flere sykler som ikke støtter dette. Vil du fremdeles bestille sykkelkurv?'
           );
@@ -1444,9 +1447,12 @@ export class Bestilling extends Component {
             this.hentUtstyrOversikt();
           }
           break;
+        } else {
+          this.leggInnValgtUtstyr();
+          this.hentUtstyrOversikt();
         }
-      } else if (this.barnesete > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Herre m/ bagasjebrett') {
-        if (this.barnesete > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Dame m/ bagasjebrett') {
+      } else if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
+        if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
           var z = confirm(
             'OBS! Du har valgt barnesete som utstyr med en/flere sykler som ikke støtter dette. Vil du fremdeles bestille barnesete?'
           );
@@ -1456,9 +1462,12 @@ export class Bestilling extends Component {
             this.hentUtstyrOversikt();
           }
           break;
+        } else {
+          this.leggInnValgtUtstyr();
+          this.hentUtstyrOversikt();
         }
-      } else if (this.barnesete > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Dame m/ bagasjebrett') {
-        if (this.barnesete > 0 && this.sykkelOversikt[i].modellnavn != 'Ghost Hybrid Herre m/ bagasjebrett') {
+      } else if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
+        if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
           var r = confirm(
             'OBS! Du har valgt barnesete som utstyr med en/flere sykler som ikke støtter dette. Vil du fremdeles bestille barnesete?'
           );
@@ -1468,10 +1477,10 @@ export class Bestilling extends Component {
             this.hentUtstyrOversikt();
           }
           break;
+        } else {
+          this.leggInnValgtUtstyr();
+          this.hentUtstyrOversikt();
         }
-      } else {
-        this.leggInnValgtUtstyr();
-        this.hentUtstyrOversikt();
       }
     }
   }

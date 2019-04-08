@@ -91,7 +91,7 @@ class SykkelService extends Component {
 
   hentSyklerOversikt(bestilling_id, success) {
     connection.query(
-      'SELECT Sykkel.id, modellnavn, bestilling_type, timepris FROM Sykkel INNER JOIN Bestilling ON Bestilling.id = Sykkel.bestilling_id WHERE bestilling_id=?',
+      'SELECT Sykkel.id, modellnavn, type, bestilling_type, timepris FROM Sykkel INNER JOIN Bestilling ON Bestilling.id = Sykkel.bestilling_id WHERE bestilling_id=?',
       [bestilling_id],
       (error, results) => {
         if (error) return console.error(error);
