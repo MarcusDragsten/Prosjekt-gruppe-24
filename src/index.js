@@ -34,6 +34,9 @@ import {
 } from '../scripts/salg.js';
 import {
   LagerStartside,
+  LagerStartsideSykkel,
+  LagerStartsideUtstyr,
+  LagerStartsideLeggTil,
   LedigSykkel,
   UtleidSykkel,
   LedigUtstyr,
@@ -46,7 +49,16 @@ import {
   EndreSykkel,
   EndreUtstyrLager,
   SavnetSykkel,
-  SykkelBestilling
+  SykkelBestilling,
+  UtilgjengeligeSykler,
+  TilbakePåLager,
+  SlettFraLager,
+  UtilgjengeligeUtstyr,
+  EndreReparasjonerUtstyr,
+  TilbakePåLagerUtstyr,
+  SlettFraLagerUtstyr,
+  UtstyrBestilling,
+  HenteUtstyr
 } from '../scripts/lager.js';
 import { loginService } from './services';
 
@@ -196,19 +208,34 @@ ReactDOM.render(
       <Route path="/nyLokasjon/:ansattId" component={LokasjonNew} />
 
       <Route path="/lagerStartside/:ansattId" component={LagerStartside} />
+      <Route path="/lagerStartsideSykkel/:ansattId" component={LagerStartsideSykkel} />
+      <Route path="/lagerStartsideUtstyr/:ansattId" component={LagerStartsideUtstyr} />
+      <Route path="/lagerStartsideLeggTil/:ansattId" component={LagerStartsideLeggTil} />
       <Route path="/ledigSykkel/:ansattId" component={LedigSykkel} />
       <Route path="/utleidSykkel/:ansattId" component={UtleidSykkel} />
+
+      <Route path="/utilgjengeligSykler/:ansattId" component={UtilgjengeligeSykler} />
+      <Route path="/reparasjoner/:ansattId:id/edit" component={EndreReparasjoner} />
+      <Route path="/utilgjengeligSykler/:ansattId:id/tilbake" component={TilbakePåLager} />
+      <Route path="/utilgjengeligSykler/:ansattId:id/slett" component={SlettFraLager} />
+      <Route path="/sykkelBestilling/:ansattId" component={SykkelBestilling} />
+      <Route path="/henteSykkel/:ansattId" component={HenteSykkel} />
+
+      <Route path="/utilgjengeligUtstyr/:ansattId" component={UtilgjengeligeUtstyr} />
+      <Route path="/reparasjonerUtstyr/:ansattId:id/edit" component={EndreReparasjonerUtstyr} />
+      <Route path="/utilgjengeligUtstyr/:ansattId:id/tilbake" component={TilbakePåLagerUtstyr} />
+      <Route path="/utilgjengeligUtstyr/:ansattId:id/slett" component={SlettFraLagerUtstyr} />
+      <Route path="/utstyrBestilling/:ansattId" component={UtstyrBestilling} />
+      <Route path="/henteUtstyr/:ansattId" component={HenteUtstyr} />
+
       <Route path="/ledigUtstyr/:ansattId" component={LedigUtstyr} />
       <Route path="/utleidUtstyr/:ansattId" component={UtleidUtstyr} />
       <Route path="/reparasjoner/:ansattId" component={Reparasjoner} />
-      <Route path="/reparasjoner/:ansattId:id/edit" component={EndreReparasjoner} />
-      <Route path="/henteSykkel/:ansattId" component={HenteSykkel} />
       <Route path="/leggTilSykkel/:ansattId" component={LeggTilSykkel} />
       <Route path="/leggTilUtstyr/:ansattId" component={LeggTilUtstyr} />
       <Route path="/redigerSykkel/:ansattId:id/edit" component={EndreSykkel} />
       <Route path="/redigerUtstyr/:ansattId:id/edit" component={EndreUtstyrLager} />
       <Route path="/savnetSykkel/:ansattId" component={SavnetSykkel} />
-      <Route path="/sykkelBestilling/:ansattId" component={SykkelBestilling} />
     </div>
   </HashRouter>,
   document.getElementById('root')
