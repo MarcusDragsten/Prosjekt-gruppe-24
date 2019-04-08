@@ -233,7 +233,7 @@ export class Bestilling extends Component {
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
               <h4>Hybridsykkel Herre</h4>
               <hr />
-              <img src="../bilder/sykkel-herre-uten.jpeg" />
+              <img src="../bilder/sykkel-herre-uten.jpeg" alt="Hybridsykkel" />
               <input
                 type="number"
                 placeholder="Hvor mange vil du leie?"
