@@ -4,7 +4,7 @@
 body {
   /*  background-color: #c4dfe6 !important;
 */
-  background-image: url('../bilder/eb285e21.png') !important;
+  background-image: url('../bilder/8f2e7f8c.png') !important;
 }
 
 /*removes all rounded corners in bootstrap buttons*/
@@ -372,7 +372,10 @@ img {
 #nyAnsattLokasjonInput,
 #nyAnsattEtternavnInput,
 #nyAnsattBrukernavnInput,
-#nyAnsattTlfInput {
+#nyAnsattTlfInput,
+#nyLokasjonAdresseInput,
+#nyLokasjonPostKodeInput,
+#nyLokasjonOmrådeInput {
   max-width: 34%;
   margin: auto;
 }
