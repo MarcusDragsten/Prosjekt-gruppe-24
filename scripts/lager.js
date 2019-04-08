@@ -17,7 +17,7 @@ export class LagerStartside extends Component {
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
           <h1>Startside - Lager</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Logg ut
           </button>
         </div>
@@ -28,13 +28,13 @@ export class LagerStartside extends Component {
             {this.ansatt.fornavn} {this.ansatt.etternavn}{' '}
           </h2>
 
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.sykkel}>
+          <button type="button" id="knapperStartside" class="btn btn-sucess btn-lg btn-block" onClick={this.sykkel}>
             Sykkel
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utstyr}>
+          <button type="button" id="knapperStartside" class="btn btn-sucess btn-lg btn-block" onClick={this.utstyr}>
             Utstyr
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTil}>
+          <button type="button" id="knapperStartside" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTil}>
             Legg til
           </button>
         </div>
@@ -64,28 +64,53 @@ export class LagerStartsideSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Sykkel - Lager</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake til startsiden
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
           <h2>Oversikt over Sykler</h2>
 
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.oversiktUtleveringSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.oversiktUtleveringSykkel}
+          >
             Utleveringer
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.oversiktInnleveringSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.oversiktInnleveringSykkel}
+          >
             Innleveringer
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ledigSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.ledigSykkel}
+          >
             På Lager
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utleidSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.utleidSykkel}
+          >
             Utleid
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.reparasjonIkkeLevertSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.reparasjonIkkeLevertSykkel}
+          >
             Utilgjengelig
           </button>
         </div>
@@ -116,28 +141,53 @@ export class LagerStartsideUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Ustyr - Lager</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+        <div class="header w3-container" id="header">
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake til startsiden
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
           <h2>Oversikt over Utstyr</h2>
 
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.oversiktUtleveringUtstyr}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.oversiktUtleveringUtstyr}
+          >
             Utleveringer
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.oversiktInnleveringUtstyr}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.oversiktInnleveringUtstyr}
+          >
             Innleveringer
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.ledigUtstyr}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.ledigUtstyr}
+          >
             På Lager
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utleidUtstyr}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.utleidUtstyr}
+          >
             Utleid
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.utilgjengelig}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.utilgjengelig}
+          >
             Utilgjengelig
           </button>
         </div>
@@ -167,18 +217,28 @@ export class LagerStartsideLeggTil extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
+        <div class="header w3-container" id="header">
           <h1>Legg Til - Lager</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake til startsiden
           </button>
         </div>
         <div id="salgStartsideKnapperDiv">
           <h2>Legg til sykler/utstyr</h2>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTilSykkel}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.leggTilSykkel}
+          >
             Legg til sykler
           </button>
-          <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.leggTilUtstyr}>
+          <button
+            type="button"
+            id="knapperStartside"
+            class="btn btn-sucess btn-lg btn-block"
+            onClick={this.leggTilUtstyr}
+          >
             Legg til utstyr
           </button>
         </div>
@@ -203,9 +263,9 @@ export class SykkelBestilling extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+        <div class="header w3-container" id="header">
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -222,7 +282,6 @@ export class SykkelBestilling extends Component {
     lagerService.hentSykkelBestilling(syklerIBestilling => {
       this.syklerIBestilling = syklerIBestilling;
       this.createTable();
-      console.log(this.syklerIBestilling);
     });
   }
   createTable() {
@@ -272,10 +331,10 @@ export class HenteSykkel extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+        <div class="header w3-container" id="header">
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
         <h2>Oversikt over sykler som trenger transport tilbake til lager</h2>
@@ -290,7 +349,6 @@ export class HenteSykkel extends Component {
   mounted() {
     lagerService.henteSykkel(sykkel => {
       this.sykkel = sykkel;
-      console.log(this.sykkel);
       this.createTable6();
     });
   }
@@ -347,8 +405,8 @@ export class LedigSykkel extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -356,7 +414,8 @@ export class LedigSykkel extends Component {
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer
         </button>
-        <div id="filtrerAktiveBestillingerDiv">
+        <br />
+        <div id="filtrerRapportAnsatteDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
               <h3>Filtrer sykler</h3>
@@ -429,7 +488,7 @@ export class LedigSykkel extends Component {
     });
   }
   toggleFiltrer() {
-    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    var x = document.getElementById('filtrerRapportAnsatteDiv');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
     } else {
@@ -495,10 +554,6 @@ export class LedigSykkel extends Component {
     lagerService.sok(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sok => {
       this.sykkelPåLager = sok;
       this.createTable1();
-      console.log(this.type);
-      console.log(this.lokasjon_id);
-      console.log(this.modellnavn);
-      console.log(this.timepris);
     });
   }
 
@@ -540,8 +595,8 @@ export class UtleidSykkel extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -549,7 +604,8 @@ export class UtleidSykkel extends Component {
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer
         </button>
-        <div id="filtrerAktiveBestillingerDiv">
+        <br />
+        <div id="filtrerRapportAnsatteDiv">
           <form onSubmit={this.sokUtleid}>
             <div class="form-inline">
               <h3>Filtrer sykler</h3>
@@ -622,7 +678,7 @@ export class UtleidSykkel extends Component {
     });
   }
   toggleFiltrer() {
-    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    var x = document.getElementById('filtrerRapportAnsatteDiv');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
     } else {
@@ -687,10 +743,6 @@ export class UtleidSykkel extends Component {
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
       this.createTable1();
-      console.log(this.type);
-      console.log(this.lokasjon_id);
-      console.log(this.modellnavn);
-      console.log(this.timepris);
     });
   }
 
@@ -730,23 +782,33 @@ export class UtilgjengeligeSykler extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+        <div class="header w3-container" id="header">
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
         <h2>Oversikt over utilgjengelige sykler</h2>
         <br />
-        <h2>
+        <h4>
           Utilgjengelige sykler består av sykler som trenger eventuelle reparasjoner eller har ikke blitt levert tilbake
           av kunden i tide.
-        </h2>
-        <button type="submit" class="btn btn-sucess btn-lg btn-block" onClick={this.createTableRep}>
-          Reparasjon
+        </h4>
+        <button
+          type="submit"
+          id="knapperStartside"
+          class="btn btn-sucess btn-lg btn-block"
+          onClick={this.createTableRep}
+        >
+          Trenger reparasjon
         </button>
-        <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.createTableIkkeLevert}>
-          Ikke levert tilbake i tide
+        <button
+          type="button"
+          id="knapperStartside"
+          class="btn btn-sucess btn-lg btn-block"
+          onClick={this.createTableIkkeLevert}
+        >
+          Ikke levert tilbake
         </button>
         <br />
         <table id="customers" align="center">
@@ -759,15 +821,12 @@ export class UtilgjengeligeSykler extends Component {
   mounted() {
     lagerService.gjørUtilgjengelig(gjørutilgjengelig => {
       this.gjørutilgjengelig = gjørutilgjengelig;
-      console.log(this.gjørutilgjengelig);
     });
     lagerService.hentReparasjoner(reparasjon => {
       this.reparasjon = reparasjon;
-      console.log(this.reparasjon);
     });
     lagerService.hentUtilgjengelig(utilgjengelig => {
       this.utilgjengelig = utilgjengelig;
-      console.log(this.utilgjengelig);
     });
   }
   createTableRep() {
@@ -880,7 +939,7 @@ export class TilbakePåLager extends Component {
   }
 
   mounted() {
-    lagerService.hentUtilgjengeligeID(this.props.match.params.id, hentUtilgjengeligeID => {
+    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
       lagerService.tilbakeUtilgjengelige(this.props.match.params.id, tilbakeUtilgjengelige => {
         history.push('/utilgjengeligSykler/' + this.props.match.params.ansattId);
       });
@@ -893,7 +952,7 @@ export class SlettFraLager extends Component {
   }
 
   mounted() {
-    lagerService.hentUtilgjengeligeID(this.props.match.params.id, hentUtilgjengeligeID => {
+    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
       lagerService.slettUtilgjengelige(this.props.match.params.id, slettUtilgjengelige => {
         history.push('/utilgjengeligSykler/' + this.props.match.params.ansattId);
       });
@@ -907,9 +966,9 @@ export class UtstyrBestilling extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+        <div class="header w3-container" id="header">
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -926,7 +985,6 @@ export class UtstyrBestilling extends Component {
     lagerService.hentSykkelBestillingUtstyr(utstyrIBestilling => {
       this.utstyrIBestilling = utstyrIBestilling;
       this.createTable();
-      console.log(this.utstyrIBestilling);
     });
   }
   createTable() {
@@ -976,10 +1034,10 @@ export class HenteUtstyr extends Component {
   render() {
     return (
       <div id="yttersteDiv">
-        <div class="header w3-container w3-green">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+        <div class="header w3-container" id="header">
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
         <h2>Oversikt over sykler som trenger transport tilbake til lager</h2>
@@ -994,7 +1052,6 @@ export class HenteUtstyr extends Component {
   mounted() {
     lagerService.henteUtstyr(utstyr => {
       this.utstyr = utstyr;
-      console.log(this.utstyr);
       this.createTable6();
     });
   }
@@ -1050,8 +1107,8 @@ export class LedigUtstyr extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -1059,7 +1116,8 @@ export class LedigUtstyr extends Component {
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer
         </button>
-        <div id="filtrerAktiveBestillingerDiv">
+        <br />
+        <div id="filtrerRapportAnsatteDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
               <h3>Filtrer utstyr</h3>
@@ -1130,7 +1188,7 @@ export class LedigUtstyr extends Component {
     });
   }
   toggleFiltrer() {
-    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    var x = document.getElementById('filtrerRapportAnsatteDiv');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
     } else {
@@ -1186,9 +1244,6 @@ export class LedigUtstyr extends Component {
     lagerService.sokUtstyr(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrPåLager = sok;
       this.createTable1();
-      console.log(this.type);
-      console.log(this.lokasjon_id);
-      console.log(this.pris);
     });
   }
 
@@ -1226,8 +1281,8 @@ export class UtleidUtstyr extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
             Tilbake
           </button>
         </div>
@@ -1235,7 +1290,8 @@ export class UtleidUtstyr extends Component {
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer
         </button>
-        <div id="filtrerAktiveBestillingerDiv">
+        <br />
+        <div id="filtrerRapportAnsatteDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
               <h3>Filtrer utstyr</h3>
@@ -1307,7 +1363,7 @@ export class UtleidUtstyr extends Component {
   }
 
   toggleFiltrer() {
-    var x = document.getElementById('filtrerAktiveBestillingerDiv');
+    var x = document.getElementById('filtrerRapportAnsatteDiv');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
     } else {
@@ -1363,9 +1419,6 @@ export class UtleidUtstyr extends Component {
     lagerService.sokUtstyrUtleid(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrUtleid = sok;
       this.createTable1();
-      console.log(this.type);
-      console.log(this.lokasjon_id);
-      console.log(this.pris);
     });
   }
 
@@ -1399,22 +1452,32 @@ export class UtilgjengeligeUtstyr extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
         <h2>Oversikt over utilgjengelige utstyr</h2>
         <br />
-        <h2>
+        <h4>
           Utilgjengelige utstyr består av utstyr som trenger eventuelle reparasjoner eller har ikke blitt levert tilbake
           av kunden i tide.
-        </h2>
-        <button type="submit" class="btn btn-sucess btn-lg btn-block" onClick={this.createTableRep}>
-          Reparasjon
+        </h4>
+        <button
+          type="submit"
+          id="knapperStartside"
+          class="btn btn-sucess btn-lg btn-block"
+          onClick={this.createTableRep}
+        >
+          Trenger reparasjon
         </button>
-        <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.createTableIkkeLevert}>
-          Ikke levert tilbake i tide
+        <button
+          type="button"
+          id="knapperStartside"
+          class="btn btn-sucess btn-lg btn-block"
+          onClick={this.createTableIkkeLevert}
+        >
+          Ikke levert tilbake
         </button>
         <br />
         <table id="customers" align="center">
@@ -1427,15 +1490,12 @@ export class UtilgjengeligeUtstyr extends Component {
   mounted() {
     lagerService.gjørUtilgjengeligUtstyr(gjørUtilgjengeligUtstyr => {
       this.gjørUtilgjengeligUtstyr = gjørUtilgjengeligUtstyr;
-      console.log(this.gjørutilgjengelig);
     });
     lagerService.hentReparasjonerUtstyr(reparasjon => {
       this.reparasjon = reparasjon;
-      console.log(this.reparasjon);
     });
     lagerService.hentUtilgjengeligUtstyr(utilgjengelig => {
       this.utilgjengelig = utilgjengelig;
-      console.log(this.utilgjengelig);
     });
   }
   createTableRep() {
@@ -1583,107 +1643,114 @@ export class LeggTilSykkel extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+          <h1>Legg til - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
-        <div id="leggTilSykkelDiv">
+        <div id="nyAnsattDiv">
           <form onSubmit={this.add}>
-            <div class="form-inline">
-              <h3>Legg til nye sykler</h3>
-              <select
-                value={this.type}
-                class="form-control form-control-lg"
-                onChange={e => (this.type = event.target.value)}
-                required
-              >
-                <option>Velg sykkeltype</option>
-                <option value="Hybrid Dame m/bagasjebrett">Hybrid Dame med bagasjebrett</option>
-                <option value="Hybrid Herre m/bagasjebrett">Hybrid Herre med bagasjebrett</option>
-                <option value="Hybrid Dame">Hybrid Dame uten bagasjebrett</option>
-                <option value="Hybrid Herre">Hybrid Herre uten bagasjebrett</option>
-                <option value="Barnesykkel">Barnesykkel</option>
-                <option value="Juniorsykkel">Juniorsykkel</option>
-                <option value="El-sykkel">El-sykkel</option>
-                <option value="Terrengsykkel">Terrengsykkel</option>
-                <option value="Landeveissykkel">Landeveissykkel</option>
-              </select>
-              <br />
-              <input
-                type="text"
-                placeholder="Modellnavn"
-                class="form-control form-control-lg"
-                onChange={e => (this.modellnavn = e.target.value)}
-                required
-              />
-              <br />
-              <input
-                type="number"
-                placeholder="Hjulstørrelse"
-                class="form-control form-control-lg"
-                onChange={e => (this.hjul_størrelse = e.target.value)}
-                required
-              />
-              <br />
-              <select
-                value={this.girsystem}
-                class="form-control form-control-lg"
-                onChange={e => (this.girsystem = event.target.value)}
-                required
-              >
-                <option>Velg girtype</option>
-                <option value="Derailleurgir">Derailleurgir</option>
-                <option value="Navgir">Navgir</option>
-              </select>
-              <br />
-              <input
-                type="text"
-                placeholder="Ramme"
-                class="form-control form-control-lg"
-                onChange={e => (this.ramme = e.target.value)}
-                required
-              />
-              <br />
-              <select
-                id="lokasjon_id"
-                class="form-control form-control-lg"
-                onChange={e => (this.lokasjon_id = event.target.value)}
-              >
-                {' '}
-                <option value="" selected>
-                  Velg tilhørighet:
+            <h3>Legg til nye sykler</h3>
+            <hr />
+            <h4>Sykkeltype</h4>
+            <select
+              value={this.type}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.type = event.target.value)}
+              required
+            >
+              <option value="" selected hidden>
+                Velg sykkeltype
+              </option>
+              <option value="Hybrid Dame m/bagasjebrett">Hybrid Dame med bagasjebrett</option>
+              <option value="Hybrid Herre m/bagasjebrett">Hybrid Herre med bagasjebrett</option>
+              <option value="Hybrid Dame">Hybrid Dame uten bagasjebrett</option>
+              <option value="Hybrid Herre">Hybrid Herre uten bagasjebrett</option>
+              <option value="Barnesykkel">Barnesykkel</option>
+              <option value="Juniorsykkel">Juniorsykkel</option>
+              <option value="El-sykkel">El-sykkel</option>
+              <option value="Terrengsykkel">Terrengsykkel</option>
+              <option value="Landeveissykkel">Landeveissykkel</option>
+            </select>
+            <h4>Modellnavn</h4>
+            <input
+              type="text"
+              placeholder="Modellnavn"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.modellnavn = e.target.value)}
+              required
+            />
+            <h4>Hjulstørrelse</h4>
+            <input
+              type="number"
+              placeholder="Hjulstørrelse"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.hjul_størrelse = e.target.value)}
+              required
+            />
+            <h4>Girsystem</h4>
+            <select
+              value={this.girsystem}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.girsystem = event.target.value)}
+              required
+            >
+              <option value="" selected hidden>
+                Velg girsystem
+              </option>
+              <option value="Derailleurgir">Derailleurgir</option>
+              <option value="Navgir">Navgir</option>
+            </select>
+            <h4>Rammematerialet</h4>
+            <input
+              type="text"
+              placeholder="Ramme"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.ramme = e.target.value)}
+              required
+            />
+            <h4>Tilhørighet</h4>
+            <select
+              id="lokasjon_id"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.lokasjon_id = event.target.value)}
+            >
+              {' '}
+              <option value="" selected hidden>
+                Velg tilhørighet:
+              </option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
                 </option>
-                {this.tilhørighet.map(tilhørighet => (
-                  <option value={tilhørighet.id} key={tilhørighet.id}>
-                    {tilhørighet.område}
-                  </option>
-                ))}
-              </select>
-              <br />
-              <select
-                name="bremse"
-                value={this.bremse}
-                class="form-control form-control-lg"
-                onChange={e => (this.bremse = event.target.value)}
-                required
-              >
-                <option>Velg bremsetype</option>
-                <option value="Hydraulisk Skivebrems">Hydraulisk Skivebrems</option>
-                <option value="Bremsekloss">Bremsekloss</option>
-              </select>
-              <br />
-              <input
-                type="number"
-                id="number"
-                min="0"
-                placeholder="Timepris"
-                class="form-control form-control-lg"
-                onChange={e => (this.timepris = e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              ))}
+            </select>
+            <h4>Bremsetype</h4>
+            <select
+              name="bremse"
+              value={this.bremse}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.bremse = event.target.value)}
+              required
+            >
+              <option value="" selected hidden>
+                Velg bremsetype
+              </option>
+              <option value="Hydraulisk Skivebrems">Hydraulisk Skivebrems</option>
+              <option value="Bremsekloss">Bremsekloss</option>
+            </select>
+            <h4>Timepris</h4>
+            <input
+              type="number"
+              id="number"
+              min="0"
+              placeholder="Timepris"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.timepris = e.target.value)}
+              required
+            />
+            <br />
+            <button type="submit" class="btn">
               Legg til
             </button>
           </form>
@@ -1739,67 +1806,70 @@ export class LeggTilUtstyr extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+          <h1>Legg til - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
-        <div id="leggTilSykkelDiv">
+        <div id="nyAnsattDiv">
           <form onSubmit={this.add}>
-            <div class="form-inline">
-              <h3>Legg til nytt utsyr</h3>
-              <select
-                value={this.type}
-                class="form-control form-control-lg"
-                onChange={e => (this.type = event.target.value)}
-                required
-              >
-                <option>Velg utstyrstype</option>
-                <option value="Hjelm voksne">Hjelm voksne</option>
-                <option value="Hjelm barn">Hjelm barn</option>
-                <option value="Sykkellås">Sykkellås</option>
-                <option value="Barnesete">Barnesete</option>
-                <option value="Sykkelvogn">Sykkelvogn</option>
-                <option value="Sykkelkurv">Sykkelkurv</option>
-                <option value="Sykkelstativ">Sykkelstativ</option>
-              </select>
-              <br />
-              <select
-                id="lokasjon_id"
-                class="form-control form-control-lg"
-                onChange={e => (this.lokasjon_id = event.target.value)}
-              >
-                {' '}
-                <option value="" selected>
-                  Velg tilhørighet:
+            <h3>Legg til nytt utsyr</h3>
+            <hr />
+            <h4>Utstyrstype</h4>
+            <select
+              value={this.type}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.type = event.target.value)}
+              required
+            >
+              <option value="" selected hidden>
+                Velg utstyrstype
+              </option>
+              <option value="Hjelm voksne">Hjelm voksne</option>
+              <option value="Hjelm barn">Hjelm barn</option>
+              <option value="Sykkellås">Sykkellås</option>
+              <option value="Barnesete">Barnesete</option>
+              <option value="Sykkelvogn">Sykkelvogn</option>
+              <option value="Sykkelkurv">Sykkelkurv</option>
+              <option value="Sykkelstativ">Sykkelstativ</option>
+            </select>
+            <h4>Tilhørighet</h4>
+            <select
+              id="lokasjon_id"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.lokasjon_id = event.target.value)}
+            >
+              {' '}
+              <option value="" selected hidden>
+                Velg tilhørighet:
+              </option>
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
                 </option>
-                {this.tilhørighet.map(tilhørighet => (
-                  <option value={tilhørighet.id} key={tilhørighet.id}>
-                    {tilhørighet.område}
-                  </option>
-                ))}
-              </select>
-              <br />
-              <input
-                type="text"
-                placeholder="Beskrivelse"
-                value={this.beskrivelse}
-                class="form-control form-control-lg"
-                onChange={e => (this.beskrivelse = e.target.value)}
-                required
-              />
-              <br />
-              <input
-                type="number"
-                min="0"
-                id="number"
-                placeholder="Timepris"
-                class="form-control form-control-lg"
-                onChange={e => (this.pris = event.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              ))}
+            </select>
+            <h4>Beskrivelse</h4>
+            <input
+              type="text"
+              placeholder="Beskrivelse"
+              value={this.beskrivelse}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.beskrivelse = e.target.value)}
+              required
+            />
+            <h4>Timepris</h4>
+            <input
+              type="number"
+              min="0"
+              id="number"
+              placeholder="Timepris"
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.pris = event.target.value)}
+              required
+            />
+            <br />
+            <button type="submit" class="btn">
               Legg til
             </button>
           </form>
@@ -1840,54 +1910,56 @@ export class EndreSykkel extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+          <h1>Sykkel - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
-        <div id="leggTilSykkelDiv">
+        <div id="nyAnsattDiv">
           <form onSubmit={this.save}>
-            <div class="form-inline">
-              <h3>
-                {this.sykler.modellnavn} med ID-nummer {this.sykler.id}{' '}
-              </h3>
-              <select
-                value={this.sykler.status}
-                class="form-control form-control-lg"
-                onChange={e => (this.sykler.status = event.target.value)}
-                required
-              >
-                <option value="Ledig">Ledig</option>
-                <option value="Utleid">Utleid</option>
-                <option value="Reparasjon">Til reparasjon</option>
-                <option value="Utilgjengelig">Utilgjengelig</option>
-              </select>
-              <br />
-              <select
-                value={this.sykler.lokasjon_id}
-                class="form-control form-control-lg"
-                onChange={e => (this.sykler.lokasjon_id = event.target.value)}
-                required
-              >
-                {this.tilhørighet.map(tilhørighet => (
-                  <option value={tilhørighet.id} key={tilhørighet.id}>
-                    {tilhørighet.område}
-                  </option>
-                ))}
-              </select>
-              <br />
-              <input
-                type="number"
-                class="form-control form-control-lg"
-                value={this.sykler.timepris}
-                onChange={e => (this.sykler.timepris = event.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+            <h3>
+              {this.sykler.modellnavn} med ID-nummer {this.sykler.id}{' '}
+            </h3>
+            <hr />
+            <h4>Status</h4>
+            <select
+              value={this.sykler.status}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.sykler.status = event.target.value)}
+              required
+            >
+              <option value="Ledig">Ledig</option>
+              <option value="Utleid">Utleid</option>
+              <option value="Reparasjon">Til reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+            <h4>Tilhørighet</h4>
+            <select
+              value={this.sykler.lokasjon_id}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.sykler.lokasjon_id = event.target.value)}
+              required
+            >
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
+            </select>
+            <h4>Timepris</h4>
+            <input
+              type="number"
+              class="genereltInputer form-control form-control-lg"
+              value={this.sykler.timepris}
+              onChange={e => (this.sykler.timepris = event.target.value)}
+              required
+            />
+
+            <br />
+            <button type="submit" class="btn">
               Lagre
             </button>
-            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.delete}>
+            <button type="button" class="btn" onClick={this.delete}>
               Slett
             </button>
           </form>
@@ -1901,7 +1973,6 @@ export class EndreSykkel extends Component {
     });
     bestillingService.hentUtleveringsted(tilhørighet => {
       this.tilhørighet = tilhørighet;
-      console.log(this.tilhørighet);
     });
   }
 
@@ -1936,54 +2007,56 @@ export class EndreUtstyrLager extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.tilbake}>
-            Tilbake til startsiden
+          <h1>Utstyr - Lager</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
           </button>
         </div>
-        <div id="leggTilSykkelDiv">
+        <div id="nyAnsattDiv">
           <form onSubmit={this.save}>
-            <div class="form-inline">
-              <h3>
-                {this.utstyr.type} med ID-nummer {this.utstyr.id}{' '}
-              </h3>
-              <select
-                value={this.utstyr.status}
-                class="form-control form-control-lg"
-                onChange={e => (this.utstyr.status = event.target.value)}
-                required
-              >
-                <option value="Ledig">Ledig</option>
-                <option value="Utleid">Utleid</option>
-                <option value="Reparasjon">Til reparasjon</option>
-                <option value="Utilgjengelig">Utilgjengelig</option>
-              </select>
-              <br />
-              <select
-                value={this.utstyr.lokasjon_id}
-                class="form-control form-control-lg"
-                onChange={e => (this.utstyr.lokasjon_id = event.target.value)}
-                required
-              >
-                {this.tilhørighet.map(tilhørighet => (
-                  <option value={tilhørighet.id} key={tilhørighet.id}>
-                    {tilhørighet.område}
-                  </option>
-                ))}
-              </select>
-              <br />
-              <input
-                type="number"
-                class="form-control form-control-lg"
-                value={this.utstyr.pris}
-                onChange={e => (this.utstyr.pris = event.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
+            <h3>
+              {this.utstyr.type} med ID-nummer {this.utstyr.id}{' '}
+            </h3>
+            <hr />
+            <h4>Status</h4>
+            <select
+              value={this.utstyr.status}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.utstyr.status = event.target.value)}
+              required
+            >
+              <option value="Ledig">Ledig</option>
+              <option value="Utleid">Utleid</option>
+              <option value="Reparasjon">Til reparasjon</option>
+              <option value="Utilgjengelig">Utilgjengelig</option>
+            </select>
+            <h4>Tilhørighet</h4>
+            <select
+              value={this.utstyr.lokasjon_id}
+              class="genereltInputer form-control form-control-lg"
+              onChange={e => (this.utstyr.lokasjon_id = event.target.value)}
+              required
+            >
+              {this.tilhørighet.map(tilhørighet => (
+                <option value={tilhørighet.id} key={tilhørighet.id}>
+                  {tilhørighet.område}
+                </option>
+              ))}
+            </select>
+            <h4>Timepris</h4>
+            <input
+              type="number"
+              class="genereltInputer form-control form-control-lg"
+              value={this.utstyr.pris}
+              onChange={e => (this.utstyr.pris = event.target.value)}
+              required
+            />
+
+            <br />
+            <button type="submit" class="btn">
               Lagre
             </button>
-            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.delete}>
+            <button type="button" class="btn" onClick={this.delete}>
               Slett
             </button>
           </form>
