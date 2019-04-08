@@ -205,13 +205,6 @@ class LagerService extends Component {
       success();
     });
   }
-  hentUtilgjengeligeID(id, success) {
-    connection.query('select * from Sykkel where id=?', [id], (error, results) => {
-      if (error) return console.error(error);
-
-      success(results[0]);
-    });
-  }
 
   tilbakeUtilgjengelige(id, success) {
     connection.query('update Sykkel set status="Ledig", bestilling_id = NULL where id=?', [id], (error, results) => {
@@ -263,16 +256,6 @@ class LagerService extends Component {
       }
     );
   }
-  henteSykkelOversikt(success) {
-    connection.query(
-      'SELECT Sykkel.bestilling_id, Sykkel.id, Sykkel.modellnavn, Bestilling.innleveringssted, Bestilling.innlevering_dato, Bestilling.innlevering_tid, Lokasjoner.område FROM Bestilling INNER JOIN Sykkel ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Lokasjoner.id = Sykkel.lokasjon_id WHERE Bestilling.innleveringssted <> Lokasjoner.område AND Sykkel.status = "Utleid" AND Bestilling.innlevering_dato >= CURRENT_DATE() AND Bestilling.faktiskInnlevering_dato IS NULL ORDER BY Bestilling.innlevering_dato ASC LIMIT 3',
-
-      (error, results) => {
-        if (error) return console.error(error);
-        success(results);
-      }
-    );
-  }
   henteSykkelId(id, success) {
     connection.query('select * from Sykkel where id=?', [id], (error, results) => {
       if (error) return console.error(error);
@@ -302,16 +285,6 @@ class LagerService extends Component {
     connection.query(
       'SELECT * FROM Lokasjoner WHERE har_lager = "Ja"',
 
-      (error, results) => {
-        if (error) return console.error(error);
-
-        success(results);
-      }
-    );
-  }
-  hentSykkelBestillingOversikt(success) {
-    connection.query(
-      'SELECT Sykkel.bestilling_id, Sykkel.id, Sykkel.type, Sykkel.modellnavn, Lokasjoner.område, Bestilling.utleveringssted, Bestilling.utlevering_dato, Bestilling.utlevering_tid FROM Sykkel INNER JOIN Bestilling ON Sykkel.bestilling_id = Bestilling.id INNER JOIN Lokasjoner ON Sykkel.lokasjon_id = Lokasjoner.id WHERE Sykkel.status = "Utleid" AND Sykkel.bestilling_id IS NOT NULL AND Bestilling.utlevering_dato >= CURRENT_DATE() ORDER BY Bestilling.utlevering_dato LIMIT 3',
       (error, results) => {
         if (error) return console.error(error);
 
