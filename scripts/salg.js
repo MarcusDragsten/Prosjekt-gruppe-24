@@ -96,7 +96,7 @@ export class AktiveBestillinger extends Component {
             Tilbake til startsiden
           </button>
         </div>
-        <h2>Aktive bestillinger</h2>
+        <h2>Tabell over alle aktive bestillinger</h2>
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer tabellen?
         </button>
@@ -105,75 +105,77 @@ export class AktiveBestillinger extends Component {
           <form onSubmit={this.sok}>
             <div class="form-inline">
               <h3>Filtrer bestillingene:</h3>
-              <h4>Velg start- og sluttidspunkt</h4>
+              <h4>Velg start- og sluttdato</h4>
               <input
                 id="utlevering_dato"
                 type="date"
-                class="form-control form-control-lg"
+                class="genereltInputer form-control form-control-lg"
                 onChange={e => (this.utlevering_dato = event.target.value)}
                 required
               />
               <input
                 id="innlevering_dato"
                 type="date"
-                class="form-control form-control-lg"
+                class="genereltInputer form-control form-control-lg"
                 min={this.utlevering_dato}
                 onChange={e => (this.innlevering_dato = event.target.value)}
                 required
               />
             </div>
-            <br />
-            <label for="bestilling_type">Bestillingtype:</label>
-            <select
-              id="bestilling_type"
-              class="form-control form-control-lg"
-              onChange={e => (this.bestilling_type = event.target.value)}
-            >
-              <option value="" selected>
-                Søk etter bestillingstype:
-              </option>
-              <option value="Timeutleie">Timeutleie</option>
-              <option value="Dagsutleie">Dagsutleie</option>
-              <option value="Helgeutleie">Helgeutleie</option>
-            </select>
-            <label for="kunde_epost">Kundens Epost:</label>
-            <input
-              type="text"
-              id="kunde_epost"
-              class="form-control form-control-lg"
-              placeholder="Søk etter kundens epost:"
-              onChange={e => (this.kunde_epost = event.target.value)}
-            />
-            <label for="utleveringssted">Utleveringssted:</label>
-            <select
-              id="utleveringssted"
-              class="form-control form-control-lg"
-              onChange={e => (this.utleveringssted = event.target.value)}
-            >
-              <option value="" selected>
-                Velg utleveringssted
-              </option>
-              {this.utleveringssteder.map(steder => (
-                <option key={steder.id}>{steder.område}</option>
-              ))}
-            </select>
-            <label for="innleveringssted">Innleveringssted:</label>
-            <select
-              id="innleveringssted"
-              class="form-control form-control-lg"
-              onChange={e => (this.innleveringssted = event.target.value)}
-            >
-              <option value="" selected>
-                Velg utleveringssted
-              </option>
-              {this.innleveringssteder.map(steder => (
-                <option key={steder.id}>{steder.område}</option>
-              ))}
-            </select>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
-              Søk
+
+            <div class="form-inline">
+              <h4>Filtrer med andre filtre:</h4>
+              <select
+                id="bestilling_type"
+                class="genereltInputer form-control form-control-lg"
+                onChange={e => (this.bestilling_type = event.target.value)}
+              >
+                <option value="" selected>
+                  Søk etter bestillingstype:
+                </option>
+                <option value="Timeutleie">Timeutleie</option>
+                <option value="Dagsutleie">Dagsutleie</option>
+                <option value="Helgeutleie">Helgeutleie</option>
+              </select>
+
+              <input
+                type="text"
+                id="kunde_epost"
+                class="genereltInputer form-control form-control-lg"
+                placeholder="Søk etter kundens epost:"
+                onChange={e => (this.kunde_epost = event.target.value)}
+              />
+              <br />
+              <select
+                id="utleveringssted"
+                class="genereltInputer form-control form-control-lg"
+                onChange={e => (this.utleveringssted = event.target.value)}
+              >
+                <option value="" selected>
+                  Søk etter utleveringssted
+                </option>
+                {this.utleveringssteder.map(steder => (
+                  <option key={steder.id}>{steder.område}</option>
+                ))}
+              </select>
+
+              <select
+                id="innleveringssted"
+                class="genereltInputer form-control form-control-lg"
+                onChange={e => (this.innleveringssted = event.target.value)}
+              >
+                <option value="" selected>
+                  Søk etter utleveringssted
+                </option>
+                {this.innleveringssteder.map(steder => (
+                  <option key={steder.id}>{steder.område}</option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" class="btn">
+              Filter
             </button>
-            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+            <button type="button" class="btn" onClick={this.nullstill}>
               Nullstill
             </button>
           </form>
@@ -329,15 +331,12 @@ export class BestillingHistorikk extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Bestillingssiden</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Bestillinghistorikk</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.tilbake}>
+            Tilbake til startsiden
           </button>
         </div>
-        <button type="button" id="tilbake" class="btn" onClick={this.tilbake}>
-          Tilbake
-        </button>
-        <h2>Bestillingshistorikk</h2>
+        <h2>Tabell over alle innleverte bestillinger</h2>
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
           Filtrer bestillingene?
         </button>
@@ -363,58 +362,60 @@ export class BestillingHistorikk extends Component {
                 required
               />
             </div>
+            <div class="form-inline">
+              <h4>Filtrer med andre filtre:</h4>
+              <select
+                id="bestilling_type"
+                class="form-control form-control-lg"
+                onChange={e => (this.bestilling_type = event.target.value)}
+              >
+                <option value="" selected>
+                  Søk etter bestillingstype:
+                </option>
+                <option value="Timeutleie">Timeutleie</option>
+                <option value="Dagsutleie">Dagsutleie</option>
+                <option value="Helgeutleie">Helgeutleie</option>
+              </select>
+
+              <input
+                type="text"
+                id="kunde_epost"
+                class="form-control form-control-lg"
+                placeholder="Søk etter kundens epost:"
+                onChange={e => (this.kunde_epost = event.target.value)}
+              />
+              <br />
+              <select
+                id="utleveringssted"
+                class="form-control form-control-lg"
+                onChange={e => (this.utleveringssted = event.target.value)}
+              >
+                <option value="" selected>
+                  Velg utleveringssted
+                </option>
+                {this.utleveringssteder.map(steder => (
+                  <option key={steder.id}>{steder.område}</option>
+                ))}
+              </select>
+
+              <select
+                id="innleveringssted"
+                class="form-control form-control-lg"
+                onChange={e => (this.innleveringssted = event.target.value)}
+              >
+                <option value="" selected>
+                  Velg utleveringssted
+                </option>
+                {this.innleveringssteder.map(steder => (
+                  <option key={steder.id}>{steder.område}</option>
+                ))}
+              </select>
+            </div>
             <br />
-            <label for="bestilling_type">Bestillingtype:</label>
-            <select
-              id="bestilling_type"
-              class="form-control form-control-lg"
-              onChange={e => (this.bestilling_type = event.target.value)}
-            >
-              <option value="" selected>
-                Søk etter bestillingstype:
-              </option>
-              <option value="Timeutleie">Timeutleie</option>
-              <option value="Dagsutleie">Dagsutleie</option>
-              <option value="Helgeutleie">Helgeutleie</option>
-            </select>
-            <label for="kunde_epost">Kundens Epost:</label>
-            <input
-              type="text"
-              id="kunde_epost"
-              class="form-control form-control-lg"
-              placeholder="Søk etter kundens epost:"
-              onChange={e => (this.kunde_epost = event.target.value)}
-            />
-            <label for="utleveringssted">Utleveringssted:</label>
-            <select
-              id="utleveringssted"
-              class="form-control form-control-lg"
-              onChange={e => (this.utleveringssted = event.target.value)}
-            >
-              <option value="" selected>
-                Velg utleveringssted
-              </option>
-              {this.utleveringssteder.map(steder => (
-                <option key={steder.id}>{steder.område}</option>
-              ))}
-            </select>
-            <label for="innleveringssted">Innleveringssted:</label>
-            <select
-              id="innleveringssted"
-              class="form-control form-control-lg"
-              onChange={e => (this.innleveringssted = event.target.value)}
-            >
-              <option value="" selected>
-                Velg utleveringssted
-              </option>
-              {this.innleveringssteder.map(steder => (
-                <option key={steder.id}>{steder.område}</option>
-              ))}
-            </select>
-            <button type="submit" class="btn btn-sucess btn-lg btn-block">
-              Søk
+            <button type="submit" class="btn">
+              Filtrer
             </button>
-            <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+            <button type="button" class="btn" onClick={this.nullstill}>
               Nullstill
             </button>
           </form>
@@ -553,9 +554,9 @@ export class Innlevering extends Component {
     return (
       <div>
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Innlevering av bestilling</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
         <u>
@@ -566,8 +567,10 @@ export class Innlevering extends Component {
           <div id="innholdIBestilling">
             <h2>Innholdet i bestillingen:</h2>
             <p>
-              Gå over alt av innleverte sykler og utstyr, deretter velg om sykkelen er i god nok stand til å leveres
-              inn. Om ikke, velg om sykkelen trenger reparasjon eller er forsvunnet.
+              <i>
+                Gå over alt av innleverte sykler og utstyr, deretter velg om sykkelen er i god nok stand til å leveres
+                inn. Om ikke, velg om sykkelen trenger reparasjon eller er forsvunnet.
+              </i>
             </p>
             <div id="syklerIbestilling">
               <h3>Sykler i bestillingen:</h3>
@@ -609,12 +612,16 @@ export class Innlevering extends Component {
     });
   }
 
+  return() {
+    history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
+  }
+
   lagSykkelOversikt() {
     this.tabell1.push(
       <tr>
         <th>SykkelID</th>
         <th>Modell</th>
-        <th>Velg status på sykkelen</th>
+        <th>Velg status på syklene</th>
       </tr>
     );
 
@@ -726,14 +733,11 @@ export class EndreBestilling extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <h1>Redigering av bestilling</h1>
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <button type="save" id="tilbake" class="btn" onClick={this.tilbake}>
-          Tilbake
-        </button>
         <div id="endreInfoBestilling">
           <h2>Endring av bestillingen {this.bestillinger.id}</h2>
           <hr />
@@ -741,8 +745,7 @@ export class EndreBestilling extends Component {
             <h3>Bestillingstype:</h3>
             <select
               type="text"
-              class="form-control"
-              id="bestilling_typeInput"
+              class="genereltInputer form-control form-control-lg"
               value={this.bestillinger.bestilling_type}
               onChange={e => (this.bestillinger.bestilling_type = event.target.value)}
               required
@@ -755,8 +758,7 @@ export class EndreBestilling extends Component {
           <div>
             <h3>Utleveringssted:</h3>
             <select
-              class="form-control"
-              id="utleveringsstedInput"
+              class="genereltInputer form-control form-control-lg"
               onChange={e => (this.utleveringssted = event.target.value)}
               required
             >
@@ -771,8 +773,7 @@ export class EndreBestilling extends Component {
             </select>
             <h3>Innleveringssted:</h3>
             <select
-              class="form-control"
-              id="utleveringsstedInput"
+              class="genereltInputer form-control form-control-lg"
               onChange={e => (this.innleveringssted = event.target.value)}
               required
             >
@@ -789,20 +790,18 @@ export class EndreBestilling extends Component {
           <div class="form-inline">
             <h3>Utleveringstid:</h3>
             <input
-              id="utleveringsdato"
               type="date"
-              class="form-control"
+              class="genereltInputer form-control form-control-lg"
               min={this.dateNow}
               value={this.bestillinger.utlevering_dato}
               onChange={e => (this.bestillinger.utlevering_dato = event.target.value)}
               required
             />
             <input
-              id="utleveringstid"
               type="time"
               min="08:00"
               max="19:00"
-              class="form-control"
+              class="genereltInputer form-control form-control-lg"
               value={this.bestillinger.utlevering_tid}
               onChange={e => (this.bestillinger.utlevering_tid = event.target.value)}
               required
@@ -812,7 +811,7 @@ export class EndreBestilling extends Component {
             <h3>Innleveringstid</h3>
             <input
               type="date"
-              class="form-control"
+              class="genereltInputer form-control form-control-lg"
               min={this.utlevering_dato}
               value={this.bestillinger.innlevering_dato}
               onChange={e => (this.bestillinger.innlevering_dato = event.target.value)}
@@ -822,7 +821,7 @@ export class EndreBestilling extends Component {
               type="time"
               min={this.utlevering_tid}
               max="19:00"
-              class="form-control"
+              class="genereltInputer form-control form-control-lg"
               value={this.bestillinger.innlevering_tid}
               onChange={e => (this.bestillinger.innlevering_tid = event.target.value)}
               required
@@ -832,9 +831,8 @@ export class EndreBestilling extends Component {
             <h3>Epost:</h3>
             <input
               type="text"
-              id="kunde_epostInput"
               value={this.bestillinger.kunde_epost}
-              class="form-control"
+              class="genereltInputer form-control form-control-lg"
               onChange={e => (this.bestillinger.kunde_epost = e.target.value)}
             />
           </div>
@@ -854,14 +852,18 @@ export class EndreBestilling extends Component {
             <table align="center" id="customers">
               <tbody>{this.tabell1}</tbody>
             </table>
-            <button onClick={this.syklerPush}>Legg til / fjern sykler fra bestillingen</button>
+            <button class="btn" onClick={this.syklerPush}>
+              Legg til / fjern sykler fra bestillingen
+            </button>
           </div>
           <div id="utstyrIbestilling">
             <h4>Oversikt over utstyr i bestillingen:</h4>
             <table align="center" id="customers">
               <tbody>{this.tabell2}</tbody>
             </table>
-            <button onClick={this.utstyrPush}>Legg til / fjern utstyr fra bestillingen</button>
+            <button class="btn" onClick={this.utstyrPush}>
+              Legg til / fjern utstyr fra bestillingen
+            </button>
           </div>
         </div>
         <br />
@@ -917,7 +919,7 @@ export class EndreBestilling extends Component {
     }
   }
 
-  tilbake() {
+  return() {
     history.push('/aktiveBestillinger/' + this.props.match.params.ansattId);
   }
 
@@ -1035,13 +1037,10 @@ export class EndreSykler extends Component {
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <button type="save" class="btn" onClick={this.tilbake}>
-          Tilbake
-        </button>
         <div id="syklerDiv">
           <h1>Velg hvor mange sykler kunden vil ha:</h1>
           <div id="ghostHybridHerreDiv" class="sykkelDiver">
@@ -1194,7 +1193,7 @@ export class EndreSykler extends Component {
     this.hentAntall();
   }
 
-  tilbake() {
+  return() {
     history.push('/endreBestilling/' + this.props.match.params.ansattId + '/' + +this.props.match.params.bestillingId);
   }
 
@@ -1544,13 +1543,10 @@ export class EndreUtstyr extends Component {
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
           <h1>Book & Bike</h1>
-          <button type="button" id="loggUtKnapp" onClick={this.loggUtPush}>
-            Logg ut
+          <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
+            Tilbake
           </button>
         </div>
-        <button type="save" class="btn" onClick={this.tilbake}>
-          Tilbake
-        </button>
         <div id="utstyrDiv">
           <h1>Velg Utstyr</h1>
           <div id="barneseteDiv" class="utstyrDiver">
@@ -1664,7 +1660,7 @@ export class EndreUtstyr extends Component {
     this.hentAntall();
   }
 
-  tilbake() {
+  return() {
     history.push('/endreBestilling/' + this.props.match.params.ansattId + '/' + +this.props.match.params.bestillingId);
   }
 

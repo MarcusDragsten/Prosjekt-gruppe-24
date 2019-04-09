@@ -470,6 +470,7 @@ img {
   max-width: 30%;
   margin: auto;
   text-align: center;
+  text-align-last: center;
 }
 
 #nyKundeTekst {
