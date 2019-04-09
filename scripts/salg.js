@@ -201,7 +201,7 @@ export class AktiveBestillinger extends Component {
     });
   }
 
-  tilbake() {
+  return() {
     history.push('/salgStartside/' + this.props.match.params.ansattId);
   }
 
@@ -1960,7 +1960,8 @@ export class NyKunde extends Component {
     history.push('/bestilling/' + this.props.match.params.ansattId);
   }
 
-  leggTilKunde() {
+  leggTilKunde(e) {
+    e.preventDefault();
     bestillingService.leggTilKunde(this.epost, this.fornavn, this.etternavn, this.telefon, id => {
       history.push('/bestilling/' + this.props.match.params.ansattId);
     });
