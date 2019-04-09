@@ -1305,12 +1305,11 @@ export class RapportSekretær extends Component {
             <p>En rapport som viser inntekter for alle innleverte bestillinger</p>
           </i>
           <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-            Filtrer bestillingene?
+            Filtrer rapporten?
           </button>
           <div id="filtrerRapportTotalDiv">
             <form onSubmit={this.sok}>
               <div class="form-inline">
-                <h3>Filtrer rapporten:</h3>
                 <h4>Velg ut- og innleveringtidspunkt</h4>
                 <input
                   id="utlevering_dato"
@@ -1359,12 +1358,11 @@ export class RapportSekretær extends Component {
             <p>En rapport som viser inntekter for alle innleverte bestillinger per selger</p>
           </i>
           <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer2}>
-            Filtrer bestillingene?
+            Filtrer rapporten?
           </button>
           <div id="filtrerRapportAnsatteDiv">
             <form onSubmit={this.sok2}>
               <div class="form-inline">
-                <h3>Filtrer rapporten:</h3>
                 <h4>Velg ut- og innleveringtidspunkt</h4>
                 <input
                   id="utlevering_dato2"

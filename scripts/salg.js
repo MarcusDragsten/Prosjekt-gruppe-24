@@ -104,7 +104,6 @@ export class AktiveBestillinger extends Component {
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
-              <h3>Filtrer bestillingene:</h3>
               <h4>Velg start- og sluttdato</h4>
               <input
                 id="utlevering_dato"
@@ -338,13 +337,12 @@ export class BestillingHistorikk extends Component {
         </div>
         <h2>Tabell over alle innleverte bestillinger</h2>
         <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
-          Filtrer bestillingene?
+          Filtrer tabellen?
         </button>
         <br />
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
-              <h3>Filtrer bestillingene:</h3>
               <h4>Velg start- og sluttidspunkt</h4>
               <input
                 id="utlevering_dato"
