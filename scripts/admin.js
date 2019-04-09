@@ -117,7 +117,6 @@ export class AnsatteAdmin extends Component {
   mounted() {
     ansatteService.getAnsatte(ansatte => {
       this.ansatte = ansatte;
-      console.log(this.ansatte);
     });
   }
 
@@ -160,7 +159,6 @@ export class AnsatteDetails extends Component {
   mounted() {
     ansatteService.getAnsatt(this.props.match.params.ansatteListe, ansatte => {
       this.ansatte = ansatte;
-      console.log(this.ansatte);
     });
   }
 
@@ -427,7 +425,6 @@ export class AnsatteEdit extends Component {
   mounted() {
     ansatteService.getAnsatt(this.props.match.params.edit, ansatte => {
       this.ansatte = ansatte;
-      console.log(this.ansatte);
     });
 
     bestillingService.hentUtleveringsted(utleveringssteder => {
@@ -485,7 +482,6 @@ export class Lokasjoner extends Component {
   mounted() {
     ansatteService.hentLokasjoner(lokasjoner => {
       this.lokasjoner = lokasjoner;
-      console.log(this.lokasjoner);
     });
   }
 
@@ -874,7 +870,6 @@ export class Rapport extends Component {
 
     ansatteService.getSelgere(selgere => {
       this.selgere = selgere;
-      console.log(this.selgere);
     });
   }
 
@@ -1151,7 +1146,6 @@ export class AnsatteSekretær extends Component {
   mounted() {
     ansatteService.getAnsatte(ansatte => {
       this.ansatte = ansatte;
-      console.log(this.ansatte);
     });
   }
 
@@ -1227,7 +1221,6 @@ export class LokasjonerSekretær extends Component {
   mounted() {
     ansatteService.hentLokasjoner(lokasjoner => {
       this.lokasjoner = lokasjoner;
-      console.log(this.lokasjoner);
     });
   }
 
@@ -1437,7 +1430,6 @@ export class RapportSekretær extends Component {
 
     ansatteService.getSelgere(selgere => {
       this.selgere = selgere;
-      console.log(this.selgere);
     });
   }
 
