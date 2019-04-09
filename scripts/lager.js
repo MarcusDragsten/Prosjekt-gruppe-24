@@ -265,7 +265,8 @@ export class LagerStartsideLeggTil extends Component {
   }
 }
 export class SykkelBestilling extends Component {
-  //Viser oversikt over hvilke sykler som skal
+  //Viser oversikt over hvilke sykler som skal ut i en bestilling. Sortert slik at de øverste syklene i tabellen skal ut først.
+
   syklerIBestilling = [];
   tabell = [];
 
@@ -288,6 +289,7 @@ export class SykkelBestilling extends Component {
   }
 
   mounted() {
+    //Kjører en spørring opp mot databasen som henter sykler som har status som "Utleid" og en utleveringsdato som enda ikke har vært.
     lagerService.hentSykkelBestilling(syklerIBestilling => {
       this.syklerIBestilling = syklerIBestilling;
       this.createTable();
@@ -334,6 +336,7 @@ export class SykkelBestilling extends Component {
 }
 
 export class HenteSykkel extends Component {
+  //Viser en oversikt over hvilke sykler som må hentes/transporteres fra bestillingens innleveringssted til lageret der sykkelen tilhører.
   sykkel = [];
   tabell6 = [];
 
@@ -356,6 +359,7 @@ export class HenteSykkel extends Component {
   }
 
   mounted() {
+    //Kjører en spørring opp mot databasen som henter sykler som er i en bestilling og har innleveringssted en ikke matcher sykkelens tilhørighet.
     lagerService.henteSykkel(sykkel => {
       this.sykkel = sykkel;
       this.createTable6();
@@ -401,8 +405,10 @@ export class HenteSykkel extends Component {
 }
 
 export class LedigSykkel extends Component {
+  //Viser en oversikt over ledige sykler på lager
+
   sykkelPåLager = [];
-  tabell1 = [];
+  tabell = [];
   tilhørighet = [];
 
   type = '%';
@@ -476,13 +482,14 @@ export class LedigSykkel extends Component {
         </div>
         <br />
         <table id="customers" align="center">
-          <tbody>{this.tabell1}</tbody>
+          <tbody>{this.tabell}</tbody>
         </table>
       </div>
     );
   }
 
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('timepris');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
@@ -494,7 +501,7 @@ export class LedigSykkel extends Component {
     });
     lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
-      this.createTable1();
+      this.createtable();
     });
   }
   toggleFiltrer() {
@@ -506,13 +513,13 @@ export class LedigSykkel extends Component {
     }
   }
 
-  createTable1() {
+  createtable() {
     if (this.sykkelPåLager == 0) {
       alert('Ingen sykler matchet søket!');
     } else {
-      this.tabell1 = '';
-      this.tabell1 = [];
-      this.tabell1.push(
+      this.tabell = '';
+      this.tabell = [];
+      this.tabell.push(
         <tr>
           <th>Id</th>
           <th>Modell</th>
@@ -528,7 +535,7 @@ export class LedigSykkel extends Component {
       );
 
       for (let i = 0; i < this.sykkelPåLager.length; i++) {
-        this.tabell1.push(
+        this.tabell.push(
           <tr>
             <td>{this.sykkelPåLager[i].id}</td>
             <td>{this.sykkelPåLager[i].modellnavn}</td>
@@ -563,7 +570,7 @@ export class LedigSykkel extends Component {
 
     lagerService.sok(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sok => {
       this.sykkelPåLager = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 
@@ -586,14 +593,16 @@ export class LedigSykkel extends Component {
 
     lagerService.sok(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sok => {
       this.sykkelPåLager = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 }
 
 export class UtleidSykkel extends Component {
+  //Viser en oversikt over utleide sykler
+
   sykkelUtleid = [];
-  tabell1 = [];
+  tabell = [];
   tilhørighet = [];
 
   type = '%';
@@ -656,10 +665,10 @@ export class UtleidSykkel extends Component {
                 ))}
               </select>
               <br />
-              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              <button type="submit" class="btn">
                 Søk
               </button>
-              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+              <button type="button" class="btn" onClick={this.nullstill}>
                 Nullstill
               </button>
             </div>
@@ -667,13 +676,14 @@ export class UtleidSykkel extends Component {
         </div>
         <br />
         <table id="customers" align="center">
-          <tbody>{this.tabell1}</tbody>
+          <tbody>{this.tabell}</tbody>
         </table>
       </div>
     );
   }
 
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('timepris');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
@@ -683,9 +693,10 @@ export class UtleidSykkel extends Component {
     lagerService.hentUtleideSykler(sykkelUtleid => {
       this.sykkelUtleid = sykkelUtleid;
     });
+    //Henter lokasjoner som er lager
     lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
-      this.createTable1();
+      this.createtable();
     });
   }
   toggleFiltrer() {
@@ -697,13 +708,13 @@ export class UtleidSykkel extends Component {
     }
   }
 
-  createTable1() {
+  createtable() {
     if (this.sykkelUtleid == 0) {
       alert('Ingen sykler matchet søket!');
     } else {
-      this.tabell1 = '';
-      this.tabell1 = [];
-      this.tabell1.push(
+      this.tabell = '';
+      this.tabell = [];
+      this.tabell.push(
         <tr>
           <th>Id</th>
           <th>Modell</th>
@@ -714,12 +725,11 @@ export class UtleidSykkel extends Component {
           <th>Bremse</th>
           <th>Tilhørighet</th>
           <th>Timepris</th>
-          <th>Endre informasjon</th>
         </tr>
       );
 
       for (let i = 0; i < this.sykkelUtleid.length; i++) {
-        this.tabell1.push(
+        this.tabell.push(
           <tr>
             <td>{this.sykkelUtleid[i].id}</td>
             <td>{this.sykkelUtleid[i].modellnavn}</td>
@@ -730,12 +740,6 @@ export class UtleidSykkel extends Component {
             <td>{this.sykkelUtleid[i].bremse}</td>
             <td>{this.sykkelUtleid[i].område}</td>
             <td>{this.sykkelUtleid[i].timepris}</td>
-            <td>
-              <NavLink to={'/redigerSykkel/' + this.props.match.params.ansattId + this.sykkelUtleid[i].id + '/edit'}>
-                {' '}
-                Endre{' '}
-              </NavLink>
-            </td>
           </tr>
         );
       }
@@ -753,7 +757,7 @@ export class UtleidSykkel extends Component {
 
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
-      this.createTable1();
+      this.createtable();
     });
   }
 
@@ -776,11 +780,13 @@ export class UtleidSykkel extends Component {
 
     lagerService.sokUtleid(this.type, this.lokasjon_id, this.modellnavn, this.timepris, sokUtleid => {
       this.sykkelUtleid = sokUtleid;
-      this.createTable1();
+      this.createtable();
     });
   }
 }
 export class UtilgjengeligeSykler extends Component {
+  //Siden består av to knapper som begge får frem en tabell når de blir trykket på. Den ene tabellen viser sykler som trenger reparasjoner, mens den andre viser sykler som har vært ut i en bestilling men ikke har blitt levert tilbake i tide. Disse syklene er enten savnet eller stjålet.
+
   utilgjengelig = [];
   reparasjon = [];
   gjørutilgjengelig = [];
@@ -830,17 +836,21 @@ export class UtilgjengeligeSykler extends Component {
   }
 
   mounted() {
+    //Kjører en spørring som gjør om sykkelens status til "Utilgjengelig" når fristen for å levere inn sykkelen er forbi
     lagerService.gjørUtilgjengelig(gjørutilgjengelig => {
       this.gjørutilgjengelig = gjørutilgjengelig;
     });
+    //Henter sykler som har en status som tilsier at de trenger reparasjoner
     lagerService.hentReparasjoner(reparasjon => {
       this.reparasjon = reparasjon;
     });
+    //Henter sykler som har status "Utilgjengelig"
     lagerService.hentUtilgjengelig(utilgjengelig => {
       this.utilgjengelig = utilgjengelig;
     });
   }
   createTableRep() {
+    //Tabell over sykler som trenger reparasjoner
     if (this.reparasjon == 0) {
       alert('Det er ingen sykler i denne tabellen');
     } else {
@@ -875,6 +885,7 @@ export class UtilgjengeligeSykler extends Component {
     }
   }
   createTableIkkeLevert() {
+    //Tabell over sykler som ikke har blitt levert tilbake i tide
     if (this.utilgjengelig == 0) {
       alert('Det er ingen sykler i denne tabellen');
     } else {
@@ -920,46 +931,9 @@ export class UtilgjengeligeSykler extends Component {
     history.push('/lagerStartsideSykkel/' + this.props.match.params.ansattId);
   }
 }
-export class EndreReparasjoner extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
-      lagerService.ferdigReparasjoner(this.props.match.params.id, ferdigReparasjoner => {
-        history.push('/utilgjengeligSykler/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
-export class TilbakePåLager extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
-      lagerService.tilbakeUtilgjengelige(this.props.match.params.id, tilbakeUtilgjengelige => {
-        history.push('/utilgjengeligSykler/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
-export class SlettFraLager extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjon(this.props.match.params.id, hentReparasjon => {
-      lagerService.slettUtilgjengelige(this.props.match.params.id, slettUtilgjengelige => {
-        history.push('/utilgjengeligSykler/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
 export class UtstyrBestilling extends Component {
+  //Viser en oversikt over utstyr som skal ut i en bestilling.
+
   utstyrIBestilling = [];
   tabell = [];
 
@@ -982,6 +956,7 @@ export class UtstyrBestilling extends Component {
   }
 
   mounted() {
+    //Kjører en spørring opp mot databasen som henter utstyr som har status som "Utleid" og en utleveringsdato som enda ikke har vært.
     lagerService.hentSykkelBestillingUtstyr(utstyrIBestilling => {
       this.utstyrIBestilling = utstyrIBestilling;
       this.createTable();
@@ -1028,6 +1003,8 @@ export class UtstyrBestilling extends Component {
 }
 
 export class HenteUtstyr extends Component {
+  //Viser en oversikt over utstyr som er ute i en bestilling og har innleveringssted et annet sted enn utstyrets tilhørighet
+
   utstyr = [];
   tabell6 = [];
 
@@ -1050,6 +1027,7 @@ export class HenteUtstyr extends Component {
   }
 
   mounted() {
+    //Kjører en spørring opp mot databasen som henter utstyr som er i en bestilling og har innleveringssted en ikke matcher utstyrets tilhørighet
     lagerService.henteUtstyr(utstyr => {
       this.utstyr = utstyr;
       this.createTable6();
@@ -1095,8 +1073,10 @@ export class HenteUtstyr extends Component {
 }
 
 export class LedigUtstyr extends Component {
+  //Viser en oversikt over ledig utstyr på lager
+
   utstyrPåLager = [];
-  tabell1 = [];
+  tabell = [];
   tilhørighet = [];
 
   type = '%';
@@ -1156,10 +1136,10 @@ export class LedigUtstyr extends Component {
                 onChange={e => (this.pris = event.target.value)}
               />
               <br />
-              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              <button type="submit" class="btn">
                 Søk
               </button>
-              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+              <button type="button" class="btn" onClick={this.nullstill}>
                 Nullstill
               </button>
             </div>
@@ -1167,13 +1147,14 @@ export class LedigUtstyr extends Component {
         </div>
         <br />
         <table id="customers" align="center">
-          <tbody>{this.tabell1}</tbody>
+          <tbody>{this.tabell}</tbody>
         </table>
       </div>
     );
   }
 
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('pris');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
@@ -1183,9 +1164,10 @@ export class LedigUtstyr extends Component {
     lagerService.hentUtstyrPåLager(utstyrPåLager => {
       this.utstyrPåLager = utstyrPåLager;
     });
+    //Henter lokasjoner som er lager
     lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
-      this.createTable1();
+      this.createtable();
     });
   }
   toggleFiltrer() {
@@ -1197,13 +1179,13 @@ export class LedigUtstyr extends Component {
     }
   }
 
-  createTable1() {
+  createtable() {
     if (this.utstyrPåLager == 0) {
       alert('Ingen utstyr matchet søket!');
     } else {
-      this.tabell1 = '';
-      this.tabell1 = [];
-      this.tabell1.push(
+      this.tabell = '';
+      this.tabell = [];
+      this.tabell.push(
         <tr>
           <th>Id</th>
           <th>Type</th>
@@ -1215,7 +1197,7 @@ export class LedigUtstyr extends Component {
       );
 
       for (let i = 0; i < this.utstyrPåLager.length; i++) {
-        this.tabell1.push(
+        this.tabell.push(
           <tr>
             <td>{this.utstyrPåLager[i].id}</td>
             <td>{this.utstyrPåLager[i].type}</td>
@@ -1244,7 +1226,7 @@ export class LedigUtstyr extends Component {
 
     lagerService.sokUtstyr(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrPåLager = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 
@@ -1264,14 +1246,16 @@ export class LedigUtstyr extends Component {
 
     lagerService.sokUtstyr(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrPåLager = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 }
 
 export class UtleidUtstyr extends Component {
+  //Viser en oversikt over utleid utstyr
+
   utstyrUtleid = [];
-  tabell1 = [];
+  tabell = [];
   tilhørighet = [];
 
   type = '%';
@@ -1331,10 +1315,10 @@ export class UtleidUtstyr extends Component {
                 onChange={e => (this.pris = event.target.value)}
               />
               <br />
-              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              <button type="submit" class="btn">
                 Søk
               </button>
-              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+              <button type="button" class="btn" onClick={this.nullstill}>
                 Nullstill
               </button>
             </div>
@@ -1342,13 +1326,14 @@ export class UtleidUtstyr extends Component {
         </div>
         <br />
         <table id="customers" align="center">
-          <tbody>{this.tabell1}</tbody>
+          <tbody>{this.tabell}</tbody>
         </table>
       </div>
     );
   }
 
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('pris');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
@@ -1358,9 +1343,10 @@ export class UtleidUtstyr extends Component {
     lagerService.hentUtleideUtstyr(utstyrUtleid => {
       this.utstyrUtleid = utstyrUtleid;
     });
+    //Henter lokasjoner som er lager
     lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
-      this.createTable1();
+      this.createtable();
     });
   }
 
@@ -1373,37 +1359,30 @@ export class UtleidUtstyr extends Component {
     }
   }
 
-  createTable1() {
+  createtable() {
     if (this.utstyrUtleid == 0) {
       alert('Ingen utstyr matchet søket!');
     } else {
-      this.tabell1 = '';
-      this.tabell1 = [];
-      this.tabell1.push(
+      this.tabell = '';
+      this.tabell = [];
+      this.tabell.push(
         <tr>
           <th>Id</th>
           <th>Type</th>
           <th>Beskrivelse</th>
           <th>Tilhørighet</th>
           <th>Timepris</th>
-          <th>Endre informasjon</th>
         </tr>
       );
 
       for (let i = 0; i < this.utstyrUtleid.length; i++) {
-        this.tabell1.push(
+        this.tabell.push(
           <tr>
             <td>{this.utstyrUtleid[i].id}</td>
             <td>{this.utstyrUtleid[i].type}</td>
             <td>{this.utstyrUtleid[i].beskrivelse}</td>
             <td>{this.utstyrUtleid[i].område}</td>
             <td>{this.utstyrUtleid[i].pris}</td>
-            <td>
-              <NavLink to={'/redigerUtstyr/' + this.props.match.params.ansattId + this.utstyrUtleid[i].id + '/edit'}>
-                {' '}
-                Endre{' '}
-              </NavLink>
-            </td>
           </tr>
         );
       }
@@ -1420,7 +1399,7 @@ export class UtleidUtstyr extends Component {
 
     lagerService.sokUtstyrUtleid(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrUtleid = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 
@@ -1440,11 +1419,13 @@ export class UtleidUtstyr extends Component {
 
     lagerService.sokUtstyrUtleid(this.type, this.lokasjon_id, this.pris, sok => {
       this.utstyrUtleid = sok;
-      this.createTable1();
+      this.createtable();
     });
   }
 }
 export class UtilgjengeligeUtstyr extends Component {
+  //Siden består av to knapper som begge får frem en tabell når de blir trykket på. Den ene tabellen viser utstyr som trenger reparasjoner, mens den andre viser utstyr som har vært ut i en bestilling men ikke har blitt levert tilbake i tide. Disse utstyrene er enten savnet eller stjålet.
+
   utilgjengelig = [];
   reparasjon = [];
   gjørUtilgjengeligUtstyr = [];
@@ -1490,17 +1471,21 @@ export class UtilgjengeligeUtstyr extends Component {
   }
 
   mounted() {
+    //Kjører en spørring som gjør om utstyrets status til "Utilgjengelig" når fristen for å levere inn utstyret er forbi
     lagerService.gjørUtilgjengeligUtstyr(gjørUtilgjengeligUtstyr => {
       this.gjørUtilgjengeligUtstyr = gjørUtilgjengeligUtstyr;
     });
+    //Henter utstyr som har en status som tilsier at de trenger reparasjoner
     lagerService.hentReparasjonerUtstyr(reparasjon => {
       this.reparasjon = reparasjon;
     });
+    //Henter utstyr som har status "Utilgjengelig"
     lagerService.hentUtilgjengeligUtstyr(utilgjengelig => {
       this.utilgjengelig = utilgjengelig;
     });
   }
   createTableRep() {
+    //Tabell over utstyr som trenger reparasjoner
     if (this.reparasjon == 0) {
       alert('Det er ingen utstyr i denne tabellen');
     } else {
@@ -1533,6 +1518,7 @@ export class UtilgjengeligeUtstyr extends Component {
     }
   }
   createTableIkkeLevert() {
+    //Tabell over utstyr som ikke har blitt levert tilbake i tide
     if (this.utilgjengelig == 0) {
       alert('Det er ingen utstyr i denne tabellen');
     } else {
@@ -1578,47 +1564,9 @@ export class UtilgjengeligeUtstyr extends Component {
     history.push('/lagerStartsideUtstyr/' + this.props.match.params.ansattId);
   }
 }
-export class EndreReparasjonerUtstyr extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjonUtstyr(this.props.match.params.id, hentReparasjonUtstyr => {
-      lagerService.ferdigReparasjonerUtstyr(this.props.match.params.id, ferdigReparasjonerUtstyr => {
-        history.push('/utilgjengeligUtstyr/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
-export class TilbakePåLagerUtstyr extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjonUtstyr(this.props.match.params.id, hentReparasjonUtstyr => {
-      lagerService.tilbakeUtilgjengeligeUtstyr(this.props.match.params.id, tilbakeUtilgjengeligeUtstyr => {
-        history.push('/utilgjengeligUtstyr/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
-export class SlettFraLagerUtstyr extends Component {
-  render() {
-    return <div />;
-  }
-
-  mounted() {
-    lagerService.hentReparasjonUtstyr(this.props.match.params.id, hentReparasjonUtstyr => {
-      lagerService.slettUtilgjengeligeUtstyr(this.props.match.params.id, slettUtilgjengeligeUtstyr => {
-        history.push('/utilgjengeligUtstyr/' + this.props.match.params.ansattId);
-      });
-    });
-  }
-}
 
 export class LeggTilSykkel extends Component {
+  //Side der man legger inn sykler
   tilhørighet = [];
 
   status = 'Ledig';
@@ -1750,13 +1698,15 @@ export class LeggTilSykkel extends Component {
     );
   }
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('number');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
         return false;
       }
     };
-    bestillingService.hentUtleveringsted(tilhørighet => {
+    //Henter lokasjoner som er lager
+    lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
     });
   }
@@ -1785,6 +1735,7 @@ export class LeggTilSykkel extends Component {
 }
 
 export class LeggTilUtstyr extends Component {
+  //Side der man legger til utstyr
   tilhørighet = [];
 
   type = '';
@@ -1869,13 +1820,15 @@ export class LeggTilUtstyr extends Component {
     );
   }
   mounted() {
+    //Gjør det umulig for bruker å søke etter negative verdier
     var number = document.getElementById('number');
     number.onkeydown = function(e) {
       if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8)) {
         return false;
       }
     };
-    bestillingService.hentUtleveringsted(tilhørighet => {
+    //Henter lokasjoner som er lager
+    lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
     });
   }
@@ -1892,6 +1845,7 @@ export class LeggTilUtstyr extends Component {
   }
 }
 export class EndreSykkel extends Component {
+  //Side der man endre informasjonen til syklene. Bytter også status
   sykler = null;
   tilhørighet = [];
 
@@ -1920,7 +1874,6 @@ export class EndreSykkel extends Component {
               required
             >
               <option value="Ledig">Ledig</option>
-              <option value="Utleid">Utleid</option>
               <option value="Reparasjon">Til reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
@@ -1962,7 +1915,7 @@ export class EndreSykkel extends Component {
     lagerService.getSykkel(this.props.match.params.id, sykler => {
       this.sykler = sykler;
     });
-    bestillingService.hentUtleveringsted(tilhørighet => {
+    lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
     });
   }
@@ -1992,6 +1945,7 @@ export class EndreSykkel extends Component {
   }
 }
 export class EndreUtstyrLager extends Component {
+  //Side der man endre informasjonen til utstyr. Bytter også status
   utstyr = null;
   tilhørighet = [];
 
@@ -2020,7 +1974,6 @@ export class EndreUtstyrLager extends Component {
               required
             >
               <option value="Ledig">Ledig</option>
-              <option value="Utleid">Utleid</option>
               <option value="Reparasjon">Til reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
@@ -2062,7 +2015,7 @@ export class EndreUtstyrLager extends Component {
     lagerService.getUtstyr(this.props.match.params.id, utstyr => {
       this.utstyr = utstyr;
     });
-    bestillingService.hentUtleveringsted(tilhørighet => {
+    lagerService.hentLokasjon(tilhørighet => {
       this.tilhørighet = tilhørighet;
     });
   }
