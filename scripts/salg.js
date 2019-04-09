@@ -679,12 +679,20 @@ export class Innlevering extends Component {
 
   endreStatusSykkel(id, status) {
     console.log(id, status);
-    bestillingService.endreStatusSykkelInnlevering(status, id, endreStatus => {});
+    if (status == 'Utilgjengelig') {
+      bestillingService.endreStatusSykkelInnleveringUtilgjengelig(status, id, endreStatus => {});
+    } else {
+      bestillingService.endreStatusSykkelInnlevering(status, id, endreStatus => {});
+    }
   }
 
   endreStatusUtstyr(id, status) {
     console.log(id, status);
-    bestillingService.endreStatusUtstyrInnlevering(status, id, endreStatus => {});
+    if (status == 'Utilgjengelig') {
+      bestillingService.endreStatusUtstyrInnleveringUtilgjengelig(status, id, endreStatus => {});
+    } else {
+      bestillingService.endreStatusUtstyrInnlevering(status, id, endreStatus => {});
+    }
   }
 
   gåVidere(e) {

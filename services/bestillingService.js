@@ -293,8 +293,24 @@ class BestillingService extends Component {
     });
   }
 
+  endreStatusSykkelInnleveringUtilgjengelig(status, id, success) {
+    connection.query('update Sykkel set status=? where id=?', [status, id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
   endreStatusUtstyrInnlevering(status, id, success) {
     connection.query('update Utstyr set status=? , bestilling_id = NULL where id=?', [status, id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  endreStatusUtstyrInnleveringUtilgjengelig(status, id, success) {
+    connection.query('update Sykkel set status=? where id=?', [status, id], (error, results) => {
       if (error) return console.error(error);
 
       success(results);
