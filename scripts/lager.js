@@ -11,7 +11,9 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class LagerStartside extends Component {
+  //Startside for bedriftens lageransatte
   ansatt = [];
+
   render() {
     return (
       <div id="yttersteDiv">
@@ -61,6 +63,8 @@ export class LagerStartside extends Component {
   }
 }
 export class LagerStartsideSykkel extends Component {
+  //Her finner lagermedarbeiderne full oversikt over bedriftens sykler
+
   render() {
     return (
       <div id="yttersteDiv">
@@ -138,6 +142,8 @@ export class LagerStartsideSykkel extends Component {
   }
 }
 export class LagerStartsideUtstyr extends Component {
+  //Her finner lagermedarbeiderne full oversikt over bedriftens utstyr
+
   render() {
     return (
       <div id="yttersteDiv">
@@ -214,6 +220,8 @@ export class LagerStartsideUtstyr extends Component {
   }
 }
 export class LagerStartsideLeggTil extends Component {
+  //Her har lagermedarbeiderne mulighet til å legge til nye sykler og utstyr
+
   render() {
     return (
       <div id="yttersteDiv">
@@ -257,6 +265,7 @@ export class LagerStartsideLeggTil extends Component {
   }
 }
 export class SykkelBestilling extends Component {
+  //Viser oversikt over hvilke sykler som skal
   syklerIBestilling = [];
   tabell = [];
 
@@ -455,10 +464,11 @@ export class LedigSykkel extends Component {
                   </option>
                 ))}
               </select>
-              <button type="submit" class="btn btn-sucess btn-lg btn-block">
+              <br />
+              <button type="submit" class="btn">
                 Søk
               </button>
-              <button type="button" class="btn btn-sucess btn-lg btn-block" onClick={this.nullstill}>
+              <button type="button" class="btn" onClick={this.nullstill}>
                 Nullstill
               </button>
             </div>
@@ -645,6 +655,7 @@ export class UtleidSykkel extends Component {
                   </option>
                 ))}
               </select>
+              <br />
               <button type="submit" class="btn btn-sucess btn-lg btn-block">
                 Søk
               </button>
@@ -841,7 +852,7 @@ export class UtilgjengeligeSykler extends Component {
           <th>Modellnavn</th>
           <th>Sykkeltype</th>
           <th>Tilhørighet</th>
-          <th>Ferdig Reparert</th>
+          <th>Endre informasjon</th>
         </tr>
       );
 
@@ -853,9 +864,9 @@ export class UtilgjengeligeSykler extends Component {
             <td>{this.reparasjon[i].type}</td>
             <td>{this.reparasjon[i].område}</td>
             <td>
-              <NavLink to={'/reparasjoner/' + this.props.match.params.ansattId + this.reparasjon[i].id + '/edit'}>
+              <NavLink to={'/redigerSykkel/' + this.props.match.params.ansattId + this.reparasjon[i].id + '/edit'}>
                 {' '}
-                X{' '}
+                Endre{' '}
               </NavLink>
             </td>
           </tr>
@@ -879,8 +890,7 @@ export class UtilgjengeligeSykler extends Component {
           <th>Innleveringsdato</th>
           <th>Kundens epost</th>
           <th>Kundens telefon</th>
-          <th>Tilbake på lager</th>
-          <th>Slett fra lager</th>
+          <th>Endre informasjon</th>
         </tr>
       );
 
@@ -896,19 +906,9 @@ export class UtilgjengeligeSykler extends Component {
             <td>{this.utilgjengelig[i].epost}</td>
             <td>{this.utilgjengelig[i].telefon}</td>
             <td>
-              <NavLink
-                to={'/utilgjengeligSykler/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/tilbake'}
-              >
+              <NavLink to={'/redigerSykkel/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/edit'}>
                 {' '}
-                X{' '}
-              </NavLink>
-            </td>
-            <td>
-              <NavLink
-                to={'/utilgjengeligSykler/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/slett'}
-              >
-                {' '}
-                X{' '}
+                Endre{' '}
               </NavLink>
             </td>
           </tr>
@@ -1155,6 +1155,7 @@ export class LedigUtstyr extends Component {
                 placeholder="Timepris"
                 onChange={e => (this.pris = event.target.value)}
               />
+              <br />
               <button type="submit" class="btn btn-sucess btn-lg btn-block">
                 Søk
               </button>
@@ -1329,6 +1330,7 @@ export class UtleidUtstyr extends Component {
                 placeholder="Timepris"
                 onChange={e => (this.pris = event.target.value)}
               />
+              <br />
               <button type="submit" class="btn btn-sucess btn-lg btn-block">
                 Søk
               </button>
@@ -1509,7 +1511,7 @@ export class UtilgjengeligeUtstyr extends Component {
           <th>Utstyr ID</th>
           <th>Utstyrstype</th>
           <th>Tilhørighet</th>
-          <th>Ferdig Reparert</th>
+          <th>Endre informasjon</th>
         </tr>
       );
 
@@ -1520,9 +1522,9 @@ export class UtilgjengeligeUtstyr extends Component {
             <td>{this.reparasjon[i].type}</td>
             <td>{this.reparasjon[i].område}</td>
             <td>
-              <NavLink to={'/reparasjonerUtstyr/' + this.props.match.params.ansattId + this.reparasjon[i].id + '/edit'}>
+              <NavLink to={'/redigerUtstyr/' + this.props.match.params.ansattId + this.reparasjon[i].id + '/edit'}>
                 {' '}
-                X{' '}
+                Endre{' '}
               </NavLink>
             </td>
           </tr>
@@ -1546,8 +1548,7 @@ export class UtilgjengeligeUtstyr extends Component {
           <th>Innleveringsdato</th>
           <th>Kundens epost</th>
           <th>Kundens telefon</th>
-          <th>Tilbake på lager</th>
-          <th>Slett fra lager</th>
+          <th>Endre informasjon</th>
         </tr>
       );
 
@@ -1563,19 +1564,9 @@ export class UtilgjengeligeUtstyr extends Component {
             <td>{this.utilgjengelig[i].epost}</td>
             <td>{this.utilgjengelig[i].telefon}</td>
             <td>
-              <NavLink
-                to={'/utilgjengeligUtstyr/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/tilbake'}
-              >
+              <NavLink to={'/redigerUtstyr/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/edit'}>
                 {' '}
-                X{' '}
-              </NavLink>
-            </td>
-            <td>
-              <NavLink
-                to={'/utilgjengeligUtstyr/' + this.props.match.params.ansattId + this.utilgjengelig[i].id + '/slett'}
-              >
-                {' '}
-                X{' '}
+                Endre{' '}
               </NavLink>
             </td>
           </tr>
@@ -1992,9 +1983,12 @@ export class EndreSykkel extends Component {
     history.push('/lagerStartsideSykkel/' + this.props.match.params.ansattId);
   }
   delete() {
-    lagerService.deleteSykkel(this.props.match.params.id, () =>
-      history.push('/lagerStartsideSykkel/' + this.props.match.params.ansattId)
-    );
+    var r = confirm('Er du sikker på at du ønsker å fjerne denne sykkelen fra lageret?');
+    if (r == true) {
+      lagerService.deleteSykkel(this.props.match.params.id, () =>
+        history.push('/lagerStartsideSykkel/' + this.props.match.params.ansattId)
+      );
+    }
   }
 }
 export class EndreUtstyrLager extends Component {
@@ -2089,8 +2083,11 @@ export class EndreUtstyrLager extends Component {
     history.push('/lagerStartsideUtstyr/' + this.props.match.params.ansattId);
   }
   delete() {
-    lagerService.deleteUtstyr(this.props.match.params.id, () =>
-      history.push('/lagerStartsideUtstyr/' + this.props.match.params.ansattId)
-    );
+    var r = confirm('Er du sikker på at du ønsker å fjerne dette utstyret fra lageret?');
+    if (r == true) {
+      lagerService.deleteUtstyr(this.props.match.params.id, () =>
+        history.push('/lagerStartsideUtstyr/' + this.props.match.params.ansattId)
+      );
+    }
   }
 }
