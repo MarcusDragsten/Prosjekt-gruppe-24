@@ -600,13 +600,11 @@ export class Innlevering extends Component {
     sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
       this.syklerPerBestilling = sykkelOversikt;
       this.lagSykkelOversikt();
-      console.log(this.syklerPerBestilling);
     });
 
     sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
       this.utstyrPerBestilling = utstyrOversikt;
       this.lagUtstyrOversikt();
-      console.log(this.utstyrPerBestilling);
     });
   }
 
@@ -683,7 +681,6 @@ export class Innlevering extends Component {
   }
 
   endreStatusSykkel(id, status) {
-    console.log(id, status);
     if (status == 'Utilgjengelig') {
       bestillingService.endreStatusSykkelInnleveringUtilgjengelig(status, id, endreStatus => {});
     } else {
@@ -692,7 +689,6 @@ export class Innlevering extends Component {
   }
 
   endreStatusUtstyr(id, status) {
-    console.log(id, status);
     if (status == 'Utilgjengelig') {
       bestillingService.endreStatusUtstyrInnleveringUtilgjengelig(status, id, endreStatus => {});
     } else {
@@ -876,13 +872,11 @@ export class EndreBestilling extends Component {
     sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
       this.syklerPerBestilling = sykkelOversikt;
       this.lagSykkelOversikt();
-      console.log(this.syklerPerBestilling);
     });
 
     sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
       this.utstyrPerBestilling = utstyrOversikt;
       this.lagUtstyrOversikt();
-      console.log(this.utstyrPerBestilling);
     });
 
     bestillingService.hentUtleveringsted(utleveringssteder => {
@@ -892,8 +886,6 @@ export class EndreBestilling extends Component {
     bestillingService.hentInnleveringsted(innleveringssteder => {
       this.innleveringssteder = innleveringssteder;
     });
-
-    console.log(window.location.href);
 
     this.dagensDato();
   }
@@ -952,8 +944,6 @@ export class EndreBestilling extends Component {
     }
 
     this.dateNow = yyyy + '-' + mm + '-' + dd;
-
-    console.log(this.dateNow);
   }
 
   lagSykkelOversikt() {
@@ -1034,7 +1024,7 @@ export class EndreSykler extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Endring av innhold i bestilling</h1>
           <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
             Tilbake
           </button>
@@ -1180,12 +1170,10 @@ export class EndreSykler extends Component {
   mounted() {
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;
-      console.log(this.syklerLedig);
     });
 
     sykkelService.hentSyklerOversikt(this.props.match.params.bestillingId, sykkelOversikt => {
       this.syklerPerBestilling = sykkelOversikt;
-      console.log(this.syklerPerBestilling);
     });
 
     this.hentAntall();
@@ -1467,7 +1455,6 @@ export class EndreSykler extends Component {
 
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;
-      console.log(this.syklerLedig);
     });
 
     document.getElementById('inputHybridHerre').value = '';
@@ -1504,7 +1491,6 @@ export class EndreSykler extends Component {
         this.antallValgteTerrengArray[0] = '';
         this.antallValgteElsykkelArray[0] = '';
         this.antallValgteRacerArray[0] = '';
-        console.log(this.syklerLedig);
       });
     });
   }
@@ -1540,7 +1526,7 @@ export class EndreUtstyr extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Book & Bike</h1>
+          <h1>Endring av innhold i bestilling</h1>
           <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
             Tilbake
           </button>
@@ -1646,13 +1632,10 @@ export class EndreUtstyr extends Component {
   mounted() {
     sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
       this.utstyrLedig = utstyrLedig;
-      console.log(this.utstyrLedig);
     });
 
     sykkelService.hentUtstyrOversikt(this.props.match.params.bestillingId, utstyrOversikt => {
       this.utstyrOversikt = utstyrOversikt;
-
-      console.log(this.utstyrOversikt);
     });
 
     this.hentAntall();
@@ -1860,7 +1843,6 @@ export class EndreUtstyr extends Component {
 
     sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
       this.utstyrLedig = utstyrLedig;
-      console.log(this.utstyrLedig);
     });
 
     document.getElementById('inputBarnesete').value = '';
@@ -1891,7 +1873,6 @@ export class EndreUtstyr extends Component {
         this.antallValgteSykkellåsArray[0] = '';
         this.antallValgteSykkelstativArray[0] = '';
         this.antallValgteSykkelvognArray[0] = '';
-        console.log(this.utstyrLedig);
       });
     });
   }

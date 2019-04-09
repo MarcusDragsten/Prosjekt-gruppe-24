@@ -112,7 +112,7 @@ export class Bestilling extends Component {
           <h1>Fyll inn bestillingskjema for kunden</h1>
           <hr />
           <div id="nyKundeTekst">
-            <label for="nyKundeKnapp">Er det en ny kunde?</label>{' '}
+            Er det en ny kunde?{' '}
             <button type="button" class="btn" id="nyKundeKnapp" onClick={this.nyKundePush}>
               Klikk her
             </button>
@@ -126,7 +126,7 @@ export class Bestilling extends Component {
               onChange={e => (this.bestilling_type = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg bestillingstype
               </option>
               <option value="Timeutleie">Timeutleie</option>
@@ -141,7 +141,7 @@ export class Bestilling extends Component {
               onChange={e => (this.utleveringssted = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg utleveringssted
               </option>
               {this.utleveringssteder.map(utleveringssteder => (
@@ -156,7 +156,7 @@ export class Bestilling extends Component {
               onChange={e => (this.innleveringssted = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg innleveringssted
               </option>
               {this.innleveringssteder.map(innleveringssteder => (
@@ -538,7 +538,6 @@ export class Bestilling extends Component {
 
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;
-      console.log(this.syklerLedig);
     });
 
     sykkelService.hentUtstyr(utstyr => {
@@ -547,12 +546,10 @@ export class Bestilling extends Component {
 
     sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
       this.utstyrLedig = utstyrLedig;
-      console.log(this.utstyrLedig);
     });
 
     bestillingService.epostValidering(kunde_epost => {
       this.epostValideringArray = kunde_epost;
-      console.log(this.epostValideringArray);
     });
 
     this.dagensDato();
@@ -613,9 +610,6 @@ export class Bestilling extends Component {
     this.dateNow = yyyy + '-' + mm + '-' + dd;
 
     this.timeNow = hh + '.' + min;
-
-    console.log(this.dateNow);
-    console.log(this.timeNow);
   }
 
   epostValidering() {
@@ -644,16 +638,13 @@ export class Bestilling extends Component {
       this.innlevering_dato,
       this.innlevering_tid,
       this.props.match.params.ansattId,
-      id => {
-        console.log(this.utlevering_dato);
-      }
+      id => {}
     );
   }
 
   hentBestillingId() {
     bestillingService.hentBestillingId(id => {
       this.id = id;
-      console.log(this.id);
       document.getElementById('leggInnSyklerKnapp').disabled = false;
     });
   }
@@ -875,7 +866,6 @@ export class Bestilling extends Component {
 
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;
-      console.log(this.syklerLedig);
     });
 
     document.getElementById('inputHybridHerre').value = '';
@@ -916,7 +906,6 @@ export class Bestilling extends Component {
         this.antallValgteTerrengArray[0] = '';
         this.antallValgteElsykkelArray[0] = '';
         this.antallValgteRacerArray[0] = '';
-        console.log(this.syklerLedig);
       });
     });
   }
@@ -927,12 +916,9 @@ export class Bestilling extends Component {
         sykkelService.leggInnUtstyr(this.id[0].lastInsertId, 'Barnesete', this.barnesete, barnesete => {
           sykkelService.hvorMangeUtstyrValgt(this.id[0].lastInsertId, 'Barnesete', barneseteValgt => {
             let tall = barneseteValgt;
-            console.log(tall);
             this.antallValgteBarnesete = tall[0].hvorMangeValgt;
-            console.log(tall[0].hvorMangeValgt);
             this.antallValgteBarneseteArray.pop();
             this.antallValgteBarneseteArray.push(this.antallValgteBarnesete);
-            console.log(this.antallValgteBarneseteArray[0]);
           });
         });
       } else {
@@ -1053,7 +1039,6 @@ export class Bestilling extends Component {
 
     sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
       this.utstyrLedig = utstyrLedig;
-      console.log(this.utstyrLedig);
     });
 
     document.getElementById('inputBarnesete').value = '';
@@ -1084,7 +1069,6 @@ export class Bestilling extends Component {
         this.antallValgteSykkellåsArray[0] = '';
         this.antallValgteSykkelstativArray[0] = '';
         this.antallValgteSykkelvognArray[0] = '';
-        console.log(this.utstyrLedig);
       });
     });
   }
@@ -1093,14 +1077,12 @@ export class Bestilling extends Component {
     sykkelService.hentSyklerOversikt(this.id[0].lastInsertId, sykkelOversikt => {
       this.sykkelOversikt = sykkelOversikt;
       this.visUtstyr();
-      console.log(this.sykkelOversikt);
     });
   }
 
   hentGodeKunder() {
     sykkelService.hentGodeKunder(this.kunde_epost, godKunde => {
       this.godKunde = godKunde;
-      console.log(this.godKunde);
     });
   }
 
@@ -1357,8 +1339,6 @@ export class Bestilling extends Component {
   hentUtstyrOversikt() {
     sykkelService.hentUtstyrOversikt(this.id[0].lastInsertId, utstyrOversikt => {
       this.utstyrOversikt = utstyrOversikt;
-
-      console.log(this.utstyrOversikt);
     });
   }
 
@@ -1393,7 +1373,6 @@ export class Bestilling extends Component {
       }
 
       this.sumTotalt = this.sumSykler + this.sumUtstyr;
-      console.log(this.sumTotalt);
       this.leggInnGevinst();
     }
   }
@@ -1414,7 +1393,6 @@ export class Bestilling extends Component {
         <p>{this.kundeInfo}</p>
       </div>
     );
-    console.log(this.info);
   }
 
   wrapper1(e) {

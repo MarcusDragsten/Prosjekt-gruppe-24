@@ -129,7 +129,6 @@ class Login extends Component {
     for (let i = 0; i < this.ansatte.length; i++) {
       if (this.brukernavn == this.ansatte[i].brukernavn) {
         if (this.passord == this.ansatte[i].passord) {
-          console.log(this.brukernavn + ' er innlogget!');
           if (this.ansatte[i].rolle == 'Daglig leder') {
             history.push('/adminStartside/' + this.ansatte[i].id);
             //Daglig leder
