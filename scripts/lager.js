@@ -970,9 +970,8 @@ export class UtstyrBestilling extends Component {
       this.tabell.push(
         <tr>
           <th>Bestillings ID</th>
-          <th>Sykkel ID</th>
+          <th>Utstyr ID</th>
           <th>Type</th>
-          <th>Modellnavn</th>
           <th>Tilhørighet</th>
           <th>Utleveringssted</th>
           <th>Utleveringssdato</th>
@@ -986,7 +985,6 @@ export class UtstyrBestilling extends Component {
             <td>{this.utstyrIBestilling[i].bestilling_id}</td>
             <td>{this.utstyrIBestilling[i].id}</td>
             <td>{this.utstyrIBestilling[i].type}</td>
-            <td>{this.utstyrIBestilling[i].modellnavn}</td>
             <td>{this.utstyrIBestilling[i].område}</td>
             <td>{this.utstyrIBestilling[i].utleveringssted}</td>
             <td>{this.utstyrIBestilling[i].utlevering_dato}</td>
@@ -1006,7 +1004,7 @@ export class HenteUtstyr extends Component {
   //Viser en oversikt over utstyr som er ute i en bestilling og har innleveringssted et annet sted enn utstyrets tilhørighet
 
   utstyr = [];
-  tabell6 = [];
+  tabell = [];
 
   render() {
     return (
@@ -1017,10 +1015,10 @@ export class HenteUtstyr extends Component {
             Tilbake
           </button>
         </div>
-        <h2>Oversikt over sykler som trenger transport tilbake til lager</h2>
+        <h2>Oversikt over utstyr som trenger transport tilbake til lager</h2>
         <br />
         <table id="customers" align="center">
-          <tbody>{this.tabell6}</tbody>
+          <tbody>{this.tabell}</tbody>
         </table>
       </div>
     );
@@ -1030,20 +1028,19 @@ export class HenteUtstyr extends Component {
     //Kjører en spørring opp mot databasen som henter utstyr som er i en bestilling og har innleveringssted en ikke matcher utstyrets tilhørighet
     lagerService.henteUtstyr(utstyr => {
       this.utstyr = utstyr;
-      this.createTable6();
+      this.createTable();
     });
   }
 
-  createTable6() {
+  createTable() {
     if (this.utstyr == 0) {
       alert('Det er ingen utstyr som trenger transport tilbake til lager');
       history.push('/lagerStartsideUtstyr/' + this.props.match.params.ansattId);
     } else {
-      this.tabell6.push(
+      this.tabell.push(
         <tr>
           <th>Bestillings ID</th>
-          <th>Sykkel ID</th>
-          <th>Modellnavn</th>
+          <th>Utstyrs ID</th>
           <th>Tilhørighet</th>
           <th>Innleveringssted</th>
           <th>Dato</th>
@@ -1052,11 +1049,10 @@ export class HenteUtstyr extends Component {
       );
 
       for (let i = 0; i < this.utstyr.length; i++) {
-        this.tabell6.push(
+        this.tabell.push(
           <tr>
             <td>{this.utstyr[i].bestilling_id}</td>
             <td>{this.utstyr[i].id}</td>
-            <td>{this.utstyr[i].modellnavn}</td>
             <td>{this.utstyr[i].område}</td>
             <td>{this.utstyr[i].innleveringssted}</td>
             <td>{this.utstyr[i].innlevering_dato}</td>
