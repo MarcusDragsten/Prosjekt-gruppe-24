@@ -22,7 +22,9 @@ body {
 #bestillingOversikt,
 #filtrerAktiveBestillingerDiv,
 #filtrerRapportTotalDiv,
-#filtrerRapportAnsatteDiv {
+#filtrerRapportAnsatteDiv,
+#filtrerKunderDiv,
+#epostNB {
   display: none;
 }
 
@@ -193,9 +195,8 @@ img {
   cursor: pointer;
 }
 
-.button:hover {
-  background-color: darkgrey;
-  color: white;
+.btn:hover {
+  color: lightblue !important;
 }
 
 .title {
@@ -219,8 +220,6 @@ img {
 #nyKundeDiv {
   position: relative;
   text-align: center;
-  width: 100vw;
-  height: 100vh;
 }
 
 #bestilling_typeInput,
@@ -277,6 +276,11 @@ img {
   right: 2%;
   color: black;
 }
+
+#loggUtKnapp:hover {
+  color: darkblue !important;
+}
+
 /*EndreBestilling tabell*/
 #customers {
   font-family: 'Fjalla One', sans-serif;
@@ -475,4 +479,17 @@ img {
 
 #nyKundeTekst {
   padding-bottom: 10px;
+  font-size: 25px;
+}
+
+#epostNB {
+  position: relative;
+  text-align: center;
+  margin: auto;
+  width: 50%;
+  margin-top: 5px;
+}
+
+#infoIkon {
+  cursor: pointer;
 }

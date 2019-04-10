@@ -220,50 +220,54 @@ export class AktiveBestillinger extends Component {
   }
 
   createTable() {
-    this.tabell = '';
-    this.tabell = [];
-    this.tabell.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Kundens epost</th>
-        <th>Utleveringssted</th>
-        <th>Innleveringssted</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Vis / Endre Bestilling</th>
-        <th>Innlevering</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.bestillinger.length; i++) {
+    if (this.bestillinger == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell = '';
+      this.tabell = [];
       this.tabell.push(
         <tr>
-          <td>{this.bestillinger[i].id}</td>
-          <td>{this.bestillinger[i].bestilling_type}</td>
-          <td>{this.bestillinger[i].kunde_epost}</td>
-          <td>{this.bestillinger[i].utleveringssted}</td>
-          <td>{this.bestillinger[i].innleveringssted}</td>
-          <td>
-            {this.bestillinger[i].utlevering_dato} {this.bestillinger[i].utlevering_tid}
-          </td>
-          <td>
-            {this.bestillinger[i].innlevering_dato} {this.bestillinger[i].innlevering_tid}
-          </td>
-          <td>
-            <NavLink to={'/endreBestilling/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
-              {' '}
-              Vis / Endre{' '}
-            </NavLink>
-          </td>
-          <td>
-            <NavLink to={'/innlevering/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
-              {' '}
-              Lever inn{' '}
-            </NavLink>
-          </td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Kundens epost</th>
+          <th>Utleveringssted</th>
+          <th>Innleveringssted</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Vis / Endre Bestilling</th>
+          <th>Innlevering</th>
         </tr>
       );
+
+      for (let i = 0; i < this.bestillinger.length; i++) {
+        this.tabell.push(
+          <tr>
+            <td>{this.bestillinger[i].id}</td>
+            <td>{this.bestillinger[i].bestilling_type}</td>
+            <td>{this.bestillinger[i].kunde_epost}</td>
+            <td>{this.bestillinger[i].utleveringssted}</td>
+            <td>{this.bestillinger[i].innleveringssted}</td>
+            <td>
+              {this.bestillinger[i].utlevering_dato} {this.bestillinger[i].utlevering_tid}
+            </td>
+            <td>
+              {this.bestillinger[i].innlevering_dato} {this.bestillinger[i].innlevering_tid}
+            </td>
+            <td>
+              <NavLink to={'/endreBestilling/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
+                {' '}
+                Vis / Endre{' '}
+              </NavLink>
+            </td>
+            <td>
+              <NavLink to={'/innlevering/' + this.props.match.params.ansattId + '/' + this.bestillinger[i].id}>
+                {' '}
+                Lever inn{' '}
+              </NavLink>
+            </td>
+          </tr>
+        );
+      }
     }
   }
 
@@ -459,40 +463,44 @@ export class BestillingHistorikk extends Component {
   }
 
   createTable() {
-    this.tabell = '';
-    this.tabell = [];
-    this.tabell.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Kundens epost</th>
-        <th>Utleveringssted</th>
-        <th>Innleveringssted</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Faktisk innlevering</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.bestillinger.length; i++) {
+    if (this.bestillinger == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell = '';
+      this.tabell = [];
       this.tabell.push(
         <tr>
-          <td>{this.bestillinger[i].id}</td>
-          <td>{this.bestillinger[i].bestilling_type}</td>
-          <td>{this.bestillinger[i].kunde_epost}</td>
-          <td>{this.bestillinger[i].utleveringssted}</td>
-          <td>{this.bestillinger[i].innleveringssted}</td>
-          <td>
-            {this.bestillinger[i].utlevering_dato} {this.bestillinger[i].utlevering_tid}
-          </td>
-          <td>
-            {this.bestillinger[i].innlevering_dato} {this.bestillinger[i].innlevering_tid}
-          </td>
-          <td>
-            {this.bestillinger[i].faktiskInnlevering_dato} {this.bestillinger[i].faktiskInnlevering_tid}
-          </td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Kundens epost</th>
+          <th>Utleveringssted</th>
+          <th>Innleveringssted</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Faktisk innlevering</th>
         </tr>
       );
+
+      for (let i = 0; i < this.bestillinger.length; i++) {
+        this.tabell.push(
+          <tr>
+            <td>{this.bestillinger[i].id}</td>
+            <td>{this.bestillinger[i].bestilling_type}</td>
+            <td>{this.bestillinger[i].kunde_epost}</td>
+            <td>{this.bestillinger[i].utleveringssted}</td>
+            <td>{this.bestillinger[i].innleveringssted}</td>
+            <td>
+              {this.bestillinger[i].utlevering_dato} {this.bestillinger[i].utlevering_tid}
+            </td>
+            <td>
+              {this.bestillinger[i].innlevering_dato} {this.bestillinger[i].innlevering_tid}
+            </td>
+            <td>
+              {this.bestillinger[i].faktiskInnlevering_dato} {this.bestillinger[i].faktiskInnlevering_tid}
+            </td>
+          </tr>
+        );
+      }
     }
   }
 
@@ -1001,6 +1009,8 @@ export class EndreSykler extends Component {
   syklerLedig = [];
   syklerPerBestilling = [];
 
+  syklerValgt = [];
+
   antallValgteHerreArray = [];
   antallValgteHerre = [];
   antallValgteDameArray = [];
@@ -1157,12 +1167,14 @@ export class EndreSykler extends Component {
             />
             <div class="antallValgteDiver">Antall valgte: {this.antallValgteRacerArray[0]}</div>
           </div>
-          <button type="button" class="btn" onClick={this.leggTilSykler}>
-            Legg til sykler
-          </button>
-          <button type="button" class="btn" onClick={this.fjernSykler}>
-            Fjern sykler fra bestilling
-          </button>
+          <div>
+            <button type="button" class="btn" onClick={this.leggTilSykler}>
+              Legg til sykler
+            </button>
+            <button type="button" class="btn" onClick={this.fjernSykler}>
+              Fjern sykler fra bestilling
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -1447,14 +1459,14 @@ export class EndreSykler extends Component {
       Number(this.herreBagasje) +
       Number(this.herre);
 
-    /* if (this.innlagteSykler == 0) {
-      alert('Ingen sykler er lagt til');
-    } else if (this.innlagteSykler > 0 && ){
-      alert(this.innlagteSykler + ' sykler lagt til');
-    } */
-
     sykkelService.hvorMangeSyklerLedig(syklerLedig => {
       this.syklerLedig = syklerLedig;
+    });
+
+    sykkelService.hvorMangeSykleriBestilling(this.props.match.params.bestillingId, syklerValgt => {
+      this.syklerValgt = syklerValgt;
+      let hvorMange = this.syklerValgt[0].hvorMangeValgt;
+      alert('Det ligger nå ' + hvorMange + ' sykler i bestillingen!');
     });
 
     document.getElementById('inputHybridHerre').value = '';
@@ -1480,6 +1492,7 @@ export class EndreSykler extends Component {
 
   fjernSykler() {
     sykkelService.fjernSyklerFraBestilling(this.props.match.params.bestillingId, fjernSykler => {
+      alert('Sykler fjernet!');
       sykkelService.hvorMangeSyklerLedig(syklerLedig => {
         this.syklerLedig = syklerLedig;
         this.antallValgteHerreArray[0] = '';
@@ -1519,6 +1532,8 @@ export class EndreUtstyr extends Component {
   antallValgteSykkelstativ = [];
   antallValgteSykkelvognArray = [];
   antallValgteSykkelvogn = [];
+
+  utstyrValgt = [];
 
   utstyrLedig = [];
 
@@ -1845,6 +1860,12 @@ export class EndreUtstyr extends Component {
       this.utstyrLedig = utstyrLedig;
     });
 
+    sykkelService.hvorMyeUtstyriBestilling(this.props.match.params.bestillingId, utstyrValgt => {
+      this.utstyrValgt = utstyrValgt;
+      let hvorMange = this.utstyrValgt[0].hvorMangeValgt;
+      alert('Det ligger nå ' + hvorMange + ' utstyr i bestillingen!');
+    });
+
     document.getElementById('inputBarnesete').value = '';
     document.getElementById('inputHjelmBarn').value = '';
     document.getElementById('inputHjelmVoksne').value = '';
@@ -1864,6 +1885,7 @@ export class EndreUtstyr extends Component {
 
   fjernUtstyr() {
     sykkelService.fjernUtstyrFraBestilling(this.props.match.params.bestillingId, fjernSykler => {
+      alert('Utstyr fjernet!');
       sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
         this.utstyrLedig = utstyrLedig;
         this.antallValgteBarneseteArray[0] = '';
@@ -1884,11 +1906,15 @@ export class NyKunde extends Component {
   epost = '';
   telefon = '';
 
+  tabell = [];
+
+  kunder = [];
+
   render() {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Er det en ny kunde?</h1>
+          <h1>Ny / eksisterende kunde</h1>
           <button type="button" class="btn" id="loggUtKnapp" onClick={this.return}>
             Tilbake
           </button>
@@ -1935,12 +1961,144 @@ export class NyKunde extends Component {
             </button>
           </form>
         </div>
+        <hr />
+        <div id="kundetabell">
+          <h1>Alle eksisterende kunder</h1>
+          <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
+            Filtrer tabellen?
+          </button>
+          <br />
+          <div id="filtrerKunderDiv">
+            <div class="form-inline">
+              <h4>Hva vil du finne kunden med?</h4>
+              <input
+                type="text"
+                id="etternavnInput"
+                class="genereltInputer form-control form-control-lg"
+                placeholder="Søk etter etternavn"
+                onChange={e => (this.etternavnInput = event.target.value)}
+              />
+              <input
+                type="text"
+                id="fornavnInput"
+                class="genereltInputer form-control form-control-lg"
+                placeholder="Søk etter fornavn"
+                onChange={e => (this.fornavnInput = event.target.value)}
+              />
+              <input
+                type="text"
+                id="epostInput"
+                class="genereltInputer form-control form-control-lg"
+                placeholder="Søk etter epost"
+                onChange={e => (this.epostInput = event.target.value)}
+              />
+              <input
+                type="number"
+                id="telefonInput"
+                class="genereltInputer form-control form-control-lg"
+                placeholder="Søk etter telefonnummer"
+                onChange={e => (this.telefonInput = event.target.value)}
+              />
+            </div>
+            <br />
+            <button type="button" onClick={this.sok} class="btn">
+              Filter
+            </button>
+            <button type="button" class="btn" onClick={this.nullstill}>
+              Nullstill
+            </button>
+          </div>
+          <br />
+          <table id="customers" align="center">
+            <tbody>{this.tabell}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
 
+  mounted() {
+    bestillingService.hentKunder(kunder => {
+      this.kunder = kunder;
+      this.createTable();
+    });
+  }
+
   return() {
     history.push('/bestilling/' + this.props.match.params.ansattId);
+  }
+
+  toggleFiltrer() {
+    var x = document.getElementById('filtrerKunderDiv');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+  }
+
+  createTable() {
+    if (this.kunder == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell = '';
+      this.tabell = [];
+      this.tabell.push(
+        <tr>
+          <th>Etternavn</th>
+          <th>Fornavn</th>
+          <th>Kundens epost</th>
+          <th>Telefonnummer</th>
+          <th>Rediger info</th>
+        </tr>
+      );
+
+      for (let i = 0; i < this.kunder.length; i++) {
+        this.tabell.push(
+          <tr>
+            <td>{this.kunder[i].etternavn}</td>
+            <td>{this.kunder[i].fornavn}</td>
+            <td>{this.kunder[i].epost}</td>
+            <td>{this.kunder[i].telefon}</td>
+            <td>
+              <NavLink to={'/kundeEdit/' + this.props.match.params.ansattId + '/' + this.kunder[i].epost}>
+                {' '}
+                Rediger{' '}
+              </NavLink>
+            </td>
+          </tr>
+        );
+      }
+    }
+  }
+
+  sok() {
+    if (this.etternavnInput == '') this.etternavnInput = '%';
+    if (this.fornavnInput == '') this.fornavnInput = '%';
+    if (this.epostInput == '') this.epostInput = '%';
+    if (this.telefonInput == '') this.telefonInput = '%';
+
+    bestillingService.sok5(this.etternavnInput, this.fornavnInput, this.epostInput, this.telefonInput, sok => {
+      this.kunder = sok;
+      this.createTable();
+    });
+  }
+
+  nullstill() {
+    this.etternavnInput = '';
+    this.fornavnInput = '';
+    this.epostInput = '';
+    this.telefonInput = '';
+
+    document.getElementById('etternavnInput').value = '';
+    document.getElementById('fornavnInput').value = '';
+    document.getElementById('epostInput').value = '';
+    document.getElementById('telefonInput').value = '';
+
+    bestillingService.hentKunder(kunder => {
+      this.kunder = kunder;
+      this.createTable();
+    });
   }
 
   leggTilKunde(e) {
@@ -1951,5 +2109,108 @@ export class NyKunde extends Component {
   }
   loggUtPush() {
     history.push('/');
+  }
+}
+
+export class KundeEdit extends Component {
+  //Side der man endre informasjonen til syklene. Bytter også status
+  kunde = null;
+
+  render() {
+    if (!this.kunde) return null;
+
+    return (
+      <div id="yttersteDiv">
+        <div class="header w3-container" id="header">
+          <h1>Endre / slett kunde</h1>
+          <button type="button" id="loggUtKnapp" class="btn" onClick={this.tilbake}>
+            Tilbake
+          </button>
+        </div>
+        <div id="nyAnsattDiv">
+          <h1>
+            Rediger {this.kunde.fornavn} {this.kunde.etternavn}?
+          </h1>
+          <hr />
+          <h4>Epost</h4>
+          <i class="material-icons" id="infoIkon" onClick={this.toggleInfo}>
+            info_outline
+          </i>
+          <input
+            type="text"
+            class="genereltInputer form-control form-control-lg"
+            value={this.kunde.epost}
+            required
+            disabled
+          />
+          <p id="epostNB">
+            <i>
+              Epost kan ved denne versjonen av applikasjon ikke bli endret. Om kunden ønsker å bruke en annen epost, lag
+              en ny registrering av kunden (NB! Da vil ikke de tidligere bestillingene til kunden regnes med i henhold
+              til eventueller rabatter)
+            </i>
+          </p>
+          <h4>Fornavn</h4>
+          <input
+            type="text"
+            class="genereltInputer form-control form-control-lg"
+            value={this.kunde.fornavn}
+            onChange={e => (this.kunde.fornavn = event.target.value)}
+            required
+          />
+          <h4>Etternavn</h4>
+          <input
+            type="text"
+            class="genereltInputer form-control form-control-lg"
+            value={this.kunde.etternavn}
+            onChange={e => (this.kunde.etternavn = event.target.value)}
+            required
+          />
+          <h4>Telefon</h4>
+          <input
+            type="number"
+            class="genereltInputer form-control form-control-lg"
+            value={this.kunde.telefon}
+            onChange={e => (this.kunde.telefon = event.target.value)}
+            required
+          />
+          <br />
+          <button type="button" onClick={this.save} class="btn">
+            Lagre
+          </button>
+        </div>
+      </div>
+    );
+  }
+  mounted() {
+    bestillingService.hentKunde(this.props.match.params.epost, kunde => {
+      this.kunde = kunde;
+    });
+  }
+
+  toggleInfo() {
+    var x = document.getElementById('epostNB');
+    if (window.getComputedStyle(x).display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+  }
+
+  save(e) {
+    e.preventDefault();
+    bestillingService.updateKunde(
+      this.kunde.fornavn,
+      this.kunde.etternavn,
+      this.kunde.telefon,
+      this.props.match.params.epost,
+      updateKunde => {
+        history.push('/nyKunde/' + this.props.match.params.ansattId);
+      }
+    );
+  }
+
+  tilbake() {
+    history.push('/nyKunde/' + this.props.match.params.ansattId);
   }
 }

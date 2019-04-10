@@ -14,6 +14,33 @@ class BestillingService extends Component {
     );
   }
 
+  hentKunder(success) {
+    connection.query('select * from Kunder order by etternavn', (error, results) => {
+      if (error) return console.error(error);
+      success(results);
+    });
+  }
+
+  hentKunde(id, success) {
+    connection.query('select * from Kunder where epost=?', [id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results[0]);
+    });
+  }
+
+  updateKunde(fornavn, etternavn, telefon, id, success) {
+    connection.query(
+      'update Kunder set fornavn=?, etternavn=?, telefon=? where epost=?',
+      [fornavn, etternavn, telefon, id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success();
+      }
+    );
+  }
+
   epostValidering(success) {
     connection.query('select epost from Kunder', (error, results) => {
       if (error) return console.error(error);
@@ -230,6 +257,18 @@ class BestillingService extends Component {
     connection.query(
       'SELECT Bestilling.id, bestilling_type, utlevering_dato, utlevering_tid, faktiskInnlevering_dato, faktiskInnlevering_tid, Kunder.epost, Ansatte.fornavn, Ansatte.etternavn, Ansatte.telefon, gevinst FROM Bestilling INNER JOIN Kunder ON Bestilling.kunde_epost = Kunder.epost INNER JOIN Ansatte on Bestilling.selger = Ansatte.id WHERE utlevering_dato >= ? AND faktiskInnlevering_dato <= ? AND Ansatte.id = ? AND faktiskInnlevering_tid IS NOT NULL AND faktiskInnlevering_dato IS NOT NULL',
       [utlevering_dato, faktiskInnlevering_dato, ansatteId],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
+
+  sok5(etternavn, fornavn, epost, telefon, success) {
+    connection.query(
+      'SELECT * FROM Kunder WHERE etternavn LIKE ? AND fornavn LIKE ? AND epost LIKE ? AND telefon LIKE ?',
+      [etternavn, fornavn, epost, telefon],
       (error, results) => {
         if (error) return console.error(error);
 

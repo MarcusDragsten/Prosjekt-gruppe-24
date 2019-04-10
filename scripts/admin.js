@@ -955,89 +955,97 @@ export class Rapport extends Component {
   }
 
   createTable1() {
-    this.tabell1 = '';
-    this.tabell1 = [];
+    if (this.totalRapport == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell1 = '';
+      this.tabell1 = [];
 
-    this.tabell1.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Kundens epost</th>
-        <th>Kundens navn</th>
-        <th>Inntekt for bestillinga</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.totalRapport.length; i++) {
       this.tabell1.push(
         <tr>
-          <td>{this.totalRapport[i].id}</td>
-          <td>{this.totalRapport[i].bestilling_type}</td>
-          <td>
-            {this.totalRapport[i].utlevering_dato} {this.totalRapport[i].utlevering_tid}
-          </td>
-          <td>
-            {this.totalRapport[i].faktiskInnlevering_dato} {this.totalRapport[i].faktiskInnlevering_tid}
-          </td>
-          <td>{this.totalRapport[i].epost}</td>
-          <td>
-            {this.totalRapport[i].fornavn} {this.totalRapport[i].etternavn}
-          </td>
-          <td>{this.totalRapport[i].gevinst},-</td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Kundens epost</th>
+          <th>Kundens navn</th>
+          <th>Inntekt for bestillinga</th>
         </tr>
       );
-      let tall = Number(this.totalRapport[i].gevinst);
-      this.totalGevinst = Number(this.totalGevinst) + tall;
+
+      for (let i = 0; i < this.totalRapport.length; i++) {
+        this.tabell1.push(
+          <tr>
+            <td>{this.totalRapport[i].id}</td>
+            <td>{this.totalRapport[i].bestilling_type}</td>
+            <td>
+              {this.totalRapport[i].utlevering_dato} {this.totalRapport[i].utlevering_tid}
+            </td>
+            <td>
+              {this.totalRapport[i].faktiskInnlevering_dato} {this.totalRapport[i].faktiskInnlevering_tid}
+            </td>
+            <td>{this.totalRapport[i].epost}</td>
+            <td>
+              {this.totalRapport[i].fornavn} {this.totalRapport[i].etternavn}
+            </td>
+            <td>{this.totalRapport[i].gevinst},-</td>
+          </tr>
+        );
+        let tall = Number(this.totalRapport[i].gevinst);
+        this.totalGevinst = Number(this.totalGevinst) + tall;
+      }
+      this.totalGevinstArray.pop();
+      this.totalGevinstArray.push(this.totalGevinst);
+      this.totalGevinst = 0;
     }
-    this.totalGevinstArray.pop();
-    this.totalGevinstArray.push(this.totalGevinst);
-    this.totalGevinst = 0;
   }
 
   createTable2() {
-    this.tabell2 = '';
-    this.tabell2 = [];
+    if (this.ansatteRapport == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell2 = '';
+      this.tabell2 = [];
 
-    this.tabell2.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Kundens epost</th>
-        <th>Ansattes navn</th>
-        <th>Ansattes telefon</th>
-        <th>Inntekt for bestillinga</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.ansatteRapport.length; i++) {
       this.tabell2.push(
         <tr>
-          <td>{this.ansatteRapport[i].id}</td>
-          <td>{this.ansatteRapport[i].bestilling_type}</td>
-          <td>
-            {this.ansatteRapport[i].utlevering_dato} {this.ansatteRapport[i].utlevering_tid}
-          </td>
-          <td>
-            {this.ansatteRapport[i].faktiskInnlevering_dato} {this.ansatteRapport[i].faktiskInnlevering_tid}
-          </td>
-          <td>{this.ansatteRapport[i].epost}</td>
-          <td>
-            {this.ansatteRapport[i].fornavn} {this.ansatteRapport[i].etternavn}
-          </td>
-          <td>{this.ansatteRapport[i].telefon}</td>
-          <td>{this.ansatteRapport[i].gevinst},-</td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Kundens epost</th>
+          <th>Ansattes navn</th>
+          <th>Ansattes telefon</th>
+          <th>Inntekt for bestillinga</th>
         </tr>
       );
-      let tall = Number(this.ansatteRapport[i].gevinst);
-      this.ansatteGevinst = Number(this.ansatteGevinst) + tall;
+
+      for (let i = 0; i < this.ansatteRapport.length; i++) {
+        this.tabell2.push(
+          <tr>
+            <td>{this.ansatteRapport[i].id}</td>
+            <td>{this.ansatteRapport[i].bestilling_type}</td>
+            <td>
+              {this.ansatteRapport[i].utlevering_dato} {this.ansatteRapport[i].utlevering_tid}
+            </td>
+            <td>
+              {this.ansatteRapport[i].faktiskInnlevering_dato} {this.ansatteRapport[i].faktiskInnlevering_tid}
+            </td>
+            <td>{this.ansatteRapport[i].epost}</td>
+            <td>
+              {this.ansatteRapport[i].fornavn} {this.ansatteRapport[i].etternavn}
+            </td>
+            <td>{this.ansatteRapport[i].telefon}</td>
+            <td>{this.ansatteRapport[i].gevinst},-</td>
+          </tr>
+        );
+        let tall = Number(this.ansatteRapport[i].gevinst);
+        this.ansatteGevinst = Number(this.ansatteGevinst) + tall;
+      }
+      this.ansatteGevinstArray.pop();
+      this.ansatteGevinstArray.push(this.ansatteGevinst);
+      this.ansatteGevinst = 0;
     }
-    this.ansatteGevinstArray.pop();
-    this.ansatteGevinstArray.push(this.ansatteGevinst);
-    this.ansatteGevinst = 0;
   }
 }
 
@@ -1515,88 +1523,96 @@ export class RapportSekretær extends Component {
   }
 
   createTable1() {
-    this.tabell1 = '';
-    this.tabell1 = [];
+    if (this.totalRapport == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell1 = '';
+      this.tabell1 = [];
 
-    this.tabell1.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Kundens epost</th>
-        <th>Kundens navn</th>
-        <th>Inntekt for bestillinga</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.totalRapport.length; i++) {
       this.tabell1.push(
         <tr>
-          <td>{this.totalRapport[i].id}</td>
-          <td>{this.totalRapport[i].bestilling_type}</td>
-          <td>
-            {this.totalRapport[i].utlevering_dato} {this.totalRapport[i].utlevering_tid}
-          </td>
-          <td>
-            {this.totalRapport[i].faktiskInnlevering_dato} {this.totalRapport[i].faktiskInnlevering_tid}
-          </td>
-          <td>{this.totalRapport[i].epost}</td>
-          <td>
-            {this.totalRapport[i].fornavn} {this.totalRapport[i].etternavn}
-          </td>
-          <td>{this.totalRapport[i].gevinst},-</td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Kundens epost</th>
+          <th>Kundens navn</th>
+          <th>Inntekt for bestillinga</th>
         </tr>
       );
-      let tall = Number(this.totalRapport[i].gevinst);
-      this.totalGevinst = Number(this.totalGevinst) + tall;
+
+      for (let i = 0; i < this.totalRapport.length; i++) {
+        this.tabell1.push(
+          <tr>
+            <td>{this.totalRapport[i].id}</td>
+            <td>{this.totalRapport[i].bestilling_type}</td>
+            <td>
+              {this.totalRapport[i].utlevering_dato} {this.totalRapport[i].utlevering_tid}
+            </td>
+            <td>
+              {this.totalRapport[i].faktiskInnlevering_dato} {this.totalRapport[i].faktiskInnlevering_tid}
+            </td>
+            <td>{this.totalRapport[i].epost}</td>
+            <td>
+              {this.totalRapport[i].fornavn} {this.totalRapport[i].etternavn}
+            </td>
+            <td>{this.totalRapport[i].gevinst},-</td>
+          </tr>
+        );
+        let tall = Number(this.totalRapport[i].gevinst);
+        this.totalGevinst = Number(this.totalGevinst) + tall;
+      }
+      this.totalGevinstArray.pop();
+      this.totalGevinstArray.push(this.totalGevinst);
+      this.totalGevinst = 0;
     }
-    this.totalGevinstArray.pop();
-    this.totalGevinstArray.push(this.totalGevinst);
-    this.totalGevinst = 0;
   }
 
   createTable2() {
-    this.tabell2 = '';
-    this.tabell2 = [];
+    if (this.ansatteRapport == 0) {
+      alert('Ingen rader matchet søket ditt');
+    } else {
+      this.tabell2 = '';
+      this.tabell2 = [];
 
-    this.tabell2.push(
-      <tr>
-        <th>Id</th>
-        <th>Bestillingstype</th>
-        <th>Utleveringstid</th>
-        <th>Innleveringstid</th>
-        <th>Kundens epost</th>
-        <th>Ansattes navn</th>
-        <th>Ansattes telefon</th>
-        <th>Inntekt for bestillinga</th>
-      </tr>
-    );
-
-    for (let i = 0; i < this.ansatteRapport.length; i++) {
       this.tabell2.push(
         <tr>
-          <td>{this.ansatteRapport[i].id}</td>
-          <td>{this.ansatteRapport[i].bestilling_type}</td>
-          <td>
-            {this.ansatteRapport[i].utlevering_dato} {this.ansatteRapport[i].utlevering_tid}
-          </td>
-          <td>
-            {this.ansatteRapport[i].faktiskInnlevering_dato} {this.ansatteRapport[i].faktiskInnlevering_tid}
-          </td>
-          <td>{this.ansatteRapport[i].epost}</td>
-          <td>
-            {this.ansatteRapport[i].fornavn} {this.ansatteRapport[i].etternavn}
-          </td>
-          <td>{this.ansatteRapport[i].telefon}</td>
-          <td>{this.ansatteRapport[i].gevinst},-</td>
+          <th>Id</th>
+          <th>Bestillingstype</th>
+          <th>Utleveringstid</th>
+          <th>Innleveringstid</th>
+          <th>Kundens epost</th>
+          <th>Ansattes navn</th>
+          <th>Ansattes telefon</th>
+          <th>Inntekt for bestillinga</th>
         </tr>
       );
-      let tall = Number(this.ansatteRapport[i].gevinst);
-      this.ansatteGevinst = Number(this.ansatteGevinst) + tall;
+
+      for (let i = 0; i < this.ansatteRapport.length; i++) {
+        this.tabell2.push(
+          <tr>
+            <td>{this.ansatteRapport[i].id}</td>
+            <td>{this.ansatteRapport[i].bestilling_type}</td>
+            <td>
+              {this.ansatteRapport[i].utlevering_dato} {this.ansatteRapport[i].utlevering_tid}
+            </td>
+            <td>
+              {this.ansatteRapport[i].faktiskInnlevering_dato} {this.ansatteRapport[i].faktiskInnlevering_tid}
+            </td>
+            <td>{this.ansatteRapport[i].epost}</td>
+            <td>
+              {this.ansatteRapport[i].fornavn} {this.ansatteRapport[i].etternavn}
+            </td>
+            <td>{this.ansatteRapport[i].telefon}</td>
+            <td>{this.ansatteRapport[i].gevinst},-</td>
+          </tr>
+        );
+        let tall = Number(this.ansatteRapport[i].gevinst);
+        this.ansatteGevinst = Number(this.ansatteGevinst) + tall;
+      }
+      this.ansatteGevinstArray.pop();
+      this.ansatteGevinstArray.push(this.ansatteGevinst);
+      this.ansatteGevinst = 0;
     }
-    this.ansatteGevinstArray.pop();
-    this.ansatteGevinstArray.push(this.ansatteGevinst);
-    this.ansatteGevinst = 0;
   }
 }

@@ -30,6 +30,7 @@ import {
   EndreSykler,
   EndreUtstyr,
   NyKunde,
+  KundeEdit,
   Innlevering
 } from '../scripts/salg.js';
 import {
@@ -174,6 +175,7 @@ ReactDOM.render(
       <Route path="/bestilling/:ansattId" component={Bestilling} />
 
       <Route path="/nyKunde/:ansattId" component={NyKunde} />
+      <Route path="/kundeEdit/:ansattId/:epost" component={KundeEdit} />
 
       <Route path="/adminStartside/:ansattId" component={AdminStartside} />
       <Route path="/ansatteAdmin/:ansattId" component={AnsatteAdmin} />
