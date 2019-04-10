@@ -23,7 +23,7 @@ class LagerService extends Component {
   }
   updateSykkel(status, lokasjon, timepris, id, success) {
     connection.query(
-      'update Sykkel set status=?, lokasjon_id=?, timepris=? where id=?',
+      'update Sykkel set status=?, lokasjon_id=?, timepris=?, bestilling_id = NULL where id=?',
       [status, lokasjon, timepris, id],
       (error, results) => {
         if (error) return console.error(error);
@@ -49,7 +49,7 @@ class LagerService extends Component {
   }
   updateUtstyr(status, lokasjon, pris, id, success) {
     connection.query(
-      'update Utstyr set status=?, lokasjon_id=?, pris=? where id=?',
+      'update Utstyr set status=?, lokasjon_id=?, pris=?, bestilling_id = NULL where id=?',
       [status, lokasjon, pris, id],
       (error, results) => {
         if (error) return console.error(error);
