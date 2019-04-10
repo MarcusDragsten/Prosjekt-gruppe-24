@@ -1090,9 +1090,9 @@ export class Bestilling extends Component {
     let date1 = new Date(this.utlevering_dato + ' ' + this.utlevering_tid);
     let date2 = new Date(this.innlevering_dato + ' ' + this.innlevering_tid);
 
-    let timer = Math.abs(Math.round((date2 - date1) / 36e5));
+    let timer = Math.round((date2 - date1) / 36e5);
 
-    let dager = Math.abs(Math.round((date2 - date1) / 36e5) / 12);
+    let dager = Math.round((date2 - date1) / 36e5 / 12);
 
     if (this.sykkelOversikt.length == 0) {
       this.alternativInfo1 = 'Du har ikke lagt inn noen sykler i bestillingen';
@@ -1126,7 +1126,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
@@ -1198,7 +1198,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
@@ -1276,7 +1276,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
