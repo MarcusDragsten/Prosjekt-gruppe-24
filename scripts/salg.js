@@ -129,7 +129,7 @@ export class AktiveBestillinger extends Component {
                 class="genereltInputer form-control form-control-lg"
                 onChange={e => (this.bestilling_type = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Søk etter bestillingstype:
                 </option>
                 <option value="Timeutleie">Timeutleie</option>
@@ -150,7 +150,7 @@ export class AktiveBestillinger extends Component {
                 class="genereltInputer form-control form-control-lg"
                 onChange={e => (this.utleveringssted = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Søk etter utleveringssted
                 </option>
                 {this.utleveringssteder.map(steder => (
@@ -163,7 +163,7 @@ export class AktiveBestillinger extends Component {
                 class="genereltInputer form-control form-control-lg"
                 onChange={e => (this.innleveringssted = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Søk etter utleveringssted
                 </option>
                 {this.innleveringssteder.map(steder => (
@@ -371,7 +371,7 @@ export class BestillingHistorikk extends Component {
                 class="form-control form-control-lg"
                 onChange={e => (this.bestilling_type = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Søk etter bestillingstype:
                 </option>
                 <option value="Timeutleie">Timeutleie</option>
@@ -392,7 +392,7 @@ export class BestillingHistorikk extends Component {
                 class="form-control form-control-lg"
                 onChange={e => (this.utleveringssted = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Velg utleveringssted
                 </option>
                 {this.utleveringssteder.map(steder => (
@@ -405,7 +405,7 @@ export class BestillingHistorikk extends Component {
                 class="form-control form-control-lg"
                 onChange={e => (this.innleveringssted = event.target.value)}
               >
-                <option value="" selected>
+                <option value="" defaultValue>
                   Velg utleveringssted
                 </option>
                 {this.innleveringssteder.map(steder => (
@@ -764,7 +764,7 @@ export class EndreBestilling extends Component {
               onChange={e => (this.utleveringssted = event.target.value)}
               required
             >
-              <option value={this.bestillinger.utleveringssted} selected hidden>
+              <option value={this.bestillinger.utleveringssted} defaultValue hidden>
                 {this.bestillinger.utleveringssted}
               </option>
               {this.utleveringssteder.map(steder => (
@@ -779,7 +779,7 @@ export class EndreBestilling extends Component {
               onChange={e => (this.innleveringssted = event.target.value)}
               required
             >
-              <option value={this.bestillinger.innleveringssted} selected hidden>
+              <option value={this.bestillinger.innleveringssted} defaultValue hidden>
                 {this.bestillinger.innleveringssted}
               </option>
               {this.innleveringssteder.map(steder => (
@@ -1622,7 +1622,7 @@ export class EndreUtstyr extends Component {
           </div>
           <div id="sykkelvogn" class="utstyrDiver">
             <h4>Sykkelvogn</h4>
-            <img src="../bilder/sykkelvogn.jpeg" alt="Sykkel" />
+            <img src="../bilder/sykkelvogn.jpeg" alt="Sykkelvogn" />
             <input
               type="number"
               placeholder="Hvor mange vil du leie?"
