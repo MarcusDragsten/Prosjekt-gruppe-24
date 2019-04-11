@@ -83,7 +83,7 @@ export class LagerStartsideSykkel extends Component {
             class="btn btn-sucess btn-lg btn-block"
             onClick={this.oversiktUtleveringSykkel}
           >
-            Utleveringer
+            Skal ut i bestilling
           </button>
           <button
             type="button"
@@ -91,7 +91,7 @@ export class LagerStartsideSykkel extends Component {
             class="btn btn-sucess btn-lg btn-block"
             onClick={this.oversiktInnleveringSykkel}
           >
-            Innleveringer
+            Trenger transport
           </button>
           <button
             type="button"
@@ -162,7 +162,7 @@ export class LagerStartsideUtstyr extends Component {
             class="btn btn-sucess btn-lg btn-block"
             onClick={this.oversiktUtleveringUtstyr}
           >
-            Utleveringer
+            Skal ut i bestilling
           </button>
           <button
             type="button"
@@ -170,7 +170,7 @@ export class LagerStartsideUtstyr extends Component {
             class="btn btn-sucess btn-lg btn-block"
             onClick={this.oversiktInnleveringUtstyr}
           >
-            Innleveringer
+            Trenger transport
           </button>
           <button
             type="button"
@@ -1870,7 +1870,7 @@ export class EndreSykkel extends Component {
               required
             >
               <option value="Ledig">Ledig</option>
-              <option value="Reparasjon">Til reparasjon</option>
+              <option value="Reparasjon">Reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
             <h4>Tilhørighet</h4>
