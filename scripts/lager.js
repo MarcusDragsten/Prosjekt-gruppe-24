@@ -76,7 +76,6 @@ export class LagerStartsideSykkel extends Component {
         </div>
         <div id="salgStartsideKnapperDiv">
           <h2>Oversikt over Sykler</h2>
-
           <button
             type="button"
             id="knapperStartside"
@@ -461,7 +460,7 @@ export class LedigSykkel extends Component {
                 onChange={e => (this.lokasjon_id = event.target.value)}
               >
                 {' '}
-                <option value="" selected>
+                <option value="" defaultValue>
                   Tilhørighet:
                 </option>
                 {this.tilhørighet.map(tilhørighet => (
@@ -655,8 +654,8 @@ export class UtleidSykkel extends Component {
                 onChange={e => (this.lokasjon_id = event.target.value)}
               >
                 {' '}
-                <option value="" selected>
-                  Tilhørighet:
+                <option value="" defaultValue>
+                  Tilhørighet
                 </option>
                 {this.tilhørighet.map(tilhørighet => (
                   <option value={tilhørighet.id} key={tilhørighet.id}>
@@ -806,11 +805,13 @@ export class UtilgjengeligeSykler extends Component {
           </button>
         </div>
         <h2>Oversikt over utilgjengelige sykler</h2>
+        <p>
+          <i>
+            Utilgjengelige sykler består av sykler som trenger eventuelle reparasjoner eller har ikke blitt levert
+            tilbake av kunden i tide.
+          </i>
+        </p>
         <br />
-        <h4>
-          Utilgjengelige sykler består av sykler som trenger eventuelle reparasjoner eller har ikke blitt levert tilbake
-          av kunden i tide.
-        </h4>
         <button
           type="submit"
           id="knapperStartside"
@@ -1098,8 +1099,8 @@ export class LedigUtstyr extends Component {
             <div class="form-inline">
               <h3>Filtrer utstyr</h3>
               <select id="type" class="form-control form-control-lg" onChange={e => (this.type = event.target.value)}>
-                <option value="" selected>
-                  Utstyrstype:
+                <option value="" defaultValue>
+                  Utstyrstype
                 </option>
                 <option value="Hjelm voksne">Hjelm for voksne</option>
                 <option value="Hjelm barn">Hjelm for barn</option>
@@ -1114,8 +1115,8 @@ export class LedigUtstyr extends Component {
                 onChange={e => (this.lokasjon_id = event.target.value)}
               >
                 {' '}
-                <option value="" selected>
-                  Tilhørighet:
+                <option value="" defaultValue>
+                  Tilhørighet
                 </option>
                 {this.tilhørighet.map(tilhørighet => (
                   <option value={tilhørighet.id} key={tilhørighet.id}>
@@ -1277,7 +1278,7 @@ export class UtleidUtstyr extends Component {
             <div class="form-inline">
               <h3>Filtrer utstyr</h3>
               <select id="type" class="form-control form-control-lg" onChange={e => (this.type = event.target.value)}>
-                <option value="" selected>
+                <option value="" defaultValue>
                   Utstyrstype:
                 </option>
                 <option value="Hjelm voksne">Hjelm for voksne</option>
@@ -1293,7 +1294,7 @@ export class UtleidUtstyr extends Component {
                 onChange={e => (this.lokasjon_id = event.target.value)}
               >
                 {' '}
-                <option value="" selected>
+                <option value="" defaultValue>
                   Tilhørighet:
                 </option>
                 {this.tilhørighet.map(tilhørighet => (
@@ -1437,11 +1438,13 @@ export class UtilgjengeligeUtstyr extends Component {
           </button>
         </div>
         <h2>Oversikt over utilgjengelige utstyr</h2>
+        <p>
+          <i>
+            Utilgjengelige utstyr består av utstyr som trenger eventuelle reparasjoner eller har ikke blitt levert
+            tilbake av kunden i tide.
+          </i>
+        </p>
         <br />
-        <h4>
-          Utilgjengelige utstyr består av utstyr som trenger eventuelle reparasjoner eller har ikke blitt levert tilbake
-          av kunden i tide.
-        </h4>
         <button
           type="submit"
           id="knapperStartside"
@@ -1585,16 +1588,16 @@ export class LeggTilSykkel extends Component {
         </div>
         <div id="nyAnsattDiv">
           <form onSubmit={this.add}>
-            <h3>Legg til nye sykler</h3>
+            <h2>Legg til nye sykler</h2>
             <hr />
-            <h4>Sykkeltype</h4>
+            <h3>Sykkeltype</h3>
             <select
               value={this.type}
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.type = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg sykkeltype
               </option>
               <option value="Hybrid Dame m/bagasjebrett">Hybrid Dame med bagasjebrett</option>
@@ -1607,51 +1610,51 @@ export class LeggTilSykkel extends Component {
               <option value="Terrengsykkel">Terrengsykkel</option>
               <option value="Landeveissykkel">Landeveissykkel</option>
             </select>
-            <h4>Modellnavn</h4>
+            <h3>Modellnavn</h3>
             <input
               type="text"
-              placeholder="Modellnavn"
+              placeholder="Ghost Terreng"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.modellnavn = e.target.value)}
               required
             />
-            <h4>Hjulstørrelse</h4>
+            <h3>Hjulstørrelse</h3>
             <input
               type="number"
-              placeholder="Hjulstørrelse"
+              placeholder="24"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.hjul_størrelse = e.target.value)}
               required
             />
-            <h4>Girsystem</h4>
+            <h3>Girsystem</h3>
             <select
               value={this.girsystem}
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.girsystem = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg girsystem
               </option>
               <option value="Derailleurgir">Derailleurgir</option>
               <option value="Navgir">Navgir</option>
             </select>
-            <h4>Rammematerialet</h4>
+            <h3>Rammematerialet</h3>
             <input
               type="text"
-              placeholder="Ramme"
+              placeholder="Karbon"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.ramme = e.target.value)}
               required
             />
-            <h4>Tilhørighet</h4>
+            <h3>Tilhørighet</h3>
             <select
               id="lokasjon_id"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.lokasjon_id = event.target.value)}
             >
               {' '}
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg tilhørighet:
               </option>
               {this.tilhørighet.map(tilhørighet => (
@@ -1660,7 +1663,7 @@ export class LeggTilSykkel extends Component {
                 </option>
               ))}
             </select>
-            <h4>Bremsetype</h4>
+            <h3>Bremsetype</h3>
             <select
               name="bremse"
               value={this.bremse}
@@ -1668,18 +1671,18 @@ export class LeggTilSykkel extends Component {
               onChange={e => (this.bremse = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg bremsetype
               </option>
               <option value="Hydraulisk Skivebrems">Hydraulisk Skivebrems</option>
               <option value="Bremsekloss">Bremsekloss</option>
             </select>
-            <h4>Timepris</h4>
+            <h3>Timepris</h3>
             <input
               type="number"
               id="number"
               min="0"
-              placeholder="Timepris"
+              placeholder="120"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.timepris = e.target.value)}
               required
@@ -1751,16 +1754,16 @@ export class LeggTilUtstyr extends Component {
         </div>
         <div id="nyAnsattDiv">
           <form onSubmit={this.add}>
-            <h3>Legg til nytt utsyr</h3>
+            <h2>Legg til nytt utsyr</h2>
             <hr />
-            <h4>Utstyrstype</h4>
+            <h3>Utstyrstype</h3>
             <select
               value={this.type}
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.type = event.target.value)}
               required
             >
-              <option value="" selected hidden>
+              <option value="" defaultValue hidden>
                 Velg utstyrstype
               </option>
               <option value="Hjelm voksne">Hjelm voksne</option>
@@ -1771,15 +1774,15 @@ export class LeggTilUtstyr extends Component {
               <option value="Sykkelkurv">Sykkelkurv</option>
               <option value="Sykkelstativ">Sykkelstativ</option>
             </select>
-            <h4>Tilhørighet</h4>
+            <h3>Tilhørighet</h3>
             <select
               id="lokasjon_id"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.lokasjon_id = event.target.value)}
             >
               {' '}
-              <option value="" selected hidden>
-                Velg tilhørighet:
+              <option value="" defaultValue hidden>
+                Velg tilhørighet
               </option>
               {this.tilhørighet.map(tilhørighet => (
                 <option value={tilhørighet.id} key={tilhørighet.id}>
@@ -1787,21 +1790,21 @@ export class LeggTilUtstyr extends Component {
                 </option>
               ))}
             </select>
-            <h4>Beskrivelse</h4>
+            <h3>Beskrivelse</h3>
             <input
               type="text"
-              placeholder="Beskrivelse"
+              placeholder="Kodelås i stål"
               value={this.beskrivelse}
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.beskrivelse = e.target.value)}
               required
             />
-            <h4>Timepris</h4>
+            <h3>Pris for leie</h3>
             <input
               type="number"
               min="0"
               id="number"
-              placeholder="Timepris"
+              placeholder="65"
               class="genereltInputer form-control form-control-lg"
               onChange={e => (this.pris = event.target.value)}
               required
@@ -1858,11 +1861,11 @@ export class EndreSykkel extends Component {
         </div>
         <div id="nyAnsattDiv">
           <form onSubmit={this.save}>
-            <h3>
+            <h2>
               {this.sykler.modellnavn} med ID-nummer {this.sykler.id}{' '}
-            </h3>
+            </h2>
             <hr />
-            <h4>Status</h4>
+            <h3>Status</h3>
             <select
               value={this.sykler.status}
               class="genereltInputer form-control form-control-lg"
@@ -1873,7 +1876,7 @@ export class EndreSykkel extends Component {
               <option value="Reparasjon">Reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
-            <h4>Tilhørighet</h4>
+            <h3>Tilhørighet</h3>
             <select
               value={this.sykler.lokasjon_id}
               class="genereltInputer form-control form-control-lg"
@@ -1886,7 +1889,7 @@ export class EndreSykkel extends Component {
                 </option>
               ))}
             </select>
-            <h4>Timepris</h4>
+            <h3>Timepris</h3>
             <input
               type="number"
               class="genereltInputer form-control form-control-lg"
@@ -1958,11 +1961,11 @@ export class EndreUtstyrLager extends Component {
         </div>
         <div id="nyAnsattDiv">
           <form onSubmit={this.save}>
-            <h3>
+            <h2>
               {this.utstyr.type} med ID-nummer {this.utstyr.id}{' '}
-            </h3>
+            </h2>
             <hr />
-            <h4>Status</h4>
+            <h3>Status</h3>
             <select
               value={this.utstyr.status}
               class="genereltInputer form-control form-control-lg"
@@ -1973,7 +1976,7 @@ export class EndreUtstyrLager extends Component {
               <option value="Reparasjon">Til reparasjon</option>
               <option value="Utilgjengelig">Utilgjengelig</option>
             </select>
-            <h4>Tilhørighet</h4>
+            <h3>Tilhørighet</h3>
             <select
               value={this.utstyr.lokasjon_id}
               class="genereltInputer form-control form-control-lg"
@@ -1986,7 +1989,7 @@ export class EndreUtstyrLager extends Component {
                 </option>
               ))}
             </select>
-            <h4>Timepris</h4>
+            <h3>Timepris</h3>
             <input
               type="number"
               class="genereltInputer form-control form-control-lg"

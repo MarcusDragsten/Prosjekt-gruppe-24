@@ -104,7 +104,7 @@ export class AktiveBestillinger extends Component {
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
-              <h4>Velg start- og sluttdato</h4>
+              <h3>Velg start- og sluttdato</h3>
               <input
                 id="utlevering_dato"
                 type="date"
@@ -121,9 +121,8 @@ export class AktiveBestillinger extends Component {
                 required
               />
             </div>
-
             <div class="form-inline">
-              <h4>Filtrer med andre filtre:</h4>
+              <h3>Filtrer med andre filtre</h3>
               <select
                 id="bestilling_type"
                 class="genereltInputer form-control form-control-lg"
@@ -136,7 +135,6 @@ export class AktiveBestillinger extends Component {
                 <option value="Dagsutleie">Dagsutleie</option>
                 <option value="Helgeutleie">Helgeutleie</option>
               </select>
-
               <input
                 type="text"
                 id="kunde_epost"
@@ -157,7 +155,6 @@ export class AktiveBestillinger extends Component {
                   <option key={steder.id}>{steder.område}</option>
                 ))}
               </select>
-
               <select
                 id="innleveringssted"
                 class="genereltInputer form-control form-control-lg"
@@ -171,6 +168,7 @@ export class AktiveBestillinger extends Component {
                 ))}
               </select>
             </div>
+            <br />
             <button type="submit" class="btn">
               Filter
             </button>
@@ -347,7 +345,7 @@ export class BestillingHistorikk extends Component {
         <div id="filtrerAktiveBestillingerDiv">
           <form onSubmit={this.sok}>
             <div class="form-inline">
-              <h4>Velg start- og sluttidspunkt</h4>
+              <h3>Velg start- og sluttidspunkt</h3>
               <input
                 id="utlevering_dato"
                 type="date"
@@ -365,7 +363,7 @@ export class BestillingHistorikk extends Component {
               />
             </div>
             <div class="form-inline">
-              <h4>Filtrer med andre filtre:</h4>
+              <h3>Filtrer med andre filtre</h3>
               <select
                 id="bestilling_type"
                 class="form-control form-control-lg"
