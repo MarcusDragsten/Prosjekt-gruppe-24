@@ -53,6 +53,30 @@ class SykkelService extends Component {
     );
   }
 
+  hvorMangeSykleriBestilling(bestilling_id, success) {
+    connection.query(
+      'select count (bestilling_id) as hvorMangeValgt from Sykkel where bestilling_id = ?',
+      [bestilling_id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
+
+  hvorMyeUtstyriBestilling(bestilling_id, success) {
+    connection.query(
+      'select count (bestilling_id) as hvorMangeValgt from Utstyr where bestilling_id = ?',
+      [bestilling_id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results);
+      }
+    );
+  }
+
   leggInnSykler(id, type, hvorMange, success) {
     connection.query(
       'UPDATE Sykkel SET status="Utleid", bestilling_id=? WHERE type=? AND status="Ledig" LIMIT ?',

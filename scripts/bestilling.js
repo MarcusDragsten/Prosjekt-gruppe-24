@@ -30,6 +30,9 @@ export class Bestilling extends Component {
   sykler = [];
   syklerLedig = [];
 
+  utstyrValgt = [];
+  syklerValgt = [];
+
   herre = 0;
   dame = 0;
   herreBagasje = 0;
@@ -112,7 +115,7 @@ export class Bestilling extends Component {
           <h1>Fyll inn bestillingskjema for kunden</h1>
           <hr />
           <div id="nyKundeTekst">
-            Er det en ny kunde?{' '}
+            <u>Er det en ny kunde?</u>{' '}
             <button type="button" class="btn" id="nyKundeKnapp" onClick={this.nyKundePush}>
               Klikk her
             </button>
@@ -360,19 +363,22 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteRacerArray[0]}</div>
             </div>
           </div>
-          <button type="button" id="leggInnSyklerKnapp" class="btn" onClick={this.leggInnValgteSykler}>
-            Legg inn sykler i bestillingen
-          </button>
-          <button type="button" id="fjernSyklerKnapp" class="btn" onClick={this.fjernSyklerFraBestilling}>
-            Fjern sykler som er lagt inn i bestillingen
-          </button>
+          <div>
+            <button type="button" id="leggInnSyklerKnapp" class="btn" onClick={this.leggInnValgteSykler}>
+              Legg inn sykler i bestillingen
+            </button>
+            <button type="button" id="fjernSyklerKnapp" class="btn" onClick={this.fjernSyklerFraBestilling}>
+              Fjern sykler i bestillingen
+            </button>
+            <br />
+            <button type="button" id="hentOversiktKnapp" class="btn" onClick={this.hentSyklerOversikt}>
+              Gå videre
+            </button>
+            <button type="button" id="avbrytBestillingSykkel" class="btn" onClick={this.avbrytBestillingSykkel}>
+              Avbryt bestilling
+            </button>
+          </div>
           <br />
-          <button type="button" id="hentOversiktKnapp" class="btn" onClick={this.hentSyklerOversikt}>
-            Gå videre
-          </button>
-          <button type="button" id="avbrytBestillingSykkel" class="btn" onClick={this.avbrytBestillingSykkel}>
-            Avbryt bestilling
-          </button>
         </div>
         <div id="velgUtstyr">
           <h1>Velg Utstyr</h1>
@@ -462,19 +468,22 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelvognArray[0]}</div>
             </div>
           </div>
-          <button type="button" class="btn" onClick={this.wrapper3}>
-            Legg inn utstyr
-          </button>
-          <button type="button" class="btn" onClick={this.fjernUtstyrFraBestilling}>
-            Fjern utstyr som er lagt inn i bestillingen
-          </button>
+          <div>
+            <button type="button" class="btn" onClick={this.wrapper3}>
+              Legg inn utstyr
+            </button>
+            <button type="button" class="btn" onClick={this.fjernUtstyrFraBestilling}>
+              Fjern utstyr i bestillingen
+            </button>
+            <br />
+            <button type="button" class="btn" id="lagOversiktKnapp" onClick={this.lagOversikt}>
+              Gå videre
+            </button>
+            <button type="button" id="avbrytBestillingUtstyr" class="btn" onClick={this.avbrytBestillingUtstyr}>
+              Avbryt Bestilling
+            </button>
+          </div>
           <br />
-          <button type="button" class="btn" id="lagOversiktKnapp" onClick={this.lagOversikt}>
-            Gå videre
-          </button>
-          <button type="button" id="avbrytBestillingUtstyr" class="btn" onClick={this.avbrytBestillingUtstyr}>
-            Avbryt Bestilling
-          </button>
         </div>
         <div id="bestillingOversikt">
           <h1>Bestillingoversikt</h1>
@@ -521,7 +530,6 @@ export class Bestilling extends Component {
 
   mounted() {
     document.getElementById('leggInnSyklerKnapp').disabled = true;
-    document.getElementById('fjernSyklerKnapp').disabled = true;
     document.getElementById('hentOversiktKnapp').disabled = true;
 
     bestillingService.hentUtleveringsted(utleveringssteder => {
@@ -868,6 +876,12 @@ export class Bestilling extends Component {
       this.syklerLedig = syklerLedig;
     });
 
+    sykkelService.hvorMangeSykleriBestilling(this.id[0].lastInsertId, syklerValgt => {
+      this.syklerValgt = syklerValgt;
+      let hvorMange = this.syklerValgt[0].hvorMangeValgt;
+      alert('Det ligger nå ' + hvorMange + ' sykler i bestillingen!');
+    });
+
     document.getElementById('inputHybridHerre').value = '';
     document.getElementById('inputHybridDame').value = '';
     document.getElementById('inputHybridHerreBagasje').value = '';
@@ -888,13 +902,16 @@ export class Bestilling extends Component {
     this.elSykkel = 0;
     this.racer = 0;
 
-    document.getElementById('hentOversiktKnapp').disabled = false;
+    if (this.innlagteSykler > 0) {
+      document.getElementById('hentOversiktKnapp').disabled = false;
+    }
     document.getElementById('fjernSyklerKnapp').disabled = false;
   }
 
   fjernSyklerFraBestilling() {
     sykkelService.fjernSyklerFraBestilling(this.id[0].lastInsertId, fjernSykler => {
       document.getElementById('hentOversiktKnapp').disabled = true;
+      alert('Sykler fjernet!');
       sykkelService.hvorMangeSyklerLedig(syklerLedig => {
         this.syklerLedig = syklerLedig;
         this.antallValgteHerreArray[0] = '';
@@ -1041,6 +1058,12 @@ export class Bestilling extends Component {
       this.utstyrLedig = utstyrLedig;
     });
 
+    sykkelService.hvorMyeUtstyriBestilling(this.id[0].lastInsertId, utstyrValgt => {
+      this.utstyrValgt = utstyrValgt;
+      let hvorMange = this.utstyrValgt[0].hvorMangeValgt;
+      alert('Det ligger nå ' + hvorMange + ' utstyr i bestillingen!');
+    });
+
     document.getElementById('inputBarnesete').value = '';
     document.getElementById('inputHjelmBarn').value = '';
     document.getElementById('inputHjelmVoksne').value = '';
@@ -1060,6 +1083,7 @@ export class Bestilling extends Component {
 
   fjernUtstyrFraBestilling() {
     sykkelService.fjernUtstyrFraBestilling(this.id[0].lastInsertId, fjernUtstyr => {
+      alert('Utstyr fjernet!');
       sykkelService.hvorMyeUtstyrLedig(utstyrLedig => {
         this.utstyrLedig = utstyrLedig;
         this.antallValgteBarneseteArray[0] = '';
@@ -1090,9 +1114,9 @@ export class Bestilling extends Component {
     let date1 = new Date(this.utlevering_dato + ' ' + this.utlevering_tid);
     let date2 = new Date(this.innlevering_dato + ' ' + this.innlevering_tid);
 
-    let timer = Math.abs(Math.round((date2 - date1) / 36e5));
+    let timer = Math.round((date2 - date1) / 36e5);
 
-    let dager = Math.abs(Math.round((date2 - date1) / 36e5) / 12);
+    let dager = Math.round((date2 - date1) / 36e5 / 12);
 
     if (this.sykkelOversikt.length == 0) {
       this.alternativInfo1 = 'Du har ikke lagt inn noen sykler i bestillingen';
@@ -1126,7 +1150,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
@@ -1198,7 +1222,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
@@ -1276,7 +1300,7 @@ export class Bestilling extends Component {
             this.godKunde[0].god_kunde +
             ' bestillinger. I tillegg har du lagt inn en ordre med ' +
             this.innlagteSykler +
-            ' sykler. Derfor fortjener du en heftig rabatt på 20%!';
+            ' sykler. Dette regnes som en gruppebestilling. Derfor fortjener du en heftig rabatt på 20%!';
         } else if (this.innlagteSykler >= 5) {
           for (let i = 0; i < this.sykkelOversikt.length; i++) {
             this.tabell1.push(
@@ -1414,11 +1438,13 @@ export class Bestilling extends Component {
           if (x == true) {
             this.leggInnValgtUtstyr();
             this.hentUtstyrOversikt();
+            break;
           }
           break;
         } else {
           this.leggInnValgtUtstyr();
           this.hentUtstyrOversikt();
+          break;
         }
       } else if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
         if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
@@ -1429,11 +1455,13 @@ export class Bestilling extends Component {
           if (y == true) {
             this.leggInnValgtUtstyr();
             this.hentUtstyrOversikt();
+            break;
           }
           break;
         } else {
           this.leggInnValgtUtstyr();
           this.hentUtstyrOversikt();
+          break;
         }
       } else if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
         if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
@@ -1444,11 +1472,13 @@ export class Bestilling extends Component {
           if (z == true) {
             this.leggInnValgtUtstyr();
             this.hentUtstyrOversikt();
+            break;
           }
           break;
         } else {
           this.leggInnValgtUtstyr();
           this.hentUtstyrOversikt();
+          break;
         }
       } else if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {
         if (this.barnesete > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
@@ -1459,15 +1489,18 @@ export class Bestilling extends Component {
           if (r == true) {
             this.leggInnValgtUtstyr();
             this.hentUtstyrOversikt();
+            break;
           }
           break;
         } else {
           this.leggInnValgtUtstyr();
           this.hentUtstyrOversikt();
+          break;
         }
       } else {
         this.leggInnValgtUtstyr();
         this.hentUtstyrOversikt();
+        break;
       }
     }
   }
