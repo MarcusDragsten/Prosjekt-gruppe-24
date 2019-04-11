@@ -90,7 +90,7 @@ export class AnsatteAdmin extends Component {
           </button>
         </div>
         <div id="ansatteDiv">
-          <h1>Liste over ansatte</h1>
+          <h2>Liste over ansatte</h2>
           <i>
             <p>Klikk på en ansatt for flere valg</p>
           </i>
@@ -138,7 +138,7 @@ export class AnsatteDetails extends Component {
 
     return (
       <div id="ansatteDetailsDiv">
-        <h1>Detaljer for {this.ansatte.fornavn}</h1>
+        <h2>Detaljer for {this.ansatte.fornavn}</h2>
         <hr />
         <p>Fornavn: {this.ansatte.fornavn}</p>
         <p>Etternavn: {this.ansatte.etternavn}</p>
@@ -201,14 +201,14 @@ export class NyAnsatt extends Component {
           </button>
         </div>
         <div id="nyAnsattDiv">
-          <h1>Legg til en ansatt</h1>
+          <h2>Legg til en ansatt</h2>
           <hr />
           <h3>Fornavn</h3>
           <form onSubmit={this.add}>
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv fornavn"
+              placeholder="Ola"
               value={this.fornavn}
               onChange={e => (this.fornavn = e.target.value)}
               required
@@ -217,7 +217,7 @@ export class NyAnsatt extends Component {
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv etternavn"
+              placeholder="Nordmann"
               value={this.etternavn}
               onChange={e => (this.etternavn = e.target.value)}
               required
@@ -226,7 +226,7 @@ export class NyAnsatt extends Component {
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv brukernavn"
+              placeholder="olanor"
               value={this.brukernavn}
               onChange={e => (this.brukernavn = e.target.value)}
               required
@@ -235,7 +235,7 @@ export class NyAnsatt extends Component {
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv passord"
+              placeholder="********"
               value={this.passord}
               onChange={e => (this.passord = e.target.value)}
               required
@@ -244,7 +244,7 @@ export class NyAnsatt extends Component {
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv epost"
+              placeholder="olanor@sykkel.no"
               value={this.epost}
               onChange={e => (this.epost = e.target.value)}
               required
@@ -253,7 +253,7 @@ export class NyAnsatt extends Component {
             <input
               type="number"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv telefonnummer"
+              placeholder="+47 12345678"
               value={this.telefon}
               onChange={e => (this.telefon = e.target.value)}
               required
@@ -342,7 +342,7 @@ export class AnsatteEdit extends Component {
           </button>
         </div>
         <div id="ansatteEditDiv">
-          <h1>Rediger informasjonen til {this.ansatte.fornavn}</h1>
+          <h2>Rediger informasjonen til {this.ansatte.fornavn}</h2>
           <hr />
           <h3>Fornavn</h3>
           <input
@@ -456,7 +456,7 @@ export class Lokasjoner extends Component {
           </button>
         </div>
         <div id="lokasjonerDiv">
-          <h1>Liste over lokasjoner</h1>
+          <h2>Liste over lokasjoner</h2>
           <i>
             <p>Klikk på en lokasjon for flere valg</p>
           </i>
@@ -554,14 +554,14 @@ export class LokasjonNew extends Component {
           </button>
         </div>
         <div id="nyLokasjonDiv">
-          <h1>Legg til ny lokasjon</h1>
+          <h2>Legg til ny lokasjon</h2>
           <hr />
           <h3>Adresse</h3>
           <form onSubmit={this.add}>
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv adresse"
+              placeholder="Holbergsplassen"
               value={this.adresse}
               onChange={e => (this.adresse = e.target.value)}
               required
@@ -570,7 +570,7 @@ export class LokasjonNew extends Component {
             <input
               type="number"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv postkode"
+              placeholder="5700"
               value={this.postkode}
               onChange={e => (this.postkode = e.target.value)}
               required
@@ -579,7 +579,7 @@ export class LokasjonNew extends Component {
             <input
               type="text"
               class="genereltInputer form-control form-control-lg"
-              placeholder="Skriv område"
+              placeholder="Voss"
               value={this.område}
               onChange={e => (this.område = e.target.value)}
               required
@@ -730,7 +730,7 @@ export class Rapport extends Component {
             Tilbake til startsiden
           </button>
         </div>
-        <h2>Rapport over alle inntekter:</h2>
+        <h2>Rapport over alle inntekter</h2>
         <i>
           <p>En rapport som viser inntekter for alle innleverte bestillinger</p>
         </i>
@@ -741,8 +741,7 @@ export class Rapport extends Component {
           <div id="filtrerRapportTotalDiv">
             <form onSubmit={this.sok}>
               <div class="form-inline">
-                <h3>Filtrer her:</h3>
-                <h4>Velg ut- og innleveringsdato</h4>
+                <h3>Velg ut- og innleveringsdato</h3>
                 <input
                   id="utlevering_dato"
                   type="date"
@@ -785,7 +784,7 @@ export class Rapport extends Component {
           </div>
         </div>
         <div id="rapportAnsatteTabellDiv">
-          <h2>Rapport over alle inntekter per selger:</h2>
+          <h2>Rapport over alle inntekter per selger</h2>
           <i>
             <p>En rapport som viser inntekter for alle innleverte bestillinger per selger</p>
           </i>
@@ -795,8 +794,7 @@ export class Rapport extends Component {
           <div id="filtrerRapportAnsatteDiv">
             <form onSubmit={this.sok2}>
               <div class="form-inline">
-                <h3>Filtrer her:</h3>
-                <h4>Velg ut- og innleveringsdato</h4>
+                <h3>Velg ut- og innleveringsdato</h3>
                 <input
                   id="utlevering_dato2"
                   type="date"
@@ -1130,7 +1128,7 @@ export class AnsatteSekretær extends Component {
           </button>
         </div>
         <div id="ansatteDiv">
-          <h1>Liste over ansatte</h1>
+          <h2>Liste over ansatte</h2>
           <i>
             <p>Klikk på en ansatt for mer informasjon</p>
           </i>
@@ -1174,7 +1172,7 @@ export class AnsatteDetailsSekretær extends Component {
 
     return (
       <div id="ansatteDetailsDiv">
-        <h1>Detaljer for {this.ansatte.fornavn}</h1>
+        <h2>Detaljer for {this.ansatte.fornavn}</h2>
         <hr />
         <p>Fornavn: {this.ansatte.fornavn}</p>
         <p>Etternavn: {this.ansatte.etternavn}</p>
@@ -1206,7 +1204,7 @@ export class LokasjonerSekretær extends Component {
           </button>
         </div>
         <div id="lokasjonerDiv">
-          <h1>Liste over lokasjoner</h1>
+          <h2>Liste over lokasjoner</h2>
           <i>
             <p>Klikk på en lokasjon for mer informasjon</p>
           </i>
@@ -1248,7 +1246,7 @@ export class LokasjonerDetailsSekretær extends Component {
   render() {
     return (
       <div id="ansatteDetailsDiv">
-        <h1>Detaljer for {this.lokasjoner.område}</h1>
+        <h2>Detaljer for {this.lokasjoner.område}</h2>
         <hr />
         <p>Adresse: {this.lokasjoner.adresse}</p>
         <p>Postkode: {this.lokasjoner.postkode}</p>
@@ -1311,7 +1309,7 @@ export class RapportSekretær extends Component {
           <div id="filtrerRapportTotalDiv">
             <form onSubmit={this.sok}>
               <div class="form-inline">
-                <h4>Velg ut- og innleveringtidspunkt</h4>
+                <h3>Velg ut- og innleveringsdato</h3>
                 <input
                   id="utlevering_dato"
                   type="date"
@@ -1354,7 +1352,7 @@ export class RapportSekretær extends Component {
           </div>
         </div>
         <div id="rapportAnsatteTabellDiv">
-          <h2>Rapport over alle inntekter per selger:</h2>
+          <h2>Rapport over alle inntekter per selger</h2>
           <i>
             <p>En rapport som viser inntekter for alle innleverte bestillinger per selger</p>
           </i>
@@ -1364,7 +1362,7 @@ export class RapportSekretær extends Component {
           <div id="filtrerRapportAnsatteDiv">
             <form onSubmit={this.sok2}>
               <div class="form-inline">
-                <h4>Velg ut- og innleveringtidspunkt</h4>
+                <h3>Velg ut- og innleveringsdato</h3>
                 <input
                   id="utlevering_dato2"
                   type="date"

@@ -112,7 +112,7 @@ export class Bestilling extends Component {
           <h1>Bestillingsiden</h1>
         </div>
         <div id="nyBestilling" class="form-group">
-          <h1>Fyll inn bestillingskjema for kunden</h1>
+          <h2>Fyll inn bestillingskjema for kunden</h2>
           <hr />
           <div id="nyKundeTekst">
             <u>Er det en ny kunde?</u>{' '}
@@ -228,16 +228,17 @@ export class Bestilling extends Component {
           </form>
         </div>
         <div id="velgSykkel">
-          <h1>Velg hvor mange sykler kunden vil ha:</h1>
+          <h2>Velg sykler til kunden</h2>
           <i>
             <p>
-              Velg ønsket antall sykler per type som kunden ønsker. Deretter klikk "Legg inn sykler i bestilling".
-              Deretter gå videre til valg av utstyr
+              Velg ønsket antall sykler per type som kunden ønsker. Deretter klikk "Legg inn sykler". Deretter gå videre
+              til valg av utstyr
             </p>
           </i>
+          <hr />
           <div id="syklerDiv">
             <div id="ghostHybridHerreDiv" class="sykkelDiver">
-              <h4>Hybridsykkel Herre</h4>
+              <h3>Hybridsykkel Herre</h3>
               <hr />
               <img src="../bilder/sykkel-herre-uten.jpeg" alt="Hybridsykkel Herre" />
               <input
@@ -251,7 +252,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHerreArray[0]}</div>
             </div>
             <div id="ghostHybridDameDiv" class="sykkelDiver">
-              <h4>Hybridsykkel Dame</h4>
+              <h3>Hybridsykkel Dame</h3>
               <hr />
               <img src="../bilder/sykkel-dame-uten.jpeg" alt="Hybridsykkel Dame" />
               <input
@@ -265,7 +266,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteDameArray[0]}</div>
             </div>
             <div id="ghostHybridHerreBagasjeDiv" class="sykkelDiver">
-              <h4>Hybridsykkel Herre m/ Bagasjebrett</h4>
+              <h3>Hybridsykkel Herre m/ Bagasjebrett</h3>
               <hr />
               <img src="../bilder/sykkel-herre.jpeg" alt="Hybridsykkel Herre m/Bagasjebrett" />
               <input
@@ -279,7 +280,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHerreBagasjeArray[0]}</div>
             </div>
             <div id="ghostHybridDameBagasjeDiv" class="sykkelDiver">
-              <h4>Hybridsykkel Dame m/ Bagasjebrett</h4>
+              <h3>Hybridsykkel Dame m/ Bagasjebrett</h3>
               <hr />
               <img src="../bilder/sykkel-dame.jpeg" alt="Hybridsykkel Dame m/Bagasjebrett" />
               <input
@@ -293,7 +294,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteDameBagasjeArray[0]}</div>
             </div>
             <div id="barnesykkelDiv" class="sykkelDiver">
-              <h4>Barnesykkel</h4>
+              <h3>Barnesykkel</h3>
               <hr />
               <img src="../bilder/sykkel-barn.jpeg" alt="Barnesykkel" />
               <input
@@ -307,7 +308,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteBarnArray[0]}</div>
             </div>
             <div id="juniorsykkelDiv" class="sykkelDiver">
-              <h4>Juniorsykkel</h4>
+              <h3>Juniorsykkel</h3>
               <hr />
               <img src="../bilder/sykkel-junior.jpg" alt="Juniorsykkel" />
               <input
@@ -321,7 +322,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteJuniorArray[0]}</div>
             </div>
             <div id="ghostTerrengDiv" class="sykkelDiver">
-              <h4>Terrengsykkel</h4>
+              <h3>Terrengsykkel</h3>
               <hr />
               <img src="../bilder/sykkel-terreng.jpeg" alt="Terrengsykkel" />
               <input
@@ -335,7 +336,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteTerrengArray[0]}</div>
             </div>
             <div id="elSykkelDiv" class="sykkelDiver">
-              <h4>El-sykkel</h4>
+              <h3>El-sykkel</h3>
               <hr />
               <img src="../bilder/sykkel-el.jpeg" alt="El-sykkel" />
               <input
@@ -349,7 +350,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteElsykkelArray[0]}</div>
             </div>
             <div id="racerSykkelDiv" class="sykkelDiver">
-              <h4>Landeveissykkel</h4>
+              <h3>Landeveissykkel</h3>
               <hr />
               <img src="../bilder/sykkel-racer.jpg" alt="Landeveissykkel" />
               <input
@@ -363,9 +364,10 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteRacerArray[0]}</div>
             </div>
           </div>
+          <hr />
           <div>
             <button type="button" id="leggInnSyklerKnapp" class="btn" onClick={this.leggInnValgteSykler}>
-              Legg inn sykler i bestillingen
+              Legg inn sykler
             </button>
             <button type="button" id="fjernSyklerKnapp" class="btn" onClick={this.fjernSyklerFraBestilling}>
               Fjern sykler i bestillingen
@@ -381,10 +383,17 @@ export class Bestilling extends Component {
           <br />
         </div>
         <div id="velgUtstyr">
-          <h1>Velg Utstyr</h1>
+          <h2>Velg utstyr til kunden</h2>
+          <i>
+            <p>
+              Velg ønsket antall utstyr per type som kunden ønsker. Deretter klikk "Legg inn utstyr". Om kunden ikke
+              ønsker å leie utstyr, kan du bare gå videre.
+            </p>
+          </i>
+          <hr />
           <div id="utstyrDiv">
             <div id="barneseteDiv" class="utstyrDiver">
-              <h4>Barnesete</h4>
+              <h3>Barnesete</h3>
               <img src="../bilder/barnesete.jpeg" alt="Barnesete" />
               <input
                 type="number"
@@ -396,7 +405,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteBarneseteArray[0]}</div>
             </div>
             <div id="hjelmBarnDiv" class="utstyrDiver">
-              <h4>Hjelm for barn</h4>
+              <h3>Hjelm for barn</h3>
               <img src="../bilder/hjelm-barn.jpeg" alt="Hjelm Barn" />
               <input
                 type="number"
@@ -408,7 +417,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmBarnArray[0]}</div>
             </div>
             <div id="hjelmVoksneDiv" class="utstyrDiver">
-              <h4>Hjelm for voksne</h4>
+              <h3>Hjelm for voksne</h3>
               <img src="../bilder/hjelm-voksne.jpeg" alt="Hjelm Voksne" />
               <input
                 type="number"
@@ -420,7 +429,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteHjelmVoksneArray[0]}</div>
             </div>
             <div id="sykkelkurvDiv" class="utstyrDiver">
-              <h4>Sykkelkurv</h4>
+              <h3>Sykkelkurv</h3>
               <img src="../bilder/sykkelkurv.jpeg" alt="Sykkelkurv" />
               <input
                 type="number"
@@ -432,7 +441,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelkurvArray[0]}</div>
             </div>
             <div id="sykkellåsDiv" class="utstyrDiver">
-              <h4>Sykkellås</h4>
+              <h3>Sykkellås</h3>
               <img src="../bilder/sykkellås.jpeg" alt="Sykkellås" />
               <input
                 type="number"
@@ -444,7 +453,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkellåsArray[0]}</div>
             </div>
             <div id="sykkelstativDiv" class="utstyrDiver">
-              <h4>Sykkelstativ</h4>
+              <h3>Sykkelstativ</h3>
               <img src="../bilder/sykkelstativ-hund.jpeg" alt="Sykkelstativ" />
               <input
                 type="number"
@@ -456,7 +465,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelstativArray[0]}</div>
             </div>
             <div id="sykkelvogn" class="utstyrDiver">
-              <h4>Sykkelvogn</h4>
+              <h3>Sykkelvogn</h3>
               <img src="../bilder/sykkelvogn.jpeg" alt="Sykkelvogn" />
               <input
                 type="number"
@@ -468,6 +477,7 @@ export class Bestilling extends Component {
               <div class="antallValgteDiver">Antall valgte: {this.antallValgteSykkelvognArray[0]}</div>
             </div>
           </div>
+          <hr />
           <div>
             <button type="button" class="btn" onClick={this.wrapper3}>
               Legg inn utstyr
@@ -486,11 +496,11 @@ export class Bestilling extends Component {
           <br />
         </div>
         <div id="bestillingOversikt">
-          <h1>Bestillingoversikt</h1>
+          <h2>Bestillingoversikt</h2>
           <hr />
           <div id="bestillingInfoDiv">{this.info[0]}</div>
           <hr />
-          <h3>Sykler i bestillingen:</h3>
+          <h4>Sykler i bestillingen:</h4>
           <table id="customers" align="center">
             <tbody>{this.tabell1}</tbody>
           </table>
@@ -499,7 +509,7 @@ export class Bestilling extends Component {
             Sum å betale for sykler: <u>{this.sumSykler}</u>
           </p>
           <hr />
-          <h3>Utstyr i bestillingen:</h3>
+          <h4>Utstyr i bestillingen:</h4>
           <table id="customers" align="center">
             <tbody>{this.tabell2}</tbody>
           </table>
@@ -508,7 +518,6 @@ export class Bestilling extends Component {
             Sum å betale for utstyr: <u>{this.sumUtstyr}</u>
           </p>
           <hr />
-          <br />
           <p>
             En bestillingsbekreftelse er sendt til: <b>{this.kunde_epost}</b>
           </p>
@@ -1269,7 +1278,7 @@ export class Bestilling extends Component {
               <tr>
                 <td>{this.sykkelOversikt[i].modellnavn}</td>
                 <td>{this.sykkelOversikt[i].timepris * dager},-</td>
-                <td>Du sparer: {this.sykkelOversikt[i].timepris * dager * 0.95},- for Dagsutleie</td>
+                <td>Du sparer: {this.sykkelOversikt[i].timepris * dager * 0.05},- for Dagsutleie</td>
               </tr>
             );
             let tall = this.sykkelOversikt[i].timepris * dager;
@@ -1347,7 +1356,7 @@ export class Bestilling extends Component {
               <tr>
                 <td>{this.sykkelOversikt[i].modellnavn}</td>
                 <td>{this.sykkelOversikt[i].timepris * dager},-</td>
-                <td>Du sparer: {this.sykkelOversikt[i].timepris * dager * 0.9},- for Helgeutleie</td>
+                <td>Du sparer: {this.sykkelOversikt[i].timepris * dager * 0.1},- for Helgeutleie</td>
               </tr>
             );
             let tall = this.sykkelOversikt[i].timepris * dager;
@@ -1404,7 +1413,7 @@ export class Bestilling extends Component {
   lagBestillingInfoId() {
     this.info.push(
       <div>
-        <h2>Takk for bestillingen!</h2>
+        <h3>Takk for bestillingen!</h3>
         <p>
           Orderen din er mottatt og bekreftet med ordrenummeret: <b>{this.id[0].lastInsertId}</b>
         </p>

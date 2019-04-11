@@ -1920,7 +1920,7 @@ export class NyKunde extends Component {
           </button>
         </div>
         <div id="nyKundeDiv">
-          <h1>Legg til ny kunde</h1>
+          <h2>Legg til ny kunde</h2>
           <hr />
           <form onSubmit={this.leggTilKunde}>
             <h3>Fornavn:</h3>
@@ -1963,14 +1963,14 @@ export class NyKunde extends Component {
         </div>
         <hr />
         <div id="kundetabell">
-          <h1>Alle eksisterende kunder</h1>
+          <h2>Alle eksisterende kunder</h2>
           <button type="button" id="toggleFiltrerKnapp" class="btn" onClick={this.toggleFiltrer}>
             Filtrer tabellen?
           </button>
           <br />
           <div id="filtrerKunderDiv">
             <div class="form-inline">
-              <h4>Hva vil du finne kunden med?</h4>
+              <h3>Hva vil du finne kunden med?</h3>
               <input
                 type="text"
                 id="etternavnInput"
@@ -2128,11 +2128,11 @@ export class KundeEdit extends Component {
           </button>
         </div>
         <div id="nyAnsattDiv">
-          <h1>
+          <h2>
             Rediger {this.kunde.fornavn} {this.kunde.etternavn}?
-          </h1>
+          </h2>
           <hr />
-          <h4>Epost</h4>
+          <h3>Epost</h3>
           <i class="material-icons" id="infoIkon" onClick={this.toggleInfo}>
             info_outline
           </i>
@@ -2150,7 +2150,7 @@ export class KundeEdit extends Component {
               til eventueller rabatter)
             </i>
           </p>
-          <h4>Fornavn</h4>
+          <h3>Fornavn</h3>
           <input
             type="text"
             class="genereltInputer form-control form-control-lg"
@@ -2158,7 +2158,7 @@ export class KundeEdit extends Component {
             onChange={e => (this.kunde.fornavn = event.target.value)}
             required
           />
-          <h4>Etternavn</h4>
+          <h3>Etternavn</h3>
           <input
             type="text"
             class="genereltInputer form-control form-control-lg"
@@ -2166,7 +2166,7 @@ export class KundeEdit extends Component {
             onChange={e => (this.kunde.etternavn = event.target.value)}
             required
           />
-          <h4>Telefon</h4>
+          <h3>Telefon</h3>
           <input
             type="number"
             class="genereltInputer form-control form-control-lg"
