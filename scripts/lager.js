@@ -1997,7 +1997,6 @@ export class EndreUtstyrLager extends Component {
               onChange={e => (this.utstyr.pris = event.target.value)}
               required
             />
-
             <br />
             <button type="submit" class="btn">
               Lagre
