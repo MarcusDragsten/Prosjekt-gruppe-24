@@ -9,6 +9,8 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class AdminStartside extends Component {
+  //Startside for daglig leder. Har mulighet til å redigere info, samt legge til/slette ansatte og lokasjoner.
+  //Har tilgang til rapporter
   ansatt = [];
 
   render() {
@@ -54,6 +56,7 @@ export class AdminStartside extends Component {
   }
 
   mounted() {
+    //Henter valgt ansatt med en unik ansatt-ID
     ansatteService.getAnsatt(this.props.match.params.ansattId, ansatt => {
       this.ansatt = ansatt;
     });
@@ -77,9 +80,9 @@ export class AdminStartside extends Component {
 }
 
 export class AnsatteAdmin extends Component {
-  // Oversikt over ansatte. Mulighet til å endre ansattinformasjon og fjerne/legge til ansatte. Hovedside for daglig leder og sekretær.  Muligens daglig leder kan endre informasjon og sekretær kan bare lese.
+  // Viser en oversikt over ansatte ved bedriften.
   ansatte = [];
-  //Things to do! Bare admin(reodor) og sektretær (ludvig) har tilgang her - Bare Reodor kan legge til og endre ansatt-informasjon
+
   render() {
     return (
       <div>
@@ -130,7 +133,7 @@ export class AnsatteAdmin extends Component {
 }
 
 export class AnsatteDetails extends Component {
-  //Viser mer informasjon om ansatte
+  //Viser videre informasjon om ansatte
   ansatte = [];
 
   render() {
@@ -444,6 +447,7 @@ export class AnsatteEdit extends Component {
 }
 
 export class Lokasjoner extends Component {
+  //Viser oversikt over bedriftens lokasjoner. Hvor de har lager/hvor de har innleveringssteder
   lokasjoner = [];
 
   render() {
@@ -495,7 +499,7 @@ export class Lokasjoner extends Component {
 }
 
 export class LokasjonerDetails extends Component {
-  //Viser mer informasjon om ansatte
+  //Viser mer informasjon om bedriftens lokasjon
   lokasjoner = [];
 
   render() {
@@ -538,7 +542,7 @@ export class LokasjonerDetails extends Component {
 }
 
 export class LokasjonNew extends Component {
-  //Legge til flere ansatte
+  //Legge til flere lokasjoner
   adresse = '';
   postkode = '';
   område = '';
@@ -620,7 +624,7 @@ export class LokasjonNew extends Component {
 }
 
 export class LokasjonEdit extends Component {
-  //Redigere informasjon om ansatte
+  //Redigere informasjon om lokasjoner
   lokasjoner = [];
 
   render() {
@@ -695,6 +699,7 @@ export class LokasjonEdit extends Component {
 }
 
 export class Rapport extends Component {
+  //Viser en rapport om bedriftens bestillinger. Hvor mye de har tjent og hvor mye hver selger har lagd bestillinger
   tabell1 = [];
   tabell2 = [];
 
@@ -953,6 +958,7 @@ export class Rapport extends Component {
   }
 
   createTable1() {
+    //Tabell over alle rapporter
     if (this.totalRapport == 0) {
       alert('Ingen rader matchet søket ditt');
     } else {
@@ -999,6 +1005,7 @@ export class Rapport extends Component {
   }
 
   createTable2() {
+    //Tabell over rapporter gjort av hver enkelt selger
     if (this.ansatteRapport == 0) {
       alert('Ingen rader matchet søket ditt');
     } else {
@@ -1048,6 +1055,7 @@ export class Rapport extends Component {
 }
 
 export class SekretærStartside extends Component {
+  //Startside for bedriftens sekretær
   ansatt = [];
 
   render() {
@@ -1116,6 +1124,7 @@ export class SekretærStartside extends Component {
 }
 
 export class AnsatteSekretær extends Component {
+  //Side med en oversikt over bedriftens ansatte
   ansatte = [];
 
   render() {
@@ -1165,6 +1174,7 @@ export class AnsatteSekretær extends Component {
 }
 
 export class AnsatteDetailsSekretær extends Component {
+  //Side med videre informasjon om hver enkelt ansatt. Sekretær har ikke tilgang til å redigere ansattinformasjon
   ansatte = [];
 
   render() {
@@ -1192,6 +1202,7 @@ export class AnsatteDetailsSekretær extends Component {
 }
 
 export class LokasjonerSekretær extends Component {
+  //Side med en oversikt over bedriftens lokasjoner
   lokasjoner = [];
 
   render() {
@@ -1240,7 +1251,7 @@ export class LokasjonerSekretær extends Component {
 }
 
 export class LokasjonerDetailsSekretær extends Component {
-  //Viser mer informasjon om ansatte
+  //Side med videre informasjon om hver enkelt lokasjon. Sekretær har ikke tilgang til å redigere lokasjoninformasjon
   lokasjoner = [];
 
   render() {
@@ -1263,6 +1274,7 @@ export class LokasjonerDetailsSekretær extends Component {
 }
 
 export class RapportSekretær extends Component {
+  //Viser en rapport om bedriftens bestillinger. Hvor mye de har tjent og hvor mye hver selger har lagd bestillinger. Identisk med hva daglig leder versjonen.
   tabell1 = [];
   tabell2 = [];
 
@@ -1521,6 +1533,7 @@ export class RapportSekretær extends Component {
   }
 
   createTable1() {
+    //Tabell med alle rapporter
     if (this.totalRapport == 0) {
       alert('Ingen rader matchet søket ditt');
     } else {
@@ -1567,6 +1580,7 @@ export class RapportSekretær extends Component {
   }
 
   createTable2() {
+    //Tabell over rapporter gjort av hver enkelt selger
     if (this.ansatteRapport == 0) {
       alert('Ingen rader matchet søket ditt');
     } else {
