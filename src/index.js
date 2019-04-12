@@ -65,6 +65,7 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 
 class Login extends Component {
+  //Første siden som kommer opp når man åpner applikasjon. Man logger seg inn med brukernavn og passord og blir videre sendt til startsiden som tilsvarer ansattes rolle i bedriften.
   ansatte = [];
 
   brukernavn = '';

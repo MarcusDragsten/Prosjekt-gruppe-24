@@ -9,6 +9,7 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class Bestilling extends Component {
+  //Her lages nye bestillinger.
   bestilling_type = 'Velg bestillingstype';
   kunde_epost = '';
   utleveringssted = 'Velg utleveringssted';
@@ -109,10 +110,10 @@ export class Bestilling extends Component {
     return (
       <div id="yttersteDiv">
         <div class="header w3-container" id="header">
-          <h1>Bestillingsiden</h1>
+          <h1>Bestillingssiden</h1>
         </div>
         <div id="nyBestilling" class="form-group">
-          <h2>Fyll inn bestillingskjema for kunden</h2>
+          <h2>Fyll inn bestillingsskjema for kunden</h2>
           <hr />
           <div id="nyKundeTekst">
             <u>Er det en ny kunde?</u>{' '}
@@ -667,6 +668,8 @@ export class Bestilling extends Component {
   }
 
   visSykkel() {
+    //Siden med oversikt over syklene man kan velge å ha med i bestillingen vises ikke når siden lastes
+    //Når denne funksjonen kjøres så gjøres bestillingsskjemaet usynlig og denne siden blir synlig
     var x = document.getElementById('velgSykkel');
     if (window.getComputedStyle(x).display === 'none') {
       x.style.display = 'block';
@@ -675,6 +678,7 @@ export class Bestilling extends Component {
   }
 
   visUtstyr() {
+    //Når denne funksjonen kjøres så gjøres siden med syklene som går inn i bestillingen usynlig og denne siden blir synlig
     var y = document.getElementById('velgUtstyr');
     if (window.getComputedStyle(y).display === 'none') {
       y.style.display = 'block';
@@ -683,6 +687,7 @@ export class Bestilling extends Component {
   }
 
   visOrdreOversikt() {
+    //Når denne funksjonen kjøres så gjøres siden med utstyret som går inn i bestillingen usynlig og denne siden blir synlig
     var z = document.getElementById('bestillingOversikt');
     if (window.getComputedStyle(z).display === 'none') {
       z.style.display = 'block';
@@ -1437,6 +1442,7 @@ export class Bestilling extends Component {
   }
 
   wrapper3() {
+    //Gir tilbakemelding hvis man velger utstyr som ikke passer med valgt sykkel
     for (let i = 0; i < this.sykkelOversikt.length; i++) {
       if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Herre m/bagasjebrett') {
         if (this.sykkelkurv > 0 && this.sykkelOversikt[i].type != 'Hybrid Dame m/bagasjebrett') {

@@ -9,6 +9,7 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory();
 
 export class SalgStartside extends Component {
+  //Startside for bedriftens selgere
   ansatt = [];
 
   render() {
@@ -72,7 +73,7 @@ export class SalgStartside extends Component {
 }
 
 export class AktiveBestillinger extends Component {
-  // Oversikt over aktive? bestillinger
+  // Oversikt over aktive bestillinger
   bestillinger = [];
   tabell = [];
   ansatt = [];
@@ -313,7 +314,7 @@ export class AktiveBestillinger extends Component {
 }
 
 export class BestillingHistorikk extends Component {
-  // Oversikt over aktive? bestillinger
+  // Oversikt over tidligere bestillinger. Bestillinger som havner på listen i denne siden har vært ut til kunde OG levert tilbake-
   bestillinger = [];
   tabell = [];
   ansatt = [];
@@ -546,6 +547,7 @@ export class BestillingHistorikk extends Component {
 }
 
 export class Innlevering extends Component {
+  //En side der selgeren går over syklene/utstyret som har blitt levert tilbake fra en bestilling. Selgeren velger deretter dens status og leverer inn bestillingens innhold.
   syklerIbestilling = [];
   utstyrIbestilling = [];
 
@@ -711,7 +713,7 @@ export class Innlevering extends Component {
 }
 
 export class EndreBestilling extends Component {
-  // Tar utgangspunkt i listen på startsiden. Kommer til siden som tilhører hver Bestilling
+  // Tar utgangspunkt i listen på startsiden. Kommer til siden som tilhører hver Bestilling. Gir selgeren mulighet til å endre på en kundes bestilling.
   bestillinger = null;
 
   syklerPerBestilling = [];
@@ -994,6 +996,7 @@ export class EndreBestilling extends Component {
 }
 
 export class EndreSykler extends Component {
+  //Videreføring av siden der man endrer bestillinger. Her legger man til/fjerne eventulle sykler som kunden ønsker
   herre = 0;
   dame = 0;
   herreBagasje = 0;
@@ -1508,6 +1511,7 @@ export class EndreSykler extends Component {
 }
 
 export class EndreUtstyr extends Component {
+  //Videreføring av siden der man endrer bestillinger. Her legger man til/fjerne eventulle utstyr som kunden ønsker
   barnesete = 0;
   hjelmBarn = 0;
   hjelmVoksne = 0;
@@ -1899,6 +1903,7 @@ export class EndreUtstyr extends Component {
 }
 
 export class NyKunde extends Component {
+  //Side der man registerer nye kunder. Man må være kunde for å leie, slik at bedriften har personinformasjon om kunden i tilfelle det skulle oppstå problemer rundt innlevering av lånt utstyr/sykler
   fornavn = '';
   etternavn = '';
   epost = '';
@@ -2111,7 +2116,7 @@ export class NyKunde extends Component {
 }
 
 export class KundeEdit extends Component {
-  //Side der man endre informasjonen til syklene. Bytter også status
+  //Side der man endre informasjonen til kunden. Kan ikke endre epost da den fungerer som PK i databasen
   kunde = null;
 
   render() {
